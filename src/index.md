@@ -1,4 +1,4 @@
-@def title = "JuDoc Example"
+@def title = "Benoît Legat"
 @def hasmath = true
 @def hascode = true
 <!-- Note: by default hasmath == true and hascode == false. You can change this in
