@@ -1,8 +1,93 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/infra/favicon.png"> <title>More goodies</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/pub/menu1.html">Code blocks</a> <li><a href="/pub/menu2.html">More goodies</a> <li><a href="/pub/menu3.html">Menu 3</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=jd-content > <h1 id=more_goodies ><a href="/pub/menu2.html#more_goodies">More goodies</a></h1> <h2 id=more_markdown_support ><a href="/pub/menu2.html#more_markdown_support">More markdown support</a></h2> <p>The Julia Markdown parser in Julia&#39;s stdlib is not exactly complete and JuDoc strives to bring useful extensions that are either defined in standard specs such as Common Mark or that just seem like useful extensions.</p> <ul> <li><p>indirect references for instance &#91;like so&#93;</p> </ul> or also for images</p> <p>&#33;&#91;&#93;&#91;some image&#93;</p> <p>some people find that useful as it allows referring multiply to the same link for instance.</p> <ul> <li><p>un-qualified code blocks and indented code blocks are allowed and are julia by default</p> </ul> <pre><code class="julia hljs">a = <span class=hljs-number >1</span>
-b = a+<span class=hljs-number >1</span></code></pre> or</p> <pre><code class="julia hljs">a = <span class=hljs-number >1</span>
-b = a+<span class=hljs-number >1</span></code></pre> <p>you can specify the default language with <code>@def lang &#61; &quot;julia&quot;</code>. If you actually want a &quot;plain&quot; code block, qualify it as <code>plaintext</code> like</p> <pre><code class="plaintext hljs">so this is plain-text stuff.
-</code></pre> <h2 id=a_bit_more_highlighting ><a href="/pub/menu2.html#a_bit_more_highlighting">A bit more highlighting</a></h2> <p>Extension of highlighting for <code>pkg</code> an <code>shell</code> mode in Julia:</p> <pre><code class="julia-repl hljs"><span class=hljs-metap>(v1.4) pkg&gt;</span> add JuDoc
-<span class=hljs-metas>shell&gt;</span> blah
-<span class=hljs-meta >julia&gt;</span><span class=julia > <span class=hljs-number >1</span>+<span class=hljs-number >1</span>
-</span><span class=hljs-metap>(Sandbox) pkg&gt;</span> resolve
-</code></pre> <p>you can tune the colouring etc via the</p> <ul> <li><p><code>hljs-meta</code> &#40;for <code>julia&gt;</code>&#41;</p> <li><p><code>hljs-metas</code> &#40;for <code>shell&gt;</code>&#41;</p> <li><p><code>hljs-metap</code> &#40;for <code>...pkg&gt;</code>&#41;</p> </ul> <div class=page-foot > <div class=copyright > &copy; Septimia Zenobia. Last modified: October 11, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>. </div> </div> </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Un-minified script so that can play a bit -->
+<link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+   
+  <link rel="stylesheet" href="/css/judoc.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/infra/favicon.png">
+   <title>More goodies</title>  
+</head>
+<body>
+  <header>
+    <div class="blog-name"><a href="">Benoît Legat</a></div>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/pub/menu1.html">Code blocks</a></li>
+        <li><a href="/pub/menu2.html">More goodies</a></li>
+        <li><a href="/pub/menu3.html">Menu 3</a></li>
+      </ul>
+      <img src="/assets/infra/hamburger.svg" id="menu-icon">
+    </nav>
+  </header>
+
+<!-- Content appended here -->
+
+<div class="jd-content">
+<h1 id="more_goodies"><a href="/pub/menu2.html#more_goodies">More goodies</a></h1>
+<h2 id="more_markdown_support"><a href="/pub/menu2.html#more_markdown_support">More markdown support</a></h2>
+<p>The Julia Markdown parser in Julia&#39;s stdlib is not exactly complete and JuDoc strives to bring useful extensions that are either defined in standard specs such as Common Mark or that just seem like useful extensions.</p>
+<ul>
+<li><p>indirect references for instance <a href="http://existentialcomics.com/">like so</a></p>
+</li>
+</ul>
+ or also for images</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Krul.svg" alt="some image"></p>
+<p>some people find that useful as it allows referring multiply to the same link for instance.</p>
+
+<ul>
+<li><p>un-qualified code blocks and indented code blocks are allowed and are julia by default</p>
+</li>
+</ul>
+<pre><code class="language-julia">a = 1
+b = a+1</code></pre> or</p>
+<pre><code class="language-julia">a = 1
+b = a+1</code></pre>
+<p>you can specify the default language with <code>@def lang &#61; &quot;julia&quot;</code>. If you actually want a &quot;plain&quot; code block, qualify it as <code>plaintext</code> like</p>
+<pre><code class="language-plaintext">so this is plain-text stuff.
+</code></pre>
+<h2 id="a_bit_more_highlighting"><a href="/pub/menu2.html#a_bit_more_highlighting">A bit more highlighting</a></h2>
+<p>Extension of highlighting for <code>pkg</code> an <code>shell</code> mode in Julia:</p>
+<pre><code class="language-julia-repl">(v1.4) pkg> add JuDoc
+shell> blah
+julia> 1+1
+(Sandbox) pkg> resolve
+</code></pre>
+<p>you can tune the colouring etc via the</p>
+<ul>
+<li><p><code>hljs-meta</code> &#40;for <code>julia&gt;</code>&#41;</p>
+</li>
+<li><p><code>hljs-metas</code> &#40;for <code>shell&gt;</code>&#41;</p>
+</li>
+<li><p><code>hljs-metap</code> &#40;for <code>...pkg&gt;</code>&#41;</p>
+</li>
+</ul>
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Septimia Zenobia. Last modified: October 14, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+  </div>
+</div>
+
+</div>
+<!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+        <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+    
+  </body>
+</html>
