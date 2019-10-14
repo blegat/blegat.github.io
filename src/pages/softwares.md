@@ -8,10 +8,10 @@
 * [EntropicCone.jl](https://github.com/blegat/EntropicCone.jl): Approximation of the Entropic Cone and Optimization over it.
 * [SwitchOnSafety.jl](https://github.com/blegat/SwitchOnSafety.jl): Computation of [controlled] invariant sets for Hybrid Systems.
 ~~~
-<h2><a href=http://www.juliaopt.org><img src=http://www.juliaopt.org/images/juliaopt.svg alt=JuliaOpt style="max-width:40px; max-height:40px; width=auto; height=auto"></a> Optimization algorithms</h2>
+<h2><a href=http://www.juliaopt.org><img src=https://avatars1.githubusercontent.com/u/48496332?s=200&v=4 alt=JuMP style="max-width:40px; max-height:40px; width=auto; height=auto"></a> Optimization algorithms</h2>
 ~~~
-* [SumOfSquares.jl](https://github.com/JuliaOpt/SumOfSquares.jl): Sum of Squares restriction and Moment relaxation for [PolyJuMP.jl](https://github.com/JuliaOpt/SumOfSquares.jl): Modelling with polynomial and measure variables in JuMP.</li>
-* [StructDualDynProg.jl](https://github.com/blegat/StructDualDynProg.jl): Stochastic Dual Dynamic Programming algorithm for [StructJuMP.jl](https://github.com/StructJuMP/StructJuMP.jl): Block-structured optimization framework for JuMP.</li>
+* [SumOfSquares.jl](https://github.com/JuliaOpt/SumOfSquares.jl): Sum of Squares restriction and Moment relaxation for [PolyJuMP.jl](https://github.com/JuliaOpt/SumOfSquares.jl): Modelling with polynomial and measure variables in JuMP.
+* [StructDualDynProg.jl](https://github.com/blegat/StructDualDynProg.jl): Stochastic Dual Dynamic Programming algorithm for [StructJuMP.jl](https://github.com/StructJuMP/StructJuMP.jl): Block-structured optimization framework for JuMP.
 ~~~
 <h2><img src=https://www.iconexperience.com/_img/o_collection_png/green_dark_grey/512x512/plain/tools.png alg=Utility  style="max-width:40px; max-height:40px; width=auto; height=auto">Utility</h2>
 ~~~
