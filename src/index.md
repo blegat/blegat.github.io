@@ -7,7 +7,13 @@ where appropriate -->
 
 ## Research interests
 
-I study the application of optimization techniques to the stability analysis and control synthesis of switched systems and to the Entropic Cone.
+I study set programming: the computation of sets satisfying given properties and maximizing some criteria like their volume.
+Various techniques can be employed depending on the family of sets considered:
+* Polyhedral computation or dual dynamic programming for polyhedra,
+* Semidefinite programming for ellipsoids and
+* Sum-of-Squares programming for sublevel sets of polynomials or sets with polynomial support function.
+I am also interested in the computation of infeasibility certificates for set programs.
+I apply set programming to the stability analysis and control synthesis of hybrid systems and to the approximation of the Entropic Cone.
 
 ## About me
 
