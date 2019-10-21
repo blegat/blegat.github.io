@@ -21,7 +21,7 @@ I apply set programming to the stability analysis and control synthesis of hybri
 ~~~
 <div class="row">
   <div class="container">
-    <img class="left" style="width:20%;" src="http://perso.uclouvain.be/benoit.legat/sites/default/files/small_1.jpg">
+    <img class="left" style="width:20%;" src="assets/index/profpic.jpg">
     <p>
       I am a Ph.D. student in the Applied Mathematics department of the Institute of ICTEAM (Information and Communication Technologies, Electronics and Applied Mathematics) at UCLouvain,
       advised by
