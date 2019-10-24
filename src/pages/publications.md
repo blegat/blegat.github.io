@@ -62,18 +62,15 @@ Set Programming
 
 ## Talks
 
-### Upcoming
-
-~~~
-<ul>
-  <li id="2019_NSIDE"><a href="https://www.n-side.com/">N-SIDE</a>, October 2019</li>
-</ul>
-~~~
+<!-- ### Upcoming -->
 
 ### Past
 
 ~~~
 <ul>
+  <li id="2019_NSIDE">
+    <a href="https://www.n-side.com/">N-SIDE</a>, October 2019<br><a href="https://drive.google.com/open?id=1Qo6AAiGmEP408odFQMlDWdbJOE-cIXSE">slides</a>
+  </li>
   <li id="2019_BJUG">
     <a href="https://julia-users-berlin.github.io/">Berlin Julia Users Group</a>, August 2019<br><a href="https://drive.google.com/open?id=1NjavuhxE9OrhF8BEht2vlYrQ39hvhgpt">slides</a>
   </li>
