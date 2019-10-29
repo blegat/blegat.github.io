@@ -28,6 +28,8 @@ I apply set programming to the stability analysis and control synthesis of hybri
       <a href="http://perso.uclouvain.be/raphael.jungers">Raphaël Jungers</a> and
       <a href="http://www.mit.edu/~parrilo/">Pablo Parrilo</a>.
       My research is supported by the FNRS Research Fellowship.</p>
+
+      <a href="assets/index/cv.pdf">CV</a>
     <div style="clear: both"></div>
   </div>
 </div>
