@@ -37,25 +37,25 @@ Set Programming
     Benoît Legat, Pablo A. Parrilo, and Raphaël M. Jungers. <strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong>. Submitted to SICON.<br><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc">pdf</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/LPJ17.ipynb">code</a>
   </li>
   <li id="2019_TAC">
-    Benoît Legat, Pablo A. Parrilo and Raphael M. Jungers. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8657769">An entropy-based bound for the computational complexity of a switched system</a></strong>. <em>IEEE Transactions on Automatic Control (TAC)</em>, 2019<br><a href="https://doi.org/10.24433/CO.0452244.v1">codeocean</a>
+    Benoît Legat, Pablo A. Parrilo and Raphael M. Jungers. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8657769">An entropy-based bound for the computational complexity of a switched system</a></strong>. <em>IEEE Transactions on Automatic Control (TAC)</em>, 2019. <a href="https://doi.org/10.1109/TAC.2019.2902625">10.1109/TAC.2019.2902625</a><br><a href="https://doi.org/10.24433/CO.0452244.v1">codeocean</a>
   </li>
   <li>
-    Cláudio Gomes, Raphaël M. Jungers, Benoît Legat, and Hans Vangheluwe. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8619223">Minimally, Constrained Stable Switched Systems and Application to Co-Simulation</a></strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2018, pp. 5676-5681.<br><a href="https://arxiv.org/abs/1809.02648">arXiv</a>
+    Cláudio Gomes, Raphaël M. Jungers, Benoît Legat, and Hans Vangheluwe. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8619223">Minimally, Constrained Stable Switched Systems and Application to Co-Simulation</a></strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2018, pp. 5676-5681. <a href="https://doi.org/10.1109/CDC.2018.8619223">10.1109/CDC.2018.8619223</a><br><a href="https://arxiv.org/abs/1809.02648">arXiv</a>
   </li>
   <li>
-    Benoît Legat, Paulo Tabuada and Raphaël Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S2405896318311480">Computing controlled invariant sets for hybrid systems with applications to model-predictive control</a></strong>. <em>IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2018.<br><a href="https://arxiv.org/abs/1802.04522">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
+    Benoît Legat, Paulo Tabuada and Raphaël Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S2405896318311480">Computing controlled invariant sets for hybrid systems with applications to model-predictive control</a></strong>. <em>IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2018. <a href="https://doi.org/10.1016/j.ifacol.2018.08.033">10.1016/j.ifacol.2018.08.033</a><br><a href="https://arxiv.org/abs/1802.04522">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
   </li>
   <li>
-    Manon Martin, Benoît Legat, Justine Leenders, Julien Vanwinsberghe, Réjane Rousseau, Bruno Boulanger, Paul H.C. Eilers, Pascal De Tullio and Bernadette Govaerts. <strong><a href="https://www.sciencedirect.com/science/article/pii/S0003267018303490">PepsNMR for 1H-NMR metabolomic data pre-processing</a></strong>. <em>Analytica Chimica Acta</em>, 2018.<br><a href="https://github.com/ManonMartin/PepsNMR">code</a>
+    Cláudio Gomes, Benoît Legat, Raphaël M. Jungers and Hans Vangheluwe. <strong>Stable Adaptive Co-simulation: A Switched Systems Approach</strong>. <em>IUTAM Symposium on Co-Simulation and Solver Coupling</em>, 2017. <a href="https://doi.org/10.1007/978-3-030-14883-6_5">10.1007/978-3-030-14883-6_5</a>
   </li>
   <li>
-    Cláudio Gomes, Benoît Legat, Raphaël M. Jungers and Hans Vangheluwe. <strong>Stable Adaptive Co-simulation: A Switched Systems Approach</strong>. <em>IUTAM Symposium on Co-Simulation and Solver Coupling</em>, 2017.
+    Manon Martin, Benoît Legat, Justine Leenders, Julien Vanwinsberghe, Réjane Rousseau, Bruno Boulanger, Paul H.C. Eilers, Pascal De Tullio and Bernadette Govaerts. <strong><a href="https://www.sciencedirect.com/science/article/pii/S0003267018303490">PepsNMR for 1H-NMR metabolomic data pre-processing</a></strong>. <em>Analytica Chimica Acta</em>, 2018. <a href="https://doi.org/10.1016/j.aca.2018.02.067">10.1016/j.aca.2018.02.067</a><br><a href="https://github.com/ManonMartin/PepsNMR">code</a>
   </li>
   <li>
     Benoît Legat, Raphaël M. Jungers. <a href="http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf"><strong>Parallel optimization on the Entropic Cone</strong></a>. <em>37rd Symposium on Information Theory in the Benelux</em>, 2016.<br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKNTRjZTVuSmtWTXM">pdf</a> <a href="https://github.com/blegat/EntropicCone.jl">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKa3BXZTlsdUJJZzA">slides</a>
   </li>
   <li>
-    Benoît Legat, Raphaël M. Jungers, and Pablo A. Parrilo. <a href=http://dl.acm.org/citation.cfm?id=2883821><strong>Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</strong></a>. <em>19th International Conference on Hybrid Systems: Computation and Control</em>. ACM, 2016.<br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE">slides</a>
+    Benoît Legat, Raphaël M. Jungers, and Pablo A. Parrilo. <a href=http://dl.acm.org/citation.cfm?id=2883821><strong>Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</strong></a>. <em>19th International Conference on Hybrid Systems: Computation and Control</em>. ACM, 2016. <a href="https://doi.org/10.1145/2883817.2883821">10.1145/2883817.2883821</a><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE">slides</a>
   </li>
 </ul>
 ~~~
