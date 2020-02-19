@@ -20,7 +20,7 @@ Set Programming
 * solved using Sum-of-Squares Programming
   **Talks**: [[2018_JuMP]](#2018_JuMP) [[2017_JuMP]](#2017_JuMP) **Posters**: [[2018_NCAG]](#2018_NCAG_poster)
   - with controlled or algebraic invariance constraints
-    **Talks**: [[2018_ADHS: application to MPC]](#2018_ADHS) [[2018_ISMP: application to Stochastic Programming]](#2018_ISMP) [[2018_BNLM]](#2018_BNLM)
+    **Papers**: [[2018_NAHS]](#2018_NAHS) **Talks**: [[2018_ADHS: application to MPC]](#2018_ADHS) [[2018_ISMP: application to Stochastic Programming]](#2018_ISMP) [[2018_BNLM]](#2018_BNLM)
   - Certifying infeasibility
     **Papers**: [[2019_TAC]](#2019_TAC) **Talks**: [[2017_BNLM]](#2017_BNLM) [[2017_UCLA]](#2017_UCLA) [[2016_CTUP]](#2016_CTUP)
     * Stabilization of Switched Systems applied to adaptative (co-)simulation
@@ -35,6 +35,9 @@ Set Programming
 <ul>
   <li>
     Benoît Legat, Pablo A. Parrilo, and Raphaël M. Jungers. <strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong>. Submitted to SICON.<br><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc">pdf</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/LPJ17.ipynb">code</a>
+  </li>
+  <li id="2018_NAHS">
+    Benoît Legat, Paulo Tabuada, and Raphaël M. Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S1751570X20300054">Sum-of-Squares methods for controlled invariant sets with applications to model-predictive control</a></strong>. <em>Nonlinear Analysis: Hybrid Systems (NAHS)</em>, 2020. <a href="https://doi.org/10.1016/j.nahs.2020.100858">10.1016/j.nahs.2020.100858</a><br><a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
   </li>
   <li id="2019_TAC">
     Benoît Legat, Pablo A. Parrilo and Raphael M. Jungers. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8657769">An entropy-based bound for the computational complexity of a switched system</a></strong>. <em>IEEE Transactions on Automatic Control (TAC)</em>, 2019. <a href="https://doi.org/10.1109/TAC.2019.2902625">10.1109/TAC.2019.2902625</a><br><a href="https://doi.org/10.24433/CO.0452244.v1">codeocean</a>
