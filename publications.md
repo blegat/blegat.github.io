@@ -28,6 +28,11 @@ Set Programming
 * solved using Dual Dynamic Programming applied to the Entropic Cone
   **Talks**: [[2017_ENPC]](#2017_ENPC) [[2016_SITB]](#2016_SITB)
 
+## PhD thesis
+
+~~~
+<strong>Set Programming: Theory and Computation</strong>, 2020.<br><a href="https://drive.google.com/file/d/1Y8kvUsHmvWSvgnEBS8T7GI6ofvuWng6U/view?usp=sharing">pdf</a> <a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a>
+~~~
 
 ## Papers and proceedings
 
