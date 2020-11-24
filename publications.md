@@ -18,28 +18,44 @@
 Set Programming
 **Talks**: [[2019_JuMP]](#2019_JuMP) [[2018_NCAG]](#2018_NCAG)
 * solved using Sum-of-Squares Programming
-  **Talks**: [[2018_JuMP]](#2018_JuMP) [[2017_JuMP]](#2017_JuMP) **Posters**: [[2018_NCAG]](#2018_NCAG_poster)
+  **Talks**: [[2020_INFORMSSOS]](#2020_INFORMSSOS) [[2019_JuliaCon]](#2019_JuliaCon) [[2018_JuMP]](#2018_JuMP) [[2017_JuMP]](#2017_JuMP) **Posters**: [[2018_NCAG]](#2018_NCAG_poster)
   - with controlled or algebraic invariance constraints
-    **Papers**: [[2018_NAHS]](#2018_NAHS) **Talks**: [[2018_ADHS: application to MPC]](#2018_ADHS) [[2018_ISMP: application to Stochastic Programming]](#2018_ISMP) [[2018_BNLM]](#2018_BNLM)
+    **Papers**: [[2018_NAHS]](#2018_NAHS) **Talks**: [[2019_ICCOPT]](#2019_ICCOPT) [[2018_ADHS: application to MPC]](#2018_ADHS) [[2018_ISMP: application to Stochastic Programming]](#2018_ISMP) [[2018_BNLM]](#2018_BNLM)
+    * for piecewise semi-ellipsoids
+      **Papers**: [[2020_LCSS]](#2020_LCSS) **Talks**: [[2020_PieceQuad]](#2020_PieceQuad)
   - Certifying infeasibility
-    **Papers**: [[2019_TAC]](#2019_TAC) **Talks**: [[2017_BNLM]](#2017_BNLM) [[2017_UCLA]](#2017_UCLA) [[2016_CTUP]](#2016_CTUP)
+    **Papers**: [[2020_SICON]](#2020_SICON) [[2019_TAC]](#2019_TAC) **Talks**: [[2017_BNLM]](#2017_BNLM) [[2017_UCLA]](#2017_UCLA) [[2016_CTUP]](#2016_CTUP)
     * Stabilization of Switched Systems applied to adaptative (co-)simulation
       **Talks**: [[2018_CDC]](#2018_CDC) [[2018_UANT]](#2018_UANT) **Posters**: [[2018_ADHS]](#2018_ADHS_poster)
+    * Stability of delayed switched systems
+      **Talks**: [[2020_CDC]](#2020_CDC)
 * solved using Dual Dynamic Programming applied to the Entropic Cone
   **Talks**: [[2017_ENPC]](#2017_ENPC) [[2016_SITB]](#2016_SITB)
+
+JuMP and MathOptInterface
+**Papers**: [[2021_IJOC]](#2021_IJOC) **Talks**: [[2020_INFORMS]](#2020_INFORMS) [[2019_NSIDE]](#2019_NSIDE) [[2019_BJUG]](#2019_BJUG) [[2019_LANL]](#2019_LANL) [[2019_EURO]](#2019_EURO) [[2019_JuliaNantes]](#2019_JuliaNantes)
 
 ## PhD thesis
 
 ~~~
-<strong>Set Programming: Theory and Computation</strong>, 2020.<br><a href="https://drive.google.com/file/d/1Y8kvUsHmvWSvgnEBS8T7GI6ofvuWng6U/view?usp=sharing">pdf</a> <a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a>
+<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a>
 ~~~
 
 ## Papers and proceedings
 
 ~~~
 <ul>
+  <li id="2021_IJOC">
+    Benoît Legat, Oscar Dowson, Joaquim Dias Garcia, and Miles Lubin. <strong>MathOptInterface: a data structure for mathematical optimization problems</strong>.<br><a href="https://arxiv.org/abs/2002.03447">arXiv</a> <a href="http://www.optimization-online.org/DB_HTML/2020/02/7609.html">Optimization Online</a> <a href="https://github.com/jump-dev/MOIPaperBenchmarks">code</a>
+  </li>
   <li>
-    Benoît Legat, Pablo A. Parrilo, and Raphaël M. Jungers. <strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong>. Submitted to SICON.<br><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc">pdf</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/LPJ17.ipynb">code</a>
+    Benoît Legat, Cláudio Gomes, Paschalis Karalis, Raphaël M. Jungers, Eva Navarro, and Hans Vangheluwe. <strong>Stability of Planar Switched Systems under Delayed Event Detection</strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2020<br><a href="https://arxiv.org/abs/2009.04505">arXiv</a>
+  </li>
+  <li id="2020_LCSS">
+    Benoît Legat, Saša V. Raković, and Raphaël M. Jungers. <strong><a href="https://doi.org/10.1109/LCSYS.2020.3005326">Piecewise Semi-Ellipsoidal Control Invariant Sets</a></strong>. <em>IEEE Control Systems Letters (L-CSS)</em>, 2020. <a href="https://doi.org/10.1109/LCSYS.2020.3005326">10.1109/LCSYS.2020.3005326</a><br><a href="https://arxiv.org/abs/2007.02770">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/LPJ17.ipynb">code</a>
+  </li>
+  <li id="2020_SICON">
+    Benoît Legat, Pablo A. Parrilo, and Raphaël M. Jungers. <strong><a href="https://doi.org/10.1137/18M1173460">Certifying unstability of Switched Systems using Sum of Squares Programming</a></strong>. <em>SIAM Journal on Control and Optimization (SICON)</em>, 2020. <a href="https://doi.org/10.1137/18M1173460">10.1137/18M1173460</a><br><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc">pdf</a> <a href="https://codeocean.com/capsule/8606536/tree/v2">code</a>
   </li>
   <li id="2018_NAHS">
     Benoît Legat, Paulo Tabuada, and Raphaël M. Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S1751570X20300054">Sum-of-Squares methods for controlled invariant sets with applications to model-predictive control</a></strong>. <em>Nonlinear Analysis: Hybrid Systems (NAHS)</em>, 2020. <a href="https://doi.org/10.1016/j.nahs.2020.100858">10.1016/j.nahs.2020.100858</a><br><a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
@@ -70,12 +86,29 @@ Set Programming
 
 ## Talks
 
-<!-- ### Upcoming -->
+### Upcoming
+
+~~~
+<ul>
+  <li id="2020_CDC">
+    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1Xf2bzlhmCcCmYpgnCwWbaTct5QprKelf/view?usp=sharing">slides</a>
+  </li>
+  <li id="2020_PieceQuad">
+    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1IEVIxaHS-UskrObNajuLpzUUMdfb2sZb/view?usp=sharing">slides</a>
+  </li>
+</ul>
+~~~
 
 ### Past
 
 ~~~
 <ul>
+  <li id="2020_INFORMS">
+    <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><a href="https://drive.google.com/file/d/1qPlHDoqgnoSOQ5fkzUN8qOqztzsLzg-p/view?usp=sharing">slides</a>
+  </li>
+  <li id="2020_INFORMSSOS">
+    <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><a href="https://drive.google.com/file/d/1lb8NtOWCikTYm6KRUZCSLYgaUjqIsSyV/view?usp=sharing">slides</a>
+  </li>
   <li id="2019_NSIDE">
     <a href="https://www.n-side.com/">N-SIDE</a>, October 2019<br><a href="https://drive.google.com/open?id=1Qo6AAiGmEP408odFQMlDWdbJOE-cIXSE">slides</a>
   </li>
