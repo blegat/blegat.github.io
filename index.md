@@ -23,7 +23,7 @@ I apply set programming to the stability analysis and control synthesis of hybri
   <div class="container">
     <img class="left" style="width:20%;" src="assets/index/profpic.jpg">
     <p>
-      I am a postdoc student in the Applied Mathematics department of the Institute of ICTEAM (Information and Communication Technologies, Electronics and Applied Mathematics) at UCLouvain,
+      I am a postdoc researcher in the Applied Mathematics department of the Institute of ICTEAM (Information and Communication Technologies, Electronics and Applied Mathematics) at UCLouvain,
       working on the BidMed project "Big Data in health care" with <a href="http://perso.uclouvain.be/raphael.jungers">Raphaël Jungers</a>.</p>
 
       <a href="assets/index/cv.pdf">CV</a>
