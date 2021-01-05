@@ -90,12 +90,6 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
-  <li id="2020_CDC">
-    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1Xf2bzlhmCcCmYpgnCwWbaTct5QprKelf/view?usp=sharing">slides</a>
-  </li>
-  <li id="2020_PieceQuad">
-    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1IEVIxaHS-UskrObNajuLpzUUMdfb2sZb/view?usp=sharing">slides</a>
-  </li>
 </ul>
 ~~~
 
@@ -103,6 +97,12 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2020_CDC">
+    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1Xf2bzlhmCcCmYpgnCwWbaTct5QprKelf/view?usp=sharing">slides</a>
+  </li>
+  <li id="2020_PieceQuad">
+    <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1IEVIxaHS-UskrObNajuLpzUUMdfb2sZb/view?usp=sharing">slides</a>
+  </li>
   <li id="2020_INFORMS">
     <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><a href="https://drive.google.com/file/d/1qPlHDoqgnoSOQ5fkzUN8qOqztzsLzg-p/view?usp=sharing">slides</a>
   </li>
@@ -131,7 +131,10 @@ JuMP and MathOptInterface
     <a href="https://julialang.univ-nantes.fr/programme/">juliaday Nantes 2019</a>, June 2019.<br><a href="https://drive.google.com/open?id=1pN3G9Pr8jbzK9EEaJ9a6p_qKwSbxb2bo">slides</a>
   </li>
   <li id="2019_JuMP">
-    <a href="https://www.juliaopt.org/meetings/santiago2019/">JuMP-dev 2019</a>, March 2019.<br><a href="https://www.juliaopt.org/meetings/santiago2019/slides/benoit_legat.pdf">slides</a> <a href="https://www.youtube.com/watch?v=hV3G-eNLNjk">video</a>
+    <a href="https://jump.dev/meetings/santiago2019/">The Third Annual JuMP-dev Workshop</a>, March 2019.<br><a href="https://drive.google.com/file/d/1yhgpFcwJ1iyV8uKBxghdHrgHoyV09dcY/view?usp=sharing">slides</a> <a href="https://www.youtube.com/watch?v=hV3G-eNLNjk">video</a>
+  </li>
+  <li id="2019_TUTO">
+    <a href="https://jump.dev/meetings/santiago2019/">The Third Annual JuMP-dev Workshop</a>, March 2019.<br><a href="https://github.com/blegat/JuMP-dev_2019_tutorial">notebooks</a> <a href="https://www.youtube.com/watch?v=gUf8kmdoWzo&list=PLP8iPy9hna6QkxelZiDOc5HnVGvQmEsLX&index=21">video</a>
   </li>
   <li id="2018_CDC">
     <a href="https://cdc2018.ieeecss.org/">57th IEEE Conference on Decision and Control</a>, December 2018.<br><a href="https://drive.google.com/open?id=1Ek2UmU4zTb5BUyhcMquFVAlJNbLwsVy-">slides</a>
@@ -146,7 +149,7 @@ JuMP and MathOptInterface
     <a href="https://ismp2018.sciencesconf.org/"><em>23rd International Symposium on Mathematical Programming</em></a>, July 2018.<br><a href="https://drive.google.com/open?id=1JyhySuDRH36CYy41YuTgEMZcc0fw_6Lm">slides</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/reservoir.ipynb">code</a>
   </li>
   <li id="2018_JuMP">
-    <strong>Automatic reformulation using constraint bridges</strong>. <a href="http://www.juliaopt.org/meetings/bordeaux2018/"><em>JuMP-dev workshop 2018</em></a>, June 2018.<br><a href="http://www.juliaopt.org/meetings/bordeaux2018/legat.pdf">slides</a> <a href="https://github.com/JuliaOpt/MathOptInterface.jl/tree/master/src/Bridges">code</a>
+    <a href="https://jump.dev/meetings/bordeaux2018/"><em>The Second Annual JuMP-dev Workshop</em></a>, June 2018.<br><a href="https://drive.google.com/file/d/1lVSUiXS1_oxIo7G4H9bMj771aSS3x-gu/view?usp=sharing">slides</a> <a href="https://github.com/JuliaOpt/MathOptInterface.jl/tree/master/src/Bridges">code</a>
   </li>
   <li id="2018_BNLM">
     <a href="http://www.beneluxmeeting.nl/2018/"><em>37th Benelux Meeting on Systems and Control</em></a>, March 2018.<br><a href="https://drive.google.com/open?id=1f2qtwBMXt5Ma-0EAjiy35fLbPIWXvloN">slides</a>
@@ -155,7 +158,7 @@ JuMP and MathOptInterface
     <a href="https://www.uantwerpen.be/images/uantwerpen/personalpage33566/files/AG-Seminar-2018ss/2018-02-19-Legat.pdf"><em>UAntwerpen</em></a>, February 2018.<br><a href="https://drive.google.com/open?id=1n5NRpzpYX9moejqdghNcPuaEspP9M2Zp">slides</a>
   </li>
   <li id="2017_JuMP">
-    <a href="http://www.juliaopt.org/meetings/mit2017/"><em>JuMP-dev workshop 2017</em></a>, June 2017.<br><a href="http://www.juliaopt.org/meetings/mit2017/legat.pdf">slides</a> <a href="https://www.youtube.com/watch?v=kyo72yWYr54&feature=youtu.be">video</a>
+    <a href="https://jump.dev/meetings/mit2017/"><em>The First Annual JuMP-dev Workshop</em></a>, June 2017.<br><a href="https://drive.google.com/file/d/1ea5eSMvMB3jXPuljzNGmMKied-n50YIo/view?usp=sharing">slides</a> <a href="https://www.youtube.com/watch?v=kyo72yWYr54&feature=youtu.be">video</a>
   </li>
   <li id="2017_ENPC">
     <em>Ecole des Ponts</em>, June 2017.<br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKM0pTNEphcy0wY2c">slides</a>
