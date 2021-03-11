@@ -45,6 +45,12 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_ADHS">
+    Benoît Legat and Raphaël Jungers. <strong>Geometric control of algebraic systems</strong>. <em>7th IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2021.<br><a href="https://arxiv.org/abs/2101.06990">arXiv</a> <a href="https://codeocean.com/capsule/5622794/tree/v1">code</a>
+  </li>
+  <li id="2021_L4DC">
+    Benoît Legat, Jean Bouchat and Raphaël Jungers. <strong>Abstraction-based branch and bound approach to Q-learning for hybrid optimal control</strong>. <em>3rd Annual Learning for Dynamics & Control Conference</em>, 2021.<br><a href="https://arxiv.org/abs/2011.11029">arXiv</a>
+  </li>
   <li id="2021_IJOC">
     Benoît Legat, Oscar Dowson, Joaquim Dias Garcia, and Miles Lubin. <strong>MathOptInterface: a data structure for mathematical optimization problems</strong>.<br><a href="https://arxiv.org/abs/2002.03447">arXiv</a> <a href="http://www.optimization-online.org/DB_HTML/2020/02/7609.html">Optimization Online</a> <a href="https://github.com/jump-dev/MOIPaperBenchmarks">code</a>
   </li>
@@ -67,7 +73,7 @@ JuMP and MathOptInterface
     Cláudio Gomes, Raphaël M. Jungers, Benoît Legat, and Hans Vangheluwe. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8619223">Minimally, Constrained Stable Switched Systems and Application to Co-Simulation</a></strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2018, pp. 5676-5681. <a href="https://doi.org/10.1109/CDC.2018.8619223">10.1109/CDC.2018.8619223</a><br><a href="https://arxiv.org/abs/1809.02648">arXiv</a>
   </li>
   <li>
-    Benoît Legat, Paulo Tabuada and Raphaël Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S2405896318311480">Computing controlled invariant sets for hybrid systems with applications to model-predictive control</a></strong>. <em>IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2018. <a href="https://doi.org/10.1016/j.ifacol.2018.08.033">10.1016/j.ifacol.2018.08.033</a><br><a href="https://arxiv.org/abs/1802.04522">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
+    Benoît Legat, Paulo Tabuada and Raphaël Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S2405896318311480">Computing controlled invariant sets for hybrid systems with applications to model-predictive control</a></strong>. <em>6th IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2018. <a href="https://doi.org/10.1016/j.ifacol.2018.08.033">10.1016/j.ifacol.2018.08.033</a><br><a href="https://arxiv.org/abs/1802.04522">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
   </li>
   <li>
     Cláudio Gomes, Benoît Legat, Raphaël M. Jungers and Hans Vangheluwe. <strong>Stable Adaptive Co-simulation: A Switched Systems Approach</strong>. <em>IUTAM Symposium on Co-Simulation and Solver Coupling</em>, 2017. <a href="https://doi.org/10.1007/978-3-030-14883-6_5">10.1007/978-3-030-14883-6_5</a>
@@ -90,6 +96,12 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_ADHS">
+    <a href="https://sites.uclouvain.be/adhs21/">7th IFAC Conference on Analysis and Design of Hybrid Systems</a>, July 2021.
+  </li>
+  <li id="2021_L4DC">
+    <a href="https://l4dc.ethz.ch/">3rd Annual Learning for Dynamics & Control Conference</em>, June 2021.
+  </li>
 </ul>
 ~~~
 
