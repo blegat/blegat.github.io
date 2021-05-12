@@ -38,4 +38,10 @@ optimal control.
 
 ## Contact
 
-My office is in the [Euler Building](https://www.uclouvain.be/en-416286.html) in a.021 with [Luc Rocher](https://rocher.lc).
+~~~
+My office address is:<br/>
+Laboratory for Information and Decision Systems<br/>
+Massachusetts Institute of Technology<br/>
+77 Massachusetts Avenue, Room 32-D716<br/>
+Cambridge, MA 02139-4307, USA
+~~~
