@@ -38,13 +38,16 @@ JuMP and MathOptInterface
 ## PhD thesis
 
 ~~~
-<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a>
+<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a> <a href="https://drive.google.com/file/d/1dk0DQWEyJut8m3aJ7_XFCJsekZTVxnJ2/view?usp=sharing">pdf</a>
 ~~~
 
 ## Papers and proceedings
 
 ~~~
 <ul>
+  <li>
+    Benoît Legat and Luc Rocher. <strong><a href="https://doi.org/10.3390/s21113700">The Limits of Pairwise Correlation to Model the Joint Entropy</a></strong>. <em>Sensors</em>, 2021. <a href="https://doi.org/10.3390/s21113700">10.3390/s21113700</a>
+  </li>
   <li id="2021_ADHS">
     Benoît Legat and Raphaël Jungers. <strong>Geometric control of algebraic systems</strong>. <em>7th IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2021.<br><a href="https://arxiv.org/abs/2101.06990">arXiv</a> <a href="https://codeocean.com/capsule/5622794/tree/v1">code</a>
   </li>
@@ -55,7 +58,7 @@ JuMP and MathOptInterface
     Benoît Legat, Oscar Dowson, Joaquim Dias Garcia, and Miles Lubin. <strong>MathOptInterface: a data structure for mathematical optimization problems</strong>.<br><a href="https://arxiv.org/abs/2002.03447">arXiv</a> <a href="http://www.optimization-online.org/DB_HTML/2020/02/7609.html">Optimization Online</a> <a href="https://github.com/jump-dev/MOIPaperBenchmarks">code</a>
   </li>
   <li>
-    Benoît Legat, Cláudio Gomes, Paschalis Karalis, Raphaël M. Jungers, Eva Navarro, and Hans Vangheluwe. <strong>Stability of Planar Switched Systems under Delayed Event Detection</strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2020<br><a href="https://arxiv.org/abs/2009.04505">arXiv</a>
+    Benoît Legat, Cláudio Gomes, Paschalis Karalis, Raphaël M. Jungers, Eva Navarro, and Hans Vangheluwe. <strong><a href="https://doi.org/10.1109/CDC42340.2020.9304152">Stability of Planar Switched Systems under Delayed Event Detection</a></strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2020. <a href="https://doi.org/10.1109/CDC42340.2020.9304152">10.1109/CDC42340.2020.9304152</a><br><a href="https://arxiv.org/abs/2009.04505">arXiv</a>
   </li>
   <li id="2020_LCSS">
     Benoît Legat, Saša V. Raković, and Raphaël M. Jungers. <strong><a href="https://doi.org/10.1109/LCSYS.2020.3005326">Piecewise Semi-Ellipsoidal Control Invariant Sets</a></strong>. <em>IEEE Control Systems Letters (L-CSS)</em>, 2020. <a href="https://doi.org/10.1109/LCSYS.2020.3005326">10.1109/LCSYS.2020.3005326</a><br><a href="https://arxiv.org/abs/2007.02770">arXiv</a> <a href="https://github.com/blegat/SwitchOnSafety.jl/blob/master/examples/LPJ17.ipynb">code</a>
@@ -96,11 +99,17 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_POEM">
+    <a href="poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
+  </li>
+  <li id="2021_JCon">
+    <a href="https://juliacon.org/2021/">JuliaCon 2021</a>, July 2021.
+  </li>
+  <li id="2021_EURO">
+    <a href="https://europt2021.recherche.enac.fr/">EUROPT 2021</a>, July 2021.
+  </li>
   <li id="2021_ADHS">
     <a href="https://sites.uclouvain.be/adhs21/">7th IFAC Conference on Analysis and Design of Hybrid Systems</a>, July 2021.
-  </li>
-  <li id="2021_L4DC">
-    <a href="https://l4dc.ethz.ch/">3rd Annual Learning for Dynamics & Control Conference</em>, June 2021.
   </li>
 </ul>
 ~~~
@@ -197,6 +206,9 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_L4DC">
+    <a href="https://l4dc.ethz.ch/">3rd Annual Learning for Dynamics & Control Conference</em>, June 2021.<br><a href="https://drive.google.com/file/d/1rcgIvpTp4txQJ8sINtIQW7QM_uNuu1Ii/view?usp=sharing">poster</a>
+  </li>
   <li id="2018_NCAG_poster">
     <a href="https://www.mis.mpg.de/calendar/conferences/2018/nc2018.html">Summer School on Numerical Computing in Algebraic Geometry</a>, August 2018.<br><a href="https://drive.google.com/open?id=1pf9rdoVEjAnD164rptLki1AG0AH4i88M">poster</a>
   </li>
