@@ -100,7 +100,7 @@ JuMP and MathOptInterface
 ~~~
 <ul>
   <li id="2021_POEM">
-    <a href="poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
+    <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
   </li>
   <li id="2021_JCon">
     <a href="https://juliacon.org/2021/">JuliaCon 2021</a>, July 2021.
