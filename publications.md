@@ -102,17 +102,11 @@ JuMP and MathOptInterface
   <li id="2021_POEM">
     <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
   </li>
-  <li id="2021_JuMP">
-    <a href="https://jump.dev/meetings/juliacon2021/">JuMP-dev 2021</a>, July 2021.
-  </li>
   <li id="2021_JCon">
-    <a href="https://juliacon.org/2021/">JuliaCon 2021</a>, July 2021.
+    <a href="https://pretalx.com/juliacon2021/talk/PRFW3N/">JuliaCon 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1Vo6oN6TraTVkwA14OBZ5MaKQJJA9jI1o/view?usp=sharing">slides</a>
   </li>
-  <li id="2021_EURO">
-    <a href="https://europt2021.recherche.enac.fr/">EUROPT 2021</a>, July 2021.
-  </li>
-  <li id="2021_ADHS">
-    <a href="https://sites.uclouvain.be/adhs21/">7th IFAC Conference on Analysis and Design of Hybrid Systems</a>, July 2021.
+  <li id="2021_JuMP">
+    <a href="https://pretalx.com/juliacon2021/talk/L8DTE3/">JuMP-dev 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1HtArDFNMQ6IYUqRjSWR3JviJp9xLtSlB/view?usp=sharing">slides</a>
   </li>
 </ul>
 ~~~
@@ -121,6 +115,12 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_EURO">
+    <a href="https://europt2021.recherche.enac.fr/">EUROPT 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/14Jt5xf63v9oxfkURf3gvSRiIUDcp88pM/view?usp=sharing">slides</a>
+  </li>
+  <li id="2021_ADHS">
+    <a href="https://sites.uclouvain.be/adhs21/">7th IFAC Conference on Analysis and Design of Hybrid Systems</a>, July 2021<br><a href="https://drive.google.com/file/d/1VLB_c_QXNdNTAopkvcSLQoYZRPx2kkq0/view?usp=sharing">slides</a>
+  </li>
   <li id="2020_CDC">
     <a href="https://cdc2020.ieeecss.org/">59th IEEE Conference on Decision and Control</a>, December 2020<br><a href="https://drive.google.com/file/d/1Xf2bzlhmCcCmYpgnCwWbaTct5QprKelf/view?usp=sharing">slides</a>
   </li>
