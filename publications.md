@@ -99,14 +99,11 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_INFORMS">
+    <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021.
+  </li>
   <li id="2021_POEM">
     <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
-  </li>
-  <li id="2021_JCon">
-    <a href="https://pretalx.com/juliacon2021/talk/PRFW3N/">JuliaCon 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1Vo6oN6TraTVkwA14OBZ5MaKQJJA9jI1o/view?usp=sharing">slides</a>
-  </li>
-  <li id="2021_JuMP">
-    <a href="https://pretalx.com/juliacon2021/talk/L8DTE3/">JuMP-dev 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1HtArDFNMQ6IYUqRjSWR3JviJp9xLtSlB/view?usp=sharing">slides</a>
   </li>
 </ul>
 ~~~
@@ -115,6 +112,12 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_JCon">
+    <a href="https://pretalx.com/juliacon2021/talk/PRFW3N/">JuliaCon 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1Vo6oN6TraTVkwA14OBZ5MaKQJJA9jI1o/view?usp=sharing">slides</a> <a href="https://live.juliacon.org/talk/PRFW3N">live</a> <a href="https://youtu.be/gggxyIzSYWI">video</a>
+  </li>
+  <li id="2021_JuMP">
+    <a href="https://pretalx.com/juliacon2021/talk/L8DTE3/">JuMP-dev 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1HtArDFNMQ6IYUqRjSWR3JviJp9xLtSlB/view?usp=sharing">slides</a> <a href="https://live.juliacon.org/talk/L8DTE3">live</a> <a href="https://youtu.be/KsBUmhZ1Ejw">video</a>
+  </li>
   <li id="2021_EURO">
     <a href="https://europt2021.recherche.enac.fr/">EUROPT 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/14Jt5xf63v9oxfkURf3gvSRiIUDcp88pM/view?usp=sharing">slides</a>
   </li>
