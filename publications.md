@@ -102,9 +102,6 @@ JuMP and MathOptInterface
   <li id="2021_INFORMS">
     <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021.
   </li>
-  <li id="2021_POEM">
-    <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.
-  </li>
 </ul>
 ~~~
 
@@ -112,6 +109,9 @@ JuMP and MathOptInterface
 
 ~~~
 <ul>
+  <li id="2021_POEM">
+    <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.<br><a href="https://drive.google.com/file/d/1dqgITjJZ8oIszZe3yFUiIozqPSBzqiTl/view?usp=sharing">slides</a>
+  </li>
   <li id="2021_JCon">
     <a href="https://pretalx.com/juliacon2021/talk/PRFW3N/">JuliaCon 2021</a>, July 2021<br><a href="https://drive.google.com/file/d/1Vo6oN6TraTVkwA14OBZ5MaKQJJA9jI1o/view?usp=sharing">slides</a> <a href="https://live.juliacon.org/talk/PRFW3N">live</a> <a href="https://youtu.be/gggxyIzSYWI">video</a>
   </li>
