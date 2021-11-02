@@ -24,13 +24,16 @@
 ~~~
 <ul>
   <li>
+    Julien Calbert, Benoît Legat, Lucas N. Egidio and Raphaël Jungers. <strong>Alternating Simulation on Hierarchical Abstractions</strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2021. <a href="https://github.com/dionysos-dev/Dionysos.jl">code</a>
+  </li>
+  <li>
     Benoît Legat and Luc Rocher. <strong><a href="https://doi.org/10.3390/s21113700">The Limits of Pairwise Correlation to Model the Joint Entropy</a></strong>. <em>Sensors</em>, 2021. <a href="https://doi.org/10.3390/s21113700">10.3390/s21113700</a>
   </li>
   <li id="2021_ADHS">
-    Benoît Legat and Raphaël Jungers. <strong>Geometric control of algebraic systems</strong>. <em>7th IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2021.<br><a href="https://arxiv.org/abs/2101.06990">arXiv</a> <a href="https://codeocean.com/capsule/5622794/tree/v1">code</a>
+    Benoît Legat and Raphaël Jungers. <strong><a href="https://doi.org/10.1016/j.ifacol.2021.08.478">Geometric control of algebraic systems</a></strong>. <em>7th IFAC Conference on Analysis and Design of Hybrid Systems</em>, 2021. <a href="https://doi.org/10.1016/j.ifacol.2021.08.478">10.1016/j.ifacol.2021.08.478</a><br><a href="https://arxiv.org/abs/2101.06990">arXiv</a> <a href="https://codeocean.com/capsule/5622794/tree/v1">code</a>
   </li>
   <li id="2021_L4DC">
-    Benoît Legat, Jean Bouchat and Raphaël Jungers. <strong>Abstraction-based branch and bound approach to Q-learning for hybrid optimal control</strong>. <em>3rd Annual Learning for Dynamics & Control Conference</em>, 2021.<br><a href="https://arxiv.org/abs/2011.11029">arXiv</a>
+    Benoît Legat, Jean Bouchat and Raphaël Jungers. <strong><a href="https://proceedings.mlr.press/v144/legat21a.html">Abstraction-based branch and bound approach to Q-learning for hybrid optimal control</a></strong>. <em>3rd Annual Learning for Dynamics & Control Conference</em>, 2021.<br><a href="https://arxiv.org/abs/2011.11029">arXiv</a>
   </li>
   <li id="2021_IJOC">
     Benoît Legat, Oscar Dowson, Joaquim Dias Garcia, and Miles Lubin. <strong>MathOptInterface: a data structure for mathematical optimization problems</strong>.<br><a href="https://arxiv.org/abs/2002.03447">arXiv</a> <a href="http://www.optimization-online.org/DB_HTML/2020/02/7609.html">Optimization Online</a> <a href="https://github.com/jump-dev/MOIPaperBenchmarks">code</a>
@@ -76,17 +79,15 @@
 ### Upcoming
 
 ~~~
-<ul>
-  <li id="2021_INFORMS">
-    <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021.
-  </li>
-</ul>
 ~~~
 
 ### Past
 
 ~~~
 <ul>
+  <li id="2021_INFORMS">
+    <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021.
+  </li>
   <li id="2021_POEM">
     <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">POEMA Learning Week 2</a>, September 2021.<br><a href="https://drive.google.com/file/d/1dqgITjJZ8oIszZe3yFUiIozqPSBzqiTl/view?usp=sharing">slides</a>
   </li>
