@@ -79,6 +79,14 @@
 ### Upcoming
 
 ~~~
+<ul>
+  <li id="2022_ICCOPT">
+    <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">2022 ICCOPT</a>, July 2022.
+  </li>
+  <li id="2022_ICS">
+    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022.
+  </li>
+</ul>
 ~~~
 
 ### Past
