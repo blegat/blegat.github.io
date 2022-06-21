@@ -24,6 +24,15 @@
 ~~~
 <ul>
   <li>
+    Miles Lubin, Oscar Dowson, Joaquim Dias Garcia, Joey Huchette, Benoît Legat and Juan Pablo Vielma. <strong>JuMP 1.0</strong>.<br/><a href="https://arxiv.org/abs/2206.03866">arXiv</a>
+  </li>
+  <li>
+    Akshay Sharma, Mathieu Besançon, Joaquim Dias Garcia and Benoît Legat. <strong>Flexible Differentiable Optimization via Model Transformations</strong><br/><a href="https://arxiv.org/abs/2206.06135">arXiv</a>
+  </li>
+  <li>
+    Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong>Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a>
+  </li>
+  <li>
     Julien Calbert, Benoît Legat, Lucas N. Egidio and Raphaël Jungers. <strong>Alternating Simulation on Hierarchical Abstractions</strong>. <em>IEEE Conference on Decision and Control (CDC)</em>, 2021. <a href="https://github.com/dionysos-dev/Dionysos.jl">code</a>
   </li>
   <li>
