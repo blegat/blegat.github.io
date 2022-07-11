@@ -89,14 +89,17 @@
 
 ~~~
 <ul>
+  <li id="2022_JuMP">
+    <a href="https://jump.dev/meetings/juliacon2022/">JuMP-dev 2022</a>, July 2022<br><strong>Complex number support in JuMP</strong>
+  </li>
+  <li id="2022_JCON">
+    <a href="https://juliacon.org/2022/">JuliaCon 2022</a>, July 2022<br><strong>Multivariate polynomials in Julia</strong>
+  </li>
   <li id="2022_ICCOPT">
-    <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong><a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">Mathematical Optimization in Julia with JuMP</a></strong>
+    <a href="https://iccopt2022.lehigh.edu/">7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Complex numbers in JuMP</strong>
   </li>
-  <li id="2022_ICSBM">
-    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>First-order methods for Sum-of-Squares programs</strong>
-  </li>
-  <li id="2022_ICS">
-    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong>
+  <li id="2022_ICCOPTWORKSHOP">
+    <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">Summer School of the 7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Mathematical Optimization in Julia with JuMP</strong>
   </li>
 </ul>
 ~~~
@@ -105,6 +108,18 @@
 
 ~~~
 <ul>
+  <li id="2022_TraDE-OPT">
+    <a href="https://trade-opt-itn.eu/workshop.html">TraDE-OPT Workshop on Algorithmic and Continuous Optimization</a>, July 2022<br><strong>Implementation of a solver in Julia / Introduction to JuMP</strong><br><a href="https://github.com/blegat/TraDE-OPT_2022">code</a>
+  </li>
+  <li id="2022_TraDE-OPT">
+    <a href="https://trade-opt-itn.eu/workshop.html">TraDE-OPT Workshop on Algorithmic and Continuous Optimization</a>, July 2022<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong><br><a href="https://docs.google.com/presentation/d/1vAqKs2-7zlpjfmPgzIG96-EaWlV2paTeTL14sRSN2GA/edit?usp=sharing">slides</a>
+  </li>
+  <li id="2022_ICSBM">
+    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>First-order methods for Sum-of-Squares programs</strong>
+  </li>
+  <li id="2022_ICS">
+    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong>
+  </li>
   <li id="2021_INFORMS">
     <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021<br><strong>Matrix representations for MathOptInterface</strong><br><a href="https://drive.google.com/file/d/1Ke63wsr0PFk_Z5nZEVPD8JzPHe5fB3h1/view?usp=sharing">slides</a>
   </li>
