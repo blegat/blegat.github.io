@@ -98,9 +98,6 @@
   <li id="2022_ICCOPT">
     <a href="https://iccopt2022.lehigh.edu/">7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Complex numbers in JuMP</strong>
   </li>
-  <li id="2022_ICCOPTWORKSHOP">
-    <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">Summer School of the 7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Mathematical Optimization in Julia with JuMP</strong>
-  </li>
 </ul>
 ~~~
 
@@ -108,6 +105,9 @@
 
 ~~~
 <ul>
+  <li id="2022_ICCOPTWORKSHOP">
+    <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">Summer School of the 7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Mathematical Optimization in Julia with JuMP</strong><br><a href="https://github.com/blegat/ICCOPT_SummerSchool_2022">code</a>
+  </li>
   <li id="2022_TraDE-OPT">
     <a href="https://trade-opt-itn.eu/workshop.html">TraDE-OPT Workshop on Algorithmic and Continuous Optimization</a>, July 2022<br><strong>Implementation of a solver in Julia / Introduction to JuMP</strong><br><a href="https://github.com/blegat/TraDE-OPT_2022">code</a>
   </li>
