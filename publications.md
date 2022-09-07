@@ -85,8 +85,6 @@
 
 ## Talks
 
-### Upcoming
-
 ~~~
 <ul>
   <li id="2022_JuMP">
@@ -98,13 +96,6 @@
   <li id="2022_ICCOPT">
     <a href="https://iccopt2022.lehigh.edu/">7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Complex numbers in JuMP</strong>
   </li>
-</ul>
-~~~
-
-### Past
-
-~~~
-<ul>
   <li id="2022_ICCOPTWORKSHOP">
     <a href="https://iccopt2022.lehigh.edu/summer-school/summer-school-program/">Summer School of the 7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Mathematical Optimization in Julia with JuMP</strong><br><a href="https://github.com/blegat/ICCOPT_SummerSchool_2022">code</a>
   </li>
