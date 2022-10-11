@@ -23,8 +23,8 @@ I apply set programming to the stability analysis and control synthesis of hybri
   <div class="container">
     <img class="left" style="width:20%;" src="assets/index/profpic.jpg">
     <p>
-Benoît Legat is a postdoctoral associate at MIT with <a href="http://www.mit.edu/~parrilo/">Prof. Pablo Parrilo</a>
-in the Laboratory for Information and Decision Systems (LIDS).
+Benoît Legat is a postdoctoral researcher at KULeuven with <a href="https://www.bartdemoor.be/">Prof. Bart De Moor</a>
+in STADIUS.
 He received his Ph.D. degree in applied mathematics from the UCLouvain, Belgium, in 2020.
 His research interests include mathematical optimization, invariant set computation and
 optimal control.
@@ -39,9 +39,8 @@ optimal control.
 ## Contact
 
 ~~~
-My office address is:<br/>
-Laboratory for Information and Decision Systems<br/>
-Massachusetts Institute of Technology<br/>
-77 Massachusetts Avenue, Room 32-D716<br/>
-Cambridge, MA 02139-4307, USA
+My office address is the room B04.25 at<br/>
+Department of Electrical Engineering ESAT<br/>
+Kasteelpark Arenberg 10,<br/>
+3001 Leuven<br/>
 ~~~

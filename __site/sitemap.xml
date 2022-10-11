@@ -2,26 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://blegat.github.io/toc-old/index.html</loc>
-    <lastmod>2021-09-14</lastmod>
+    <loc>https://blegat.github.io/publications\index.html</loc>
+    <lastmod>2022-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://blegat.github.io/toc-old\index.html</loc>
+    <lastmod>2022-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://blegat.github.io/index.html</loc>
-    <lastmod>2021-05-12</lastmod>
+    <lastmod>2022-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://blegat.github.io/publications/index.html</loc>
-    <lastmod>2022-09-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://blegat.github.io/softwares/index.html</loc>
-    <lastmod>2021-05-11</lastmod>
+    <loc>https://blegat.github.io/softwares\index.html</loc>
+    <lastmod>2022-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
