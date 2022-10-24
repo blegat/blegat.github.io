@@ -21,7 +21,13 @@
 </url>
 <url>
     <loc>https://blegat.github.io/softwares\index.html</loc>
-    <lastmod>2022-10-11</lastmod>
+    <lastmod>2022-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://blegat.github.io/talks\index.html</loc>
+    <lastmod>2022-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>

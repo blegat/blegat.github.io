@@ -27,10 +27,11 @@
     * [ConvexHull.jl](https://github.com/JuliaPolyhedra/ConvexHull.jl) and
     * [PORTA](https://github.com/JuliaPolyhedra/XPORTA.jl).
 * [JuliaAlgebra](https://github.com/JuliaAlgebra):
-  - ([MultivariatePolynomials.jl](https://github.com/JuliaAlgebra/MultivariatePolynomials.jl)): Interface for multivariate polynomials with two implementations:
-    * [DynamicPolynomials](https://github.com/JuliaAlgebra/DynamicPolynomials.jl/) and
-    * [TypedPolynomials](https://github.com/JuliaAlgebra/TypedPolynomials.jl/).
-  - [MultivariateBases](https://github.com/JuliaAlgebra/MultivariateBases.jl/): Bases for multivariate polynomials.
-  - [SemialgebraicSets](https://github.com/JuliaAlgebra/SemialgebraicSets.jl): Representation of algebraic sets and basic semialgebraic sets, groebner basis computation and solvers for algebraic systems.
-  - [MultivariateMoments](https://github.com/JuliaAlgebra/MultivariateMoments.jl): Extraction of atomic measures from moment matrices.
-* [HybridSystems](https://github.com/blegat/HybridSystems.jl): Hybrid systems implementations.
+  - [MultivariatePolynomials.jl](https://github.com/JuliaAlgebra/MultivariatePolynomials.jl): Interface for multivariate polynomials with two implementations:
+    * [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl/) and
+    * [TypedPolynomials.jl](https://github.com/JuliaAlgebra/TypedPolynomials.jl/).
+  - [MultivariateBases.jl](https://github.com/JuliaAlgebra/MultivariateBases.jl/): Bases for multivariate polynomials.
+  - [SemialgebraicSets.jl](https://github.com/JuliaAlgebra/SemialgebraicSets.jl): Representation of algebraic sets and basic semialgebraic sets, groebner basis computation and solvers for algebraic systems.
+  - [MultivariateMoments.jl](https://github.com/JuliaAlgebra/MultivariateMoments.jl): Extraction of atomic measures from moment matrices.
+* [MutableArithmetics.jl](https://github.com/jump-dev/MutableArithmetics.jl): Interface for efficient arithmetics on mutable types
+* [HybridSystems.jl](https://github.com/blegat/HybridSystems.jl): Hybrid systems implementations.
