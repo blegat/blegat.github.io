@@ -104,7 +104,7 @@
     Benoît Legat, Raphaël M. Jungers. <a href="http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf"><strong>Parallel optimization on the Entropic Cone</strong></a>. <em>37rd Symposium on Information Theory in the Benelux</em>, 2016.<br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKNTRjZTVuSmtWTXM">pdf</a> <a href="https://github.com/blegat/EntropicCone.jl">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKa3BXZTlsdUJJZzA">slides</a>
   </li>
   <li>
-    Benoît Legat, Raphaël M. Jungers, and Pablo A. Parrilo. <a href="http://dl.acm.org/citation.cfm?id=2883821><strong>Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</strong></a>. <em>19th International Conference on Hybrid Systems: Computation and Control</em>. ACM, 2016. <a href="https://doi.org/10.1145/2883817.2883821">10.1145/2883817.2883821</a><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE">slides</a>
+    Benoît Legat, Raphaël M. Jungers, and Pablo A. Parrilo. <a href="http://dl.acm.org/citation.cfm?id=2883821"><strong>Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</strong></a>. <em>19th International Conference on Hybrid Systems: Computation and Control</em>. ACM, 2016. <a href="https://doi.org/10.1145/2883817.2883821">10.1145/2883817.2883821</a><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE">slides</a>
   </li>
 </ul>
 ~~~
