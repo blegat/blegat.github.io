@@ -19,8 +19,6 @@ He received his Ph.D. degree in applied mathematics from the UCLouvain, Belgium,
 His research interests include mathematical optimization with a focus on polynomial optimization,
 invariant set computation and optimal control.
     </p>
-
-      <a href="assets/index/cv.pdf">CV</a>
     <div style="clear: both"></div>
   </div>
 </div>
