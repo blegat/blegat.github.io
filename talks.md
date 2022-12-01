@@ -40,7 +40,7 @@
     <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>First-order methods for Sum-of-Squares programs</strong>
   </li>
   <li id="2022_ICS">
-    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong>
+    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong><br><a href="https://drive.google.com/file/d/1rlsIxgcnKWT436k4MNenjHfgH0UYRLAB/view">slides</a>
   </li>
   <li id="2021_INFORMS">
     <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021<br><strong>Matrix representations for MathOptInterface</strong><br><a href="https://drive.google.com/file/d/1Ke63wsr0PFk_Z5nZEVPD8JzPHe5fB3h1/view?usp=sharing">slides</a>
