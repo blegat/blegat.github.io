@@ -36,11 +36,18 @@
     Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong>Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a>
   </li>
   <li>
-    Benoît Legat and Raphaël Jungers. <strong>Computation of invariant sets for complex systems</strong><br/><a href="https://doi.org/10.24433/CO.5065309.v1">code 10.24433/CO.5065309.v1</a>
-  </li>
-  <li>
     Benoît Legat. <strong>MutableArithmetics: An API for mutable operations</strong><br/><a href="https://github.com/JuliaCon/proceedings-review/issues/93">review</a>
   </li>
+</ul>
+~~~
+
+## Chapters
+
+~~~
+<ul>
+<li>
+  Benoît Legat and Raphaël Jungers. <strong>Computation of invariant sets for complex systems</strong>. <em>Handbook of Numerical Analysis</em>, 2023. <a href="https://doi.org/10.1016/bs.hna.2022.12.001">10.1016/bs.hna.2022.12.001</a><br/><a href="https://doi.org/10.24433/CO.5065309.v1">code 10.24433/CO.5065309.v1</a>
+</li>
 </ul>
 ~~~
 
