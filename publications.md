@@ -16,7 +16,7 @@
 ## PhD thesis
 
 ~~~
-<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a> <a href="https://drive.google.com/file/d/1dk0DQWEyJut8m3aJ7_XFCJsekZTVxnJ2/view?usp=sharing">pdf</a>
+<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a> <a href="https://drive.google.com/file/d/1Y8kvUsHmvWSvgnEBS8T7GI6ofvuWng6U/view">pdf</a>
 ~~~
 
 ## Under revision
