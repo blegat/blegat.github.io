@@ -6,8 +6,10 @@ function gen_literate()
     isdir(nbpath) || mkpath(nbpath)
 
     for script in readdir(milp)
+       # Generate markdown pages that Franklin will turn into html
+       Literate.markdown(joinpath(milp, script), milp, documenter=false)
        # Generate annotated notebooks
-       Literate.notebook(joinpath(ccir, script), nbpath,
+       Literate.notebook(joinpath(milp, script), nbpath,
                          execute=false, documenter=false)
     end
     JS_GHP = """
@@ -16,3 +18,5 @@ function gen_literate()
         """
     run(`$(nodejs_cmd()) -e $JS_GHP`)
 end
+
+gen_literate()
