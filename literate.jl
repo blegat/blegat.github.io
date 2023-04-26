@@ -1,7 +1,7 @@
 using Literate, NodeJS
 
 function gen_literate()
-    milp = joinpath(@__DIR__, "milp")
+    milp = joinpath(@__DIR__, "ccir")
     nbpath  = joinpath(@__DIR__, "generated", "notebooks")
     isdir(nbpath) || mkpath(nbpath)
 
@@ -15,11 +15,11 @@ function gen_literate()
        Literate.notebook(joinpath(milp, script), nbpath,
                          execute=false, documenter=false)
     end
-#    JS_GHP = """
-#        var ghpages = require('gh-pages');
-#        ghpages.publish('generated/', function(err) {});
-#        """
-#    run(`$(nodejs_cmd()) -e $JS_GHP`)
+    JS_GHP = """
+        var ghpages = require('gh-pages');
+        ghpages.publish('generated/', function(err) {});
+        """
+    run(`$(nodejs_cmd()) -e $JS_GHP`)
 end
 
 gen_literate()
