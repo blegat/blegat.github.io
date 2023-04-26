@@ -3,4 +3,4 @@
 
 ## Ongoing courses
 
-* [**The Applications of Mathematical Optimisation** at the *Cambridge Centre for International Research*](/ccir/)
+* [**The Applications of Mathematical Optimisation, Mixed-integer linear programming** at the *Cambridge Centre for International Research*](/ccir/)

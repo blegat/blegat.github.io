@@ -1,5 +1,22 @@
-# # System of linear equations
-# 
+# # Lecture 1 &ndash; System of linear equations
+#
+#md # ~~~
+#md # <a href="@__BINDER_ROOT_URL__/generated/notebooks/lecture1.ipynb"><span class="badge">
+#md # ~~~
+#md # ![](https://mybinder.org/badge_logo.svg)
+#md # ~~~
+#md # </span></a>
+#md # ~~~
+#md # ~~~
+#md # <a href="@__NBVIEWER_ROOT_URL__/generated/notebooks/lecture1.ipynb"><span class="badge">
+#md # ~~~
+#md # ![](https://img.shields.io/badge/show-nbviewer-579ACA.svg)
+#md # ~~~
+#md # </span></a>
+#md # ~~~
+#
+# ---
+#
 # Find $x_1, x_2, x_3$ such that:
 # $$
 # \begin{alignat}{7}

@@ -1,0 +1,7 @@
+.badge {text-align: center;}
+.badge img {
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    padding-left: 0%;
+}
