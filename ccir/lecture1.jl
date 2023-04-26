@@ -19,11 +19,11 @@
 #
 # Find $x_1, x_2, x_3$ such that:
 # $$
-# \begin{alignat}{7}
+# \begin{alignat*}{7}
 #  3x_1 &&\; + \;&& 2x_2 &&\; - \;&&  x_3 &&\; = \;&& 1 & \\
 #  2x_1 &&\; - \;&& 2x_2 &&\; + \;&& 4x_3 &&\; = \;&& -2 & \\
 # -2x_1 &&\; + \;&& 1x_2 &&\; - \;&& 2x_3 &&\; = \;&& 0 &
-# \end{alignat}
+# \end{alignat*}
 # $$
 
 A = [
@@ -51,11 +51,11 @@ A \ b
 # 
 # Find $x_1, x_2$ such that:
 # $$
-# \begin{alignat}{7}
+# \begin{alignat*}{7}
 # 3x_1 &&\; + \;&& 2x_2             &&\; = \;&& 1 & \\
 # 2x_1 &&\; - \;&& 2x_2             &&\; = \;&& -2 & \\
 # -2x_1 &&\; + \;&& 1x_2 &&\; = \;&& 0 &
-# \end{alignat}
+# \end{alignat*}
 # $$
 
 B = A[:, 1:2]
@@ -65,11 +65,11 @@ rref([B b])
 
 # This gives the system
 # $$
-# \begin{alignat}{7}
+# \begin{alignat*}{7}
 # x_1 &&\;  \;&&     &&\; = \;&& 0 & \\
 #     &&\;  \;&& x_2 &&\; = \;&& 0 & \\
 #     &&\;  \;&&     &&\; = \;&& 1 & \\
-# \end{alignat}
+# \end{alignat*}
 # $$
 # The system has no solution.
 
@@ -108,10 +108,10 @@ B' * e
 # 
 # Find $x_1, x_2, x_3$ such that:
 # $$
-# \begin{alignat}{7}
+# \begin{alignat*}{7}
 # 3x_1 &&\; + \;&& 2x_2 &&\; - \;&&  x_3 &&\; = \;&& 1 & \\
 # 2x_1 &&\; - \;&& 2x_2 &&\; + \;&& 4x_3 &&\; = \;&& -2 & \\
-# \end{alignat}
+# \end{alignat*}
 # $$
 
 C = A[1:2, :]
@@ -123,10 +123,10 @@ rref([C c])
 
 # This gives the system
 # $$
-# \begin{alignat}{7}
+# \begin{alignat*}{7}
 # x_1 &&\;  \;&&  &&\; + \;&&  0.6x_3 &&\; = \;&& -0.2 & \\
 #  &&\;  \;&& x_2 &&\; - \;&& 1.4x_3 &&\; = \;&& 0.8 & \\
-# \end{alignat}
+# \end{alignat*}
 # $$
 # The system has infinitely solutions: It has a solution $(-0.2 - 0.6x_3, 0.8 + 1.4x_3)$ for any $x_3$.
 
