@@ -1,14 +1,14 @@
 # # Practical 1 &ndash; Linear regressions
 #
 #md # ~~~
-#md # <a href="@__BINDER_ROOT_URL__/../generated/notebooks/pratical1.ipynb"><span class="badge">
+#md # <a href="@__BINDER_ROOT_URL__/generated/notebooks/pratical1.ipynb"><span class="badge">
 #md # ~~~
 #md # ![](https://mybinder.org/badge_logo.svg)
 #md # ~~~
 #md # </span></a>
 #md # ~~~
 #md # ~~~
-#md # <a href="@__NBVIEWER_ROOT_URL__/../generated/notebooks/practical1.ipynb"><span class="badge">
+#md # <a href="@__NBVIEWER_ROOT_URL__/generated/notebooks/practical1.ipynb"><span class="badge">
 #md # ~~~
 #md # ![](https://img.shields.io/badge/show-nbviewer-579ACA.svg)
 #md # ~~~
