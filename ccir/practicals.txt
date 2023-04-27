@@ -1,0 +1,8 @@
+Linear regressions
+Multiple linear regressions in Julia and introduction to JuMP
+Linear Programming in JuMP: The diet problem
+Mixed-Integer Linear Programming in JuMP: The facility location problem
+Sensitivity analysis of a linear program
+Sudoku
+Logic and Scheduling
+Statistics and optimization

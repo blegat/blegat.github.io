@@ -31,26 +31,3 @@ We highlight the key aspects that are important for a formulation to be solved e
 
 You will find below the list of lectures and practical sessions in html format.
 You can find a link to the jupyter notebook versions from the top of the pages.
-
-
-### Lectures
-
-* [Lecture 1](/ccir/lecture1) &ndash; System of linear equations
-* [Lecture 2](/ccir/lecture2) &ndash; Why derivatives matter
-* [Lecture 3](/ccir/lecture3) &ndash; What is convexity and why does it matter
-* [Lecture 4](/ccir/lecture4) &ndash; Mixed Integer Linear Programming and branching
-* [Lecture 5](/ccir/lecture5) &ndash; Linear Programming duality and Branch and Bound
-* [Lecture 6](/ccir/lecture6) &ndash; Max-Flow and Min-Cut
-* [Lecture 7](/ccir/lecture7) &ndash; Traveling Salesman Problem
-
-
-### Practicals
-
-* [Practical 1](/ccir/practical1) &ndash; Linear regressions
-* [Practical 2](/ccir/practical2) &ndash; Multiple linear regressions in Julia and introduction to JuMP
-* [Practical 3](/ccir/practical3) &ndash; Linear Programming in JuMP: The diet problem
-* [Practical 4](/ccir/practical4) &ndash; Mixed-Integer Linear Programming in JuMP: The facility location problem
-* [Practical 5](/ccir/practical5) &ndash; Sensitivity analysis of a linear program
-* [Practical 6](/ccir/practical6) &ndash; Sudoku
-* [Practical 7](/ccir/practical7) &ndash; Logic and Scheduling
-* [Practical 8](/ccir/practical8) &ndash; Statistics and optimization
