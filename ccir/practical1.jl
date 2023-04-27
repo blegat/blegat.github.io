@@ -1,23 +1,4 @@
-# # Practical 1 &ndash; Linear regressions
-#
-#md # ~~~
-#md # <a href="@__BINDER_ROOT_URL__/generated/notebooks/pratical1.ipynb"><span class="badge">
-#md # ~~~
-#md # ![](https://mybinder.org/badge_logo.svg)
-#md # ~~~
-#md # </span></a>
-#md # ~~~
-#md # ~~~
-#md # <a href="@__NBVIEWER_ROOT_URL__/generated/notebooks/practical1.ipynb"><span class="badge">
-#md # ~~~
-#md # ![](https://img.shields.io/badge/show-nbviewer-579ACA.svg)
-#md # ~~~
-#md # </span></a>
-#md # ~~~
-#
 # **Written by**: Jean Bouchat
-# 
-# ---
 # 
 # In this session, we'll get right into coding to import, visualize, and analyze a dataset gathered by the World Health Organization (WHO) on life expectancy. The goal is to familiarize yourself with Julia, the use of a Jupyter notebook, and get an overview of one of the most popular data analysis methods in research, linear regression.
 
@@ -125,7 +106,7 @@ scatter(x, y, ylabel="Life expectancy", xlabel="BMI")
 
 # `LinearAlgebra` is standard library of Julia. It provides native implementations of the most common linear algebra operations. Check out its documentation https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/ to learn more about it.
 # 
-# To quantify the linear relationship between life expectancy and BMI, we will fit a simple linear regression model by solving a least-squares problem with the backslash `\\` operator [go further: Least squares in Julia](https://stanford.edu/class/engr108/lectures/julia_least_squares_slides.pdf) which solves for $x$ systems such that $Ax=y$.
+# To quantify the linear relationship between life expectancy and BMI, we will fit a simple linear regression model by solving a least-squares problem with the backslash `\ ` operator [go further: Least squares in Julia](https://stanford.edu/class/engr108/lectures/julia_least_squares_slides.pdf) which solves for $x$ systems such that $Ax=y$.
 
 #Pkg.add("LinearAlgebra")
 using LinearAlgebra
