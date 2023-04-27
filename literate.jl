@@ -53,7 +53,7 @@ function gen_literate(session, index_in, index_out)
             sessionid = string(session, id)
             jl = sessionid * ".jl"
             tmp = joinpath(jlpath, "_" * jl)
-            add_header(tmp, jl, session, id, title)
+            add_header(tmp, joinpath(jlpath, jl), session, id, title)
             # Generate markdown pages that Franklin will turn into html
             Literate.markdown(tmp, jlpath, documenter=false, config=config)
             mv(joinpath(jlpath, "_" * sessionid * ".md"), joinpath(jlpath, sessionid * ".md"), force=true)
