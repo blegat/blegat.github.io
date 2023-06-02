@@ -5,11 +5,11 @@
 
 ~~~
 <ul>
-  <li id="2023_SIOP">
-    <a href="https://www.siam.org/conferences/cm/conference/op23">SIAM Conference on Optimization (OP23)</a>, May 31 - June 3, 2023
+  <li id="2023_JuMP">
+    <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2022<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a>
   </li>
-  <li id="2023_SIDS">
-    <a href="https://www.siam.org/conferences/cm/conference/ds23">SIAM Conference on Applications of Dynamical Systems (DS23)</a>, May 14 - 18 2023<br><strong>Exploiting the structure of a polynomial optimization problem</strong>
+  <li id="2023_JCON">
+    <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Multivariate polynomials in Julia</strong></a>
   </li>
 </ul>
 ~~~
@@ -18,6 +18,12 @@
 
 ~~~
 <ul>
+  <li id="2023_SIOP">
+    <a href="https://www.siam.org/conferences/cm/conference/op23">SIAM Conference on Optimization (OP23)</a>, May 31 - June 3, 2023<br><strong>Low-Rank Nonconvex Solver for Sum-of-Squares</strong><br><a href="https://drive.google.com/file/d/1MqkA8AGrkQRd8WwtEP4m0bT9GFDg_Ckr/view">slides</a>
+  </li>
+  <li id="2023_SIDS">
+    <a href="https://www.siam.org/conferences/cm/conference/ds23">SIAM Conference on Applications of Dynamical Systems (DS23)</a>, May 14 - 18 2023<br><strong>Exploiting the Structure of a Polynomial Optimization Problem</strong><br><a href="https://drive.google.com/file/d/18isl8aCr_mAsLg9v3eqe-t1BxEP4_TPE/view?usp=drive_link">slides</a>
+  </li>
   <li id="2022_JuMP">
     <a href="https://jump.dev/meetings/juliacon2022/">JuMP-dev 2022</a>, July 2022<br><strong>Complex number support in JuMP</strong>
   </li>
