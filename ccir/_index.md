@@ -27,6 +27,18 @@ The same problem can be formulated as different MILPs.
 However, while some formulations can be solved in a few seconds, some may take hours!
 We highlight the key aspects that are important for a formulation to be solved efficiently.
 
+## Software prerequisite
+
+The course uses a hands on approach by illustrating all theoretical results with
+code using the JuMP framework in the Julia programming language.
+
+In order to benefit from this, you will have to install the necessary in your computer.
+This can be achieved via the following steps:
+1. Install Julia, VS code and the Julia extension for VS code as detailed [here](https://code.visualstudio.com/docs/languages/julia#_getting-started).
+   For installing Julia, I recommend doing it through [juliaup](https://julialang.org/downloads/#juliaup_-_julia_version_manager).
+2. To download the course material, either follow the top badges to download the [Jupyter](https://jupyter.org/) notebooks or download the Julia files from [my website](https://github.com/blegat/blegat.github.io/tree/main/ccir). VS code provides similar interactive features with simple `.jl` Julia files
+that what is found in Jupyter notebooks so both option are equally good, you are free to choose the one you prefer.
+
 ## Course structure
 
 You will find below the list of lectures and practical sessions in html format.
