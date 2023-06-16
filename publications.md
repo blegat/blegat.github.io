@@ -27,13 +27,10 @@
     Torbjørn Cunis, Benoît Legat. <strong>Sequential sum-of-squares programming for analysis of nonlinear systems</strong>.<br/><a href="https://arxiv.org/abs/2210.02142">arXiv</a>
   </li>
   <li>
-    Miles Lubin, Oscar Dowson, Joaquim Dias Garcia, Joey Huchette, Benoît Legat and Juan Pablo Vielma. <strong>JuMP 1.0</strong>.<br/><a href="https://arxiv.org/abs/2206.03866">arXiv</a>
-  </li>
-  <li>
     Akshay Sharma, Mathieu Besançon, Joaquim Dias Garcia and Benoît Legat. <strong>Flexible Differentiable Optimization via Model Transformations</strong><br/><a href="https://arxiv.org/abs/2206.06135">arXiv</a>
   </li>
   <li>
-    Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong>Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a>
+    Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong>Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a> <a href="https://doi.org/10.24433/CO.7364738.v1">code 10.24433/CO.7364738.v1</a>
   </li>
   <li>
     Benoît Legat. <strong>MutableArithmetics: An API for mutable operations</strong><br/><a href="https://github.com/JuliaCon/proceedings-review/issues/93">review</a>
@@ -45,9 +42,9 @@
 
 ~~~
 <ul>
-<li>
-  Benoît Legat and Raphaël Jungers. <strong>Computation of invariant sets for complex systems</strong>. <em>Handbook of Numerical Analysis</em>, 2023. <a href="https://doi.org/10.1016/bs.hna.2022.12.001">10.1016/bs.hna.2022.12.001</a><br/><a href="https://doi.org/10.24433/CO.5065309.v1">code 10.24433/CO.5065309.v1</a>
-</li>
+  <li>
+    Benoît Legat and Raphaël Jungers. <strong>Computation of invariant sets for complex systems</strong>. <em>Handbook of Numerical Analysis</em>, 2023. <a href="https://doi.org/10.1016/bs.hna.2022.12.001">10.1016/bs.hna.2022.12.001</a><br/><a href="https://doi.org/10.24433/CO.5065309.v1">code 10.24433/CO.5065309.v1</a>
+  </li>
 </ul>
 ~~~
 
@@ -55,6 +52,9 @@
 
 ~~~
 <ul>
+  <li>
+    Miles Lubin, Oscar Dowson, Joaquim Dias Garcia, Joey Huchette, Benoît Legat and Juan Pablo Vielma. <strong><a href="https://link.springer.com/article/10.1007/s12532-023-00239-3">JuMP 1.0: Recent improvements to a modeling language for mathematical optimization</a></strong>.<br/><a href="https://arxiv.org/abs/2206.03866">arXiv</a> <a href="https://cs.paperswithcode.com/paper/jump-1-0">code</a>
+  </li>
   <li id="2022_NAHS">
     Benoît Legat and Raphaël Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S1751570X2200084X?via%3Dihub">Geometric control of hybrid systems</a></strong>. <em>Nonlinear Analysis: Hybrid Systems</em>, 2022. <a href="https://doi.org/10.1016/j.nahs.2022.101289">10.1016/j.nahs.2022.101289</a><br/><a href="https://doi.org/10.24433/CO.4907777.v2">code 10.24433/CO.4907777.v2</a>
   </li>
