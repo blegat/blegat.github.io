@@ -6,10 +6,10 @@
 ~~~
 <ul>
   <li id="2023_JuMP">
-    <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2022<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a>
+    <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a>
   </li>
   <li id="2023_JCON">
-    <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Multivariate polynomials in Julia</strong></a>
+    <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Polyhedral Computation</strong></a>
   </li>
 </ul>
 ~~~
