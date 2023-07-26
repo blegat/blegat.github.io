@@ -28,7 +28,7 @@
     <a href="https://jump.dev/meetings/juliacon2022/">JuMP-dev 2022</a>, July 2022<br><strong>Complex number support in JuMP</strong>
   </li>
   <li id="2022_JCON">
-    <a href="https://juliacon.org/2022/">JuliaCon 2022</a>, July 2022<br><strong>Multivariate polynomials in Julia</strong>
+    <a href="https://juliacon.org/2022/">JuliaCon 2022</a>, July 2022<br><a href="https://pretalx.com/juliacon-2022/talk/TRFSJY/"><strong>Multivariate polynomials in Julia</strong></a><br><a href="https://drive.google.com/file/d/1q9UT5rpcmm0GdRmWm7llhVpbOx7OxGnZ/view">slides</a>
   </li>
   <li id="2022_ICCOPT">
     <a href="https://iccopt2022.lehigh.edu/">7th International Conference on Continuous Optimization (ICCOPT)</a>, July 2022<br><strong>Complex numbers in JuMP</strong>
