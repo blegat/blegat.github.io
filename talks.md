@@ -8,9 +8,6 @@
   <li id="2023_JuMP">
     <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a>
   </li>
-  <li id="2023_JCON">
-    <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Polyhedral Computation</strong></a>
-  </li>
 </ul>
 ~~~
 
@@ -18,6 +15,9 @@
 
 ~~~
 <ul>
+  <li id="2023_JCON">
+    <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Polyhedral Computation</strong></a><br><a href="https://drive.google.com/file/d/1iSalXEqRO3AjHLm-3TqYLjby267n6uo5/view">slides</a>
+  </li>
   <li id="2023_SIOP">
     <a href="https://www.siam.org/conferences/cm/conference/op23">SIAM Conference on Optimization (OP23)</a>, May 31 - June 3, 2023<br><strong>Low-Rank Nonconvex Solver for Sum-of-Squares</strong><br><a href="https://drive.google.com/file/d/1MqkA8AGrkQRd8WwtEP4m0bT9GFDg_Ckr/view">slides</a>
   </li>
