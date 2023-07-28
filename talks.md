@@ -1,20 +1,11 @@
 @def title = "Talks"
 @def hascode = false
 
-## Upcoming talks
-
 ~~~
 <ul>
   <li id="2023_JuMP">
     <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a><br><a href="https://drive.google.com/file/d/1H-_Ot7tP2g7t95r0K_mTaXvGO1ChUPci/view?usp=drive_link">slides</a>
   </li>
-</ul>
-~~~
-
-## Past talks
-
-~~~
-<ul>
   <li id="2023_JCON">
     <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Polyhedral Computation</strong></a><br><a href="https://drive.google.com/file/d/1iSalXEqRO3AjHLm-3TqYLjby267n6uo5/view">slides</a>
   </li>
