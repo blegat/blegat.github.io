@@ -30,9 +30,6 @@
     Akshay Sharma, Mathieu Besançon, Joaquim Dias Garcia and Benoît Legat. <strong>Flexible Differentiable Optimization via Model Transformations</strong><br/><a href="https://arxiv.org/abs/2206.06135">arXiv</a>
   </li>
   <li>
-    Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong>Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a> <a href="https://doi.org/10.24433/CO.7364738.v1">code 10.24433/CO.7364738.v1</a>
-  </li>
-  <li>
     Benoît Legat. <strong>MutableArithmetics: An API for mutable operations</strong><br/><a href="https://github.com/JuliaCon/proceedings-review/issues/93">review</a>
   </li>
 </ul>
@@ -52,6 +49,9 @@
 
 ~~~
 <ul>
+  <li>
+    Benoît Legat, Chenyang Yuan and Pablo A. Parrilo. <strong><a href="https://epubs.siam.org/doi/10.1137/22M1516208">Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</a></strong><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a> <a href="https://doi.org/10.24433/CO.7364738.v1">code 10.24433/CO.7364738.v1</a>
+  </li>
   <li>
     Miles Lubin, Oscar Dowson, Joaquim Dias Garcia, Joey Huchette, Benoît Legat and Juan Pablo Vielma. <strong><a href="https://link.springer.com/article/10.1007/s12532-023-00239-3">JuMP 1.0: Recent improvements to a modeling language for mathematical optimization</a></strong>.<br/><a href="https://arxiv.org/abs/2206.03866">arXiv</a> <a href="https://cs.paperswithcode.com/paper/jump-1-0">code</a>
   </li>
