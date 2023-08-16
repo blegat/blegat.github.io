@@ -1,13 +1,28 @@
+# In this section, we illustrate the fundamental link between derivative and optimization.
+#
 # ## Univariate optimization
 # 
 # ### Linear polynomial
 # 
+# The arguably simplest functions are affine function so let's start with the minimization of an affine function.
 # What is the minimum of $x + 1$ ?
+# Let's plot this function:
 
 using Plots
-x = range(-3, stop=8, length=100)
+x = range(-8, stop=8, length=50)
 p(x) = x + 1
 plot(x, p.(x), label="")
+
+ReLU(x) = (x < 0) ? 0.0 : x
+plot(x, p.(x), label="")
+
+# In order to plot, we generate `100` equally spaced numbers between `-8` and `8`:
+
+x
+
+# We can see the elements in this range by converting into a vector with `collect`:
+
+collect(x)
 
 p.(x)
 
@@ -15,9 +30,18 @@ p.(x)
 # 
 # What is the minimum of $x^2 - 2x + 1$ ?
 
+x = range(0, stop=2, length=50)
 p(x) = x^2 - 2x + 1 # (x - 1)^2
 plot(x, p.(x), label="")
 scatter!([1], [p(1)], label="")
+
+plotly()
+
+ε = 1e-1
+c = 0.1
+f = ReLU
+x0 = range(c-ε, stop=c+ε, length=50)
+plot(x0, f.(x0), label="", linewidth=4, ratio=:equal)
 
 # 
 
@@ -50,6 +74,12 @@ plot(x, p.(x))
 
 # Is that related to its derivative ?
 
+plot(x, x)
+plot(x, x.^2)
+plot(x, x.^5)
+plot(x, x.^4)
+plot(x, -x.^4)
+
 dp(x) = 4x^3 - 24x^2 + 8x - 6
 plot(x, dp.(x))
 
@@ -58,11 +88,12 @@ plot(x, ddp.(x))
 
 # Is the zero-derivative condition sufficient ?
 
-x = range(-3, stop=8, length=1000)
+x = range(-3, stop=64, length=1000)
 plot(x, x -> x * sin(x))
 
-x = range(-3, stop=8, length=100)
 plot(x, x .* cos.(x) + sin.(x))
+
+plot(x, cos.(x) - x .* sin.(x) + cos.(x))
 
 # Zero derivative is necessary for $x$ to be a global minimizer but there are 3 cases of zero derivative:
 # 
@@ -70,22 +101,32 @@ plot(x, x .* cos.(x) + sin.(x))
 # 2. local maximum: when it's increasing before $x$ and then decreasing
 # 3. saddle point: when it's increasing (resp. decreasing) before $x$ and then increasing (resp. decreasing) after $x$
 
+# Say the first derivative of `f(x)` that is nonzero is the `k`-th derivative `f^{(k)}(x)` then
+# * if `k` is odd then it is not a local extremum
+# * if `k` is even and the value is positive then it is a local minimum
+# * if `k` is even and the value is negative then it is a local maximum
+
 x = range(-1, stop=1, length=100)
-plot(x, x.^5)
+plot(x, -x.^5)
 
 # ## Multivariate optimization
 
-
-#using Plots
+using Plots
 x = range(-4, stop=4, length=100)
 y = range(-4, stop=4, length=100)
 p(x, y) = 2x^2 + x*y + 2y^2 - 2x + 3y + 1
-#surface(x, y, p)
+plotly()
+surface(x, y, p)
 
-# $p(x, y) = 2x^2 + xy + 2y^2 - 2x + 3y + 1$
-
+# $z = p(x, y) = 2x^2 + xy + 2y^2 - 2x + 3y + 1$
+#
+# ∂z/∂x
+# ∂z/∂y
+# ∂z/∂(x + y) = ∂z/∂x + ∂z/∂y
+# ∂z/∂(x + 2y) = ∂z/∂x + 2∂z/∂y
+#
 # $\frac{\partial p}{\partial x} = 4x + y - 2$
-
+#
 # $\frac{\partial p}{\partial y} = x + 4y + 3$
 
 dx -> +1 -> 0 * 1 -> 0
@@ -129,6 +170,12 @@ p(0.75, -0.94)
 
 p(0.75, -0.93)
 
+p(0.75, -0.938)
+
+p(0.75, -0.939)
+
+p(0.75, -0.937)
+
 # The *gradient* is defined as the concatenation of all the partial derivatives.
 # Having a zero gradient is **necessary** to be a local minimizer. Again, it's not **sufficient** as it could also be a local maximizer or a saddle point.
 
@@ -149,13 +196,75 @@ v = [x, y]
 
 ∇p(v...)
 
-v = v - 0.1 * ∇p(v...)
+function gradient_descent(h, num_iters = 100, v = [1, -1])
+    for _ in 1:num_iters
+        v = v - h * ∇p(v...)
+    end
+    return v
+end
 
-v = [2.2/3, -2.8/3]
+# With a step size of `1`, we diverge
 
-∇p((x - 0.2*∇p(x...))...)
+v = gradient_descent(1)
 
-x = x - 0.3*∇p(x...)
+# With a step size of `0.1`, we converge
+
+v = gradient_descent(0.1)
+
+v = @time gradient_descent(0.001, 1000000)
+
+# Looking at the solution, it looks rational
+
+rationalize.(v, tol=1e-14)
+
+# It seems that with a step size above `0.4` we do not converge
+# and below `0.4` you converge.
+# What happens with a step size of exactly `0.4` ?
+# With the step 0.4: you converge to an orbit of period 2:
+
+v = gradient_descent(0.4, 100)
+v1 = rationalize.(v, tol=1e-10)
+
+# At the next step, we get another one
+
+v = gradient_descent(0.4, 101)
+v2 = rationalize.(v, tol=1e-10)
+
+# And then we cycle
+
+v = gradient_descent(0.4, 102)
+rationalize.(v, tol=1e-10)
+
+# Indeed, here is the difference:
+
+v1 - v2
+
+# With a step from `v1`, we go form `v1` to `v2`
+
+4 // 10 * ∇p(v1...)
+
+# With a step from `v2`, we go back to `v1`
+
+4 // 10 * ∇p(v2...)
+
+# Now what happens with a step too small ?
+
+gradient_descent(0.001, 1000)
+
+# With a bit more steps ?
+
+gradient_descent(0.001, 1000)
+
+# And with even more steps ?
+
+gradient_descent(0.001, 10000)
+
+# So, we observed that
+#
+# * With a step size that is *too large* (in this case larger than 0.4),
+#   the gradient method may diverge.
+# * With a step size that is *too small*,
+#   the method will converge but very slowly.
 
 # ## Gradient method
 # 
@@ -240,7 +349,6 @@ value(y)
 # It's important to check for the `solution_summary` to check that it's `LOCALLY_SOLVED`.
 
 using JuMP
-import NLopt
 model = Model(Ipopt.Optimizer)
 @variable(model, x)
 @variable(model, y)

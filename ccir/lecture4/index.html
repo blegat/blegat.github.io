@@ -39,7 +39,10 @@ solution_summary(model)
 
 value.(buy)</code></pre> <h1 id=milp ><a href="#milp" class=header-anchor >MILP</a></h1> <pre><code class="julia hljs"><span class=hljs-meta >@variable</span>(model, go[shop <span class=hljs-keyword >in</span> shops], Bin)
 
-<span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items) + <span class=hljs-number >50</span>sum(go))
+<span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items) + <span class=hljs-number >5</span>sum(go))
+
+
+<span class=hljs-meta >@constraint</span>(model, [shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items], buy[shop, item] &lt;= maximum(need) * go[shop])
 
 <span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >10</span>go[<span class=hljs-number >1</span>])
 <span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >2</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >10</span>go[<span class=hljs-number >2</span>])
@@ -119,6 +122,7 @@ items = <span class=hljs-number >1</span>:<span class=hljs-number >3</span>
 <span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= buy[shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items])
 <span class=hljs-meta >@constraint</span>(model, [item <span class=hljs-keyword >in</span> items], sum(buy[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops) == need[item])
 shop_fixed_cost = <span class=hljs-number >10</span>
+<span class=hljs-comment >#@variable(model, 0 &lt;= go[shop in shops] &lt;= 1, Bin)</span>
 <span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= go[shop <span class=hljs-keyword >in</span> shops] &lt;= <span class=hljs-number >1</span>)
 <span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items) + shop_fixed_cost * sum(go))
 <span class=hljs-meta >@constraint</span>(model, [shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items], buy[shop, item] &lt;= need[item] * go[shop])
@@ -129,21 +133,26 @@ optimize!(model)
 value.(buy)
 
 value.(go)</code></pre> <h2 id=planar_example ><a href="#planar_example" class=header-anchor >Planar example</a></h2> <pre><code class="julia hljs">model = Model(HiGHS.Optimizer)
-set_silent(model)
 <span class=hljs-meta >@variable</span>(model,  <span class=hljs-number >0</span> &lt;= x[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >3</span>)
 <span class=hljs-meta >@constraint</span>(model, x[<span class=hljs-number >1</span>] + <span class=hljs-number >2</span>x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >4</span>)
 <span class=hljs-meta >@constraint</span>(model, <span class=hljs-number >2</span>x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >4</span>)
 <span class=hljs-meta >@objective</span>(model, Max, x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>])
 println(model)
 
+<span class=hljs-meta >@constraint</span>(model, x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >2</span>)
+
 optimize!(model)
 value.(x)
 
 <span class=hljs-keyword >using</span> Plots, Polyhedra
-plot(polyhedron(model))
+plot(polyhedron(model), ratio = :equal)
 <span class=hljs-comment >#plot!([8/3, 0], [0, 8/3])</span>
-<span class=hljs-comment >#scatter!([1.333333333], [1.33333333])</span>
+scatter!([<span class=hljs-number >1.333333333</span>], [<span class=hljs-number >1.33333333</span>])
+scatter!([<span class=hljs-number >0</span>, <span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >2</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >0</span>])
 scatter!([<span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >2</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >0</span>])
+
+set_upper_bound(x[<span class=hljs-number >1</span>], <span class=hljs-number >1</span>)
+set_upper_bound(x[<span class=hljs-number >2</span>], <span class=hljs-number >1</span>)
 
 <span class=hljs-comment >#@constraint(model, x[1] &lt;= 1)</span>
 set_lower_bound(x[<span class=hljs-number >1</span>], <span class=hljs-number >2</span>)
@@ -185,4 +194,4 @@ plot(polyhedron(model))
 plot!([<span class=hljs-number >2</span>, <span class=hljs-number >0</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >2</span>])
 scatter!([<span class=hljs-number >1</span>], [<span class=hljs-number >1</span>])
 
-objective_value(model)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: July 28, 2023. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
+objective_value(model)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: August 16, 2023. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>

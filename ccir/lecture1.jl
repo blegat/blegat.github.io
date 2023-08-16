@@ -9,9 +9,11 @@
 
 A = [
      3  2 -1
-     2 -2  4
+    -2 -2  4
     -2  1 -2
 ]
+
+A * b
 
 b = [1, -2, 0]
 
@@ -24,17 +26,122 @@ rref([A b])
 
 rref(Rational{Int}.([A b]))
 
+# ### How does it work ?
+
+Ab = Float64[A b]
+Ab[1, :] /= Ab[1, 1]
+Ab
+
+Ab[2, :] -= Ab[2, 1] * Ab[1, :]
+Ab[3, :] -= Ab[3, 1] * Ab[1, :]
+Ab
+
+Ab[2, :] /= Ab[2, 2]
+Ab
+
+Ab[3, :] -= Ab[3, 2] * Ab[2, :]
+Ab[1, :] -= Ab[1, 2] * Ab[2, :]
+Ab
+
+Ab[3, :] /= Ab[3, 3]
+Ab
+
+Ab[1, :] -= Ab[1, 3] * Ab[3, :]
+Ab[2, :] -= Ab[2, 3] * Ab[3, :]
+Ab
+
+function row_echelon!(A)
+    for col in axes(A, 1)
+        A[col, :] /= A[col, col]
+        for row in axes(A, 1)
+            if row != col
+                A[row, :] -= A[row, col] * A[col, :]
+            end
+        end
+        display(A)
+    end
+end
+
+Ab = Float64[A b]
+row_echelon!(Ab)
+row_echelon!(Ab + 0.1*rand(size(Ab)...))
+
+# https://en.wikipedia.org/wiki/Double-precision_floating-point_format
+
+# https://en.wikipedia.org/wiki/Zeno%27s_paradoxes
+
+num = 1.0
+while num > 0
+    @show num
+    num /= 2
+end
+
+# ### Tricky example
+
+# Find $x_1, x_2, x_3$ such that:
+# $$
+# \begin{alignat*}{7}
+#  x_1 &&\; + \;&& x_2 &&\; = \;&& 2 & \\
+#  x_1 &&\; - \;&& x_2 &&\; = \;&& 0 & \\
+# \end{alignat*}
+# $$
+
+ε = 2e-10
+
+A = [
+    1  1   -1
+    1  1+ε  1
+    1 -1    1
+]
+
+b = [2, 0, 1]
+
+Ab = [A b]
+
+# #### First column
+
+Ab[2, :] -= Ab[1, :]
+Ab[3, :] -= Ab[1, :]
+Ab
+
+# #### Second column
+
+Ab[2, :] /= Ab[2, 2]
+Ab
+
+Ab[1, :] -= Ab[2, :]
+Ab[3, :] += 2Ab[2, :]
+Ab
+
+# #### Third column
+
+Ab[3, :] /= Ab[3, 3]
+Ab
+
+Ab[1, :] -= Ab[1, 3] * Ab[3, :]
+Ab[2, :] -= Ab[2, 3] * Ab[3, :]
+Ab
+
 # ## Numerical approach
 
+distance = 16
+while distance > 0
+    @show distance
+    distance /= 2
+end
+
 A \ b
+
+ε = 0.0001
+(A + ε * rand(size(A)...)) \ (b + ε * rand(size(b)...))
 
 # # Overdetermined system
 # 
 # Find $x_1, x_2$ such that:
 # $$
 # \begin{alignat*}{7}
-# 3x_1 &&\; + \;&& 2x_2             &&\; = \;&& 1 & \\
-# 2x_1 &&\; - \;&& 2x_2             &&\; = \;&& -2 & \\
+#  3x_1 &&\; + \;&& 2x_2  &&\; = \;&& 1 & \\
+#  2x_1 &&\; - \;&& 2x_2  &&\; = \;&& -2 & \\
 # -2x_1 &&\; + \;&& 1x_2 &&\; = \;&& 0 &
 # \end{alignat*}
 # $$
@@ -71,10 +178,10 @@ e = B * x - b
 # In general, $B \in \mathbb{R}^{m \times n}$, $b \in \mathbb{R}^m$:
 # $$
 # \begin{aligned}
-# \min_{x \in \mathbb{R}^n} & \|Bx - b\|_2
+# \min_{x \in \mathbb{R}^n} & \|Bx - b\|_2^2
 # \end{aligned}
 # $$
-# where $\|e\|_2 = e_1^2 + e_2^2 + \cdots e_m^2$ is the *Euclidean norm*.
+# where $\|e\|_2^2 = e_1^2 + e_2^2 + \cdots e_m^2$ is the *Euclidean norm*.
 # 
 # *Unconstrained* mathematical optimization program:
 # 
@@ -84,6 +191,8 @@ e = B * x - b
 # Optimal solution: solution of $B^\top B x = B^\top b$. If $B^\top B$ is invertible, $x = (B^\top B)^{-1} B^\top b$.
 
 B' * e
+
+(B' * B) \ B' * b
 
 # # Underdetermined system
 # 

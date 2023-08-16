@@ -43,7 +43,10 @@ value.(buy)
 
 @variable(model, go[shop in shops], Bin)
 
-@objective(model, Min, sum(buy[shop, item] * prices[shop, item] for shop in shops, item in items) + 50sum(go))
+@objective(model, Min, sum(buy[shop, item] * prices[shop, item] for shop in shops, item in items) + 5sum(go))
+
+
+@constraint(model, [shop in shops, item in items], buy[shop, item] <= maximum(need) * go[shop])
 
 @constraint(model, buy[1, 2] <= 10go[1])
 @constraint(model, buy[2, 2] <= 10go[2])
@@ -133,6 +136,7 @@ items = 1:3
 @variable(model, 0 <= buy[shop in shops, item in items])
 @constraint(model, [item in items], sum(buy[shop, item] for shop in shops) == need[item])
 shop_fixed_cost = 10
+#@variable(model, 0 <= go[shop in shops] <= 1, Bin)
 @variable(model, 0 <= go[shop in shops] <= 1)
 @objective(model, Min, sum(buy[shop, item] * prices[shop, item] for shop in shops, item in items) + shop_fixed_cost * sum(go))
 @constraint(model, [shop in shops, item in items], buy[shop, item] <= need[item] * go[shop])
@@ -147,21 +151,26 @@ value.(go)
 # ## Planar example
 
 model = Model(HiGHS.Optimizer)
-set_silent(model)
 @variable(model,  0 <= x[1:2] <= 3)
 @constraint(model, x[1] + 2x[2] <= 4)
 @constraint(model, 2x[1] + x[2] <= 4)
 @objective(model, Max, x[1] + x[2])
 println(model)
 
+@constraint(model, x[1] + x[2] <= 2)
+
 optimize!(model)
 value.(x)
 
 using Plots, Polyhedra
-plot(polyhedron(model))
+plot(polyhedron(model), ratio = :equal)
 #plot!([8/3, 0], [0, 8/3])
-#scatter!([1.333333333], [1.33333333])
+scatter!([1.333333333], [1.33333333])
+scatter!([0, 0, 1, 1, 0, 2], [0, 1, 0, 1, 2, 0])
 scatter!([1, 0, 2], [1, 2, 0])
+
+set_upper_bound(x[1], 1)
+set_upper_bound(x[2], 1)
 
 #@constraint(model, x[1] <= 1)
 set_lower_bound(x[1], 2)
