@@ -1,6 +1,18 @@
 @def title = "Talks"
 @def hascode = false
 
+## Upcoming talks
+
+~~~
+<ul>
+  <li id="2023_Julia">
+    <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong>
+  </li>
+</ul>
+~~~
+
+## Past talks
+
 ~~~
 <ul>
   <li id="2023_JuMP">
