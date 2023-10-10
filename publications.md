@@ -24,6 +24,9 @@
 ~~~
 <ul>
   <li>
+    Jie Wang, Jacopo Surace, Irénée Frérot, Benoît Legat, Marc-Olivier Renou, Victor Magron, Antonio Acín. <strong>Certifying ground-state properties of many-body systems</strong>.<br/><a href="https://arxiv.org/abs/2310.05844">arXiv</a>
+  </li>
+  <li>
     Torbjørn Cunis, Benoît Legat. <strong>Sequential sum-of-squares programming for analysis of nonlinear systems</strong>.<br/><a href="https://arxiv.org/abs/2210.02142">arXiv</a>
   </li>
   <li>
