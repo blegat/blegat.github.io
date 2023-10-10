@@ -1,20 +1,11 @@
 @def title = "Talks"
 @def hascode = false
 
-## Upcoming talks
-
 ~~~
 <ul>
   <li id="2023_Julia">
-    <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong>
+    <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong><br><a href="https://drive.google.com/file/d/1OtCUjM1eNLuI_FxbO3dBYgKxQ291goUZ/view?usp=sharing">slides</a>
   </li>
-</ul>
-~~~
-
-## Past talks
-
-~~~
-<ul>
   <li id="2023_JuMP">
     <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a><br><a href="https://drive.google.com/file/d/1H-_Ot7tP2g7t95r0K_mTaXvGO1ChUPci/view?usp=drive_link">slides</a>
   </li>
