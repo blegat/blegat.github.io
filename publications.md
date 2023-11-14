@@ -19,6 +19,7 @@
 <strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a> <a href="https://drive.google.com/file/d/1Y8kvUsHmvWSvgnEBS8T7GI6ofvuWng6U/view">pdf</a>
 ~~~
 
+
 ## Chapters
 
 ~~~
@@ -34,7 +35,7 @@
 ~~~
 <ul>
   <li>
-    Mathieu Besançon and Joaquim Dias Garcia and Beno\^it Legat and Akshay Sharma. <strong>Flexible Differentiable Optimization via Model Transformations</strong>. <em>INFORMS Journal on Computing</em>, 2023.<br/><a href="https://arxiv.org/abs/2206.06135">arXiv</a>
+    Mathieu Besançon and Joaquim Dias Garcia and Beno\^it Legat and Akshay Sharma. <strong><a href="https://pubsonline.informs.org/doi/abs/10.1287/ijoc.2022.0283">Flexible Differentiable Optimization via Model Transformations</a></strong>. <em>INFORMS Journal on Computing</em>, November 2023. <a href="https://doi.org/10.1287/ijoc.2022.0283">10.1287/ijoc.2022.0283</a><br/><a href="https://arxiv.org/abs/2206.06135">arXiv</a> <a href="https://github.com/jump-dev/DiffOpt.jl">code</a>
   </li>
   <li>
     Benoît Legat and Chenyang Yuan and Pablo A. Parrilo. <strong><a href="https://epubs.siam.org/doi/10.1137/22M1516208">Low-Rank Univariate Sum of Squares Has No Spurious Local Minima</a></strong>. <em>SIAMJournal on Optimization</em>, August 2023. <a href="https://doi.org/10.1137/22m1516208">10.1137/22m1516208</a><br/><a href="https://arxiv.org/abs/2205.11466">arXiv</a> <a href="https://doi.org/10.24433/CO.7364738.v1">code 10.24433/CO.7364738.v1</a>

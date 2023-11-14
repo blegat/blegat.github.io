@@ -226,7 +226,9 @@ add!("legat2022computation",
     bib_type = CHAPTER,
 )
 add!("besancon2023flexible",
+    url = "https://pubsonline.informs.org/doi/abs/10.1287/ijoc.2022.0283",
     arXiv = "2206.06135",
+    code = "https://github.com/jump-dev/DiffOpt.jl",
 )
 add!("legat2023lowrank",
     url = "https://epubs.siam.org/doi/10.1137/22M1516208",
