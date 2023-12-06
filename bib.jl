@@ -1,5 +1,6 @@
-import BibTeX
-_, BIB = BibTeX.parse_bibtex(read("../Research/biblio.bib", String))
+import Bibliography
+BIB_FILE = joinpath(@__DIR__, "../Research/biblio.bib")
+BIB = Bibliography.import_bibtex(BIB_FILE, check = :warn)
 
 @enum(BibType, THESIS, CHAPTER, JOURNAL, CONF)
 TYPE_MAP = Dict{String,BibType}(
@@ -16,44 +17,30 @@ function _get(d::Dict, key)
 end
 
 struct Bibs
-    sub::Dict{BibType,Vector{Dict{String,String}}}
+    sub::Dict{BibType,Vector{Base.valtype(BIB)}}
 end
 
-BIBS = Bibs(Dict{String,Vector{Dict{String,String}}}())
-
-function month_id(d::Dict)
-    month = get(d, "month", "dec")
-    return Dates.monthabbr_to_value(month, Dates.LOCALES["english"])
-end
-
-using Dates
-function year_month(d::Dict{String,String})
-    return parse(Int, d["year"]), month_id(d)
-end
-
-function year_month_isless(a::Dict, b::Dict)
-    return year_month(a) < year_month(b)
-end
+BIBS = Bibs(Dict{String,Vector{Base.valtype(BIB)}}())
 
 function add!(
     b::Bibs,
-    entry::Dict;
-    bib_type::BibType = TYPE_MAP[entry["type"]],
+    entry;
+    bib_type::BibType = TYPE_MAP[entry.type],
     kws...,
 )
     if !haskey(b.sub, bib_type)
-        b.sub[bib_type] = Dict{String,String}[]
+        b.sub[bib_type] = valtype(BIB)[]
     end
-    entry = copy(entry)
+    entry = deepcopy(entry)
     for (key, value) in kws
         k = string(key)
-        if haskey(entry, k)
-            @warn("Entry \"$(entry["title"])\" already has key $k")
+        if haskey(entry.fields, k) || (k == "url" && !isempty(entry.access.url))
+            @warn("Entry \"$(entry.title)\" already has key $k")
         end
         if k != "url" && !(k in KEYS)
             error("Invalid key `$k`, it should be one of `$KEYS`")
         end
-        entry[k] = value
+        entry.fields[k] = value
     end
     push!(b.sub[bib_type], entry)
     return
@@ -75,34 +62,24 @@ TITLE = Dict(
 
 # Fix for a BibTeX shortcoming
 function _fix(s::String)
-    s = replace(s, "\\c { c } " => "ç")
-    s = replace(s, " { \\ \" e } " => "ë")
-    s = replace(s, " { \\ \" { e } } " => "ë")
-    s = replace(s, "\\ \" { e } " => "ë")
-    s = replace(s, " { \\' { e } } " => "é")
-    s = replace(s, " { \\'a } " => "á")
-    s = replace(s, " { \\' { a } } " => "á")
-    s = replace(s, " { \\o } " => "ø")
-    s = replace(s, " { \\^ { i } } " => "î")
-    s = replace(s, " { \\^ { \\i } } " => "î")
-    s = replace(s, " { \\^\\i } " => "î")
-    s = replace(s, " { \\^i } " => "î")
-    s = replace(s, "\\^ { \\i } " => "î")
-    s = replace(s, " { \\'c } " => "ć")
-    s = replace(s, " { \\v { s } } " => "š")
-    s = replace(s, "- { " => "-")
-    s = replace(s, "{ " => "")
-    s = replace(s, " } " => "")
-    s = replace(s, " }" => "")
+    s = replace(s, "\\c{c}" => "ç")
+    s = replace(s, "{\\\"e}" => "ë")
+    s = replace(s, "{\\\"{e}}" => "ë")
+    s = replace(s, "\\\"{e}" => "ë")
+    s = replace(s, "{\\'{e}}" => "é")
+    s = replace(s, "{\\'a}" => "á")
+    s = replace(s, "{\\'{a}}" => "á")
+    s = replace(s, "{\\o}" => "ø")
+    s = replace(s, "{\\^{i}}" => "î")
+    s = replace(s, "{\\^{\\i}}" => "î")
+    s = replace(s, "{\\^\\i}" => "î")
+    s = replace(s, "{\\^i}" => "î")
+    s = replace(s, "\\^{\\i} " => "î")
+    s = replace(s, "{\\'c}" => "ć")
+    s = replace(s, "{\\v{s}}" => "š")
+    s = replace(s, "{" => "")
+    s = replace(s, "}" => "")
     return s
-end
-
-function fix_author(author)
-    return join(reverse(strip.(split(author, ','))), " ")
-end
-
-function fix_authors(authors)
-    return join(fix_author.(split(authors, "and")), " and ")
 end
 
 function tag(args...)
@@ -140,50 +117,39 @@ arXiv_url(id) = "https://arxiv.org/abs/" * id
 
 KEYS = ["arXiv", "Optimization_Online", "pdf", "code_doi", "code", "slides"]
 
-function print_entry(io::IO, d::Dict)
-    print(io, fix_authors(_fix(_get(d, "author"))))
+function print_entry(io::IO, d)
+    print(io, _fix(Bibliography.xnames(d)))
     print(io, ". ")
-    title = _fix(d["title"])
-    if haskey(d, "url")
-        title = href(d["url"], title)
+    title = _fix(d.title)
+    url = get(d.fields, "url", d.access.url)
+    if !isempty(url)
+        title = href(url, title)
     end
     tag(io, "strong", title)
     print(io, ".")
-    if haskey(d, "journal")
-        venue = d["journal"]
-    elseif haskey(d, "booktitle")
-        venue = d["booktitle"]
-        if haskey(d, "series")
-            venue = d["series"] * " : " * venue
-        end
-    elseif haskey(d, "series")
-        venue = d["series"]
-    else
+    venue = Bibliography.xin(d)
+    if isempty(venue)
         display(d)
         error("Missing venue")
     end
     print(io, " ")
     tag(io, "em", _fix(venue))
     print(io, ", ")
-    if haskey(d, "month")
-        print(io, Dates.monthname(month_id(d)), ' ')
-    end
-    print(io, d["year"], '.')
-    if haskey(d, "doi")
+    doi = d.access.doi
+    if !isempty(doi)
         print(io, " ")
-        doi = d["doi"]
         href(io, doi_url(doi), doi)
     end
     br_done = false
     for name in KEYS
-        if haskey(d, name)
+        if haskey(d.fields, name)
             if br_done
                 print(io, " ")
             else
                 print(io, "<br/>")
                 br_done = true
             end
-            value = d[name]
+            value = d.fields[name]
             if name == "code_doi"
                 url = doi_url(value)
                 content = "code " * value
@@ -204,7 +170,7 @@ end
 function Base.show(io::IO, b::Bibs)
     for bib_type in sort(collect(keys(b.sub)))
         sub = b.sub[bib_type]
-        sort!(sub, lt = year_month_isless, rev = true)
+        sort!(sub, by = entry -> entry.date, rev = true)
         println(io)
         println(io, "## $(TITLE[bib_type])")
         println(io)
