@@ -3,6 +3,9 @@
 
 ~~~
 <ul>
+  <li id="2023_KUL">
+    KU Leuven, 24th of November 2023<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong><br><a href="https://drive.google.com/file/d/1yutRLs4izHT8JZFov4SbT0_GFSmcxnzc/view">slides</a>
+  </li>
   <li id="2023_Julia">
     <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong><br><a href="https://drive.google.com/file/d/1OtCUjM1eNLuI_FxbO3dBYgKxQ291goUZ/view?usp=sharing">slides</a>
   </li>
