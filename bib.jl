@@ -220,7 +220,7 @@ add!("legat2021limits",
 )
 add!("legat2021mathoptinterface",
     url = "https://pubsonline.informs.org/doi/10.1287/ijoc.2021.1067",
-    arXiv = "https://arxiv.org/abs/2002.03447",
+    arXiv = "2002.03447",
     Optimization_Online = "http://www.optimization-online.org/DB_HTML/2020/02/7609.html",
     code = "https://github.com/jump-dev/MOIPaperBenchmarks",
 )
@@ -263,7 +263,7 @@ add!("legat2021abstractionbased",
 )
 add!("legat2020stability",
     url = "https://ieeexplore.ieee.org/document/9304152",
-    arXiv = "https://arxiv.org/abs/2009.04505",
+    arXiv = "2009.04505",
 )
 add!("gomes2017stable",
     url = "https://link.springer.com/chapter/10.1007/978-3-030-14883-6_5",
@@ -276,7 +276,7 @@ add!("legat2018computing",
 )
 add!("gomes2018minimally",
     url = "https://ieeexplore.ieee.org/abstract/document/8619223",
-    arXiv = "https://arxiv.org/abs/1809.02648",
+    arXiv = "1809.02648",
 )
 add!("legat2016parallel",
     url = "http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf",
