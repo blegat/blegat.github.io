@@ -1,6 +1,4 @@
-import Bibliography
-BIB_FILE = joinpath(@__DIR__, "../Research/biblio.bib")
-BIB = Bibliography.import_bibtex(BIB_FILE, check = :warn)
+include("biblio.jl")
 
 @enum(BibType, THESIS, CHAPTER, JOURNAL, CONF)
 TYPE_MAP = Dict{String,BibType}(
@@ -37,8 +35,8 @@ function add!(
         if haskey(entry.fields, k) || (k == "url" && !isempty(entry.access.url))
             @warn("Entry \"$(entry.title)\" already has key $k")
         end
-        if k != "url" && !(k in KEYS)
-            error("Invalid key `$k`, it should be one of `$KEYS`")
+        if k != "url" && !(k in Biblio.KEYS)
+            error("Invalid key `$k`, it should be one of `$(Biblio.KEYS)`")
         end
         entry.fields[k] = value
     end
@@ -59,113 +57,6 @@ TITLE = Dict(
     JOURNAL => "Journal Papers",
     CONF => "Conference Proceedings",
 )
-
-# Fix for a BibTeX shortcoming
-function _fix(s::String)
-    s = replace(s, "\\c{c}" => "ç")
-    s = replace(s, "{\\\"e}" => "ë")
-    s = replace(s, "{\\\"{e}}" => "ë")
-    s = replace(s, "\\\"{e}" => "ë")
-    s = replace(s, "{\\'{e}}" => "é")
-    s = replace(s, "{\\'a}" => "á")
-    s = replace(s, "{\\'{a}}" => "á")
-    s = replace(s, "{\\o}" => "ø")
-    s = replace(s, "{\\^{i}}" => "î")
-    s = replace(s, "{\\^{\\i}}" => "î")
-    s = replace(s, "{\\^\\i}" => "î")
-    s = replace(s, "{\\^i}" => "î")
-    s = replace(s, "\\^{\\i} " => "î")
-    s = replace(s, "{\\'c}" => "ć")
-    s = replace(s, "{\\v{s}}" => "š")
-    s = replace(s, "{" => "")
-    s = replace(s, "}" => "")
-    return s
-end
-
-function tag(args...)
-    io = IOBuffer()
-    tag(IOBuffer(), args...)
-    return String(take!(io))
-end
-
-function href(args...)
-    io = IOBuffer()
-    href(io, args...)
-    return String(take!(io))
-end
-
-function tag(io::IO, tag, content, options = "")
-    print(io, "<")
-    print(io, tag)
-    if !isempty(options)
-        print(io, ' ')
-        print(io, options)
-    end
-    print(io, ">")
-    print(io, content)
-    print(io, "</")
-    print(io, tag)
-    print(io, ">")
-end
-
-function href(io, href, content)
-    tag(io, "a", content, "href=\"$href\"")
-end
-
-doi_url(doi) = "https://doi.org/" * doi
-arXiv_url(id) = "https://arxiv.org/abs/" * id
-
-KEYS = ["arXiv", "Optimization_Online", "pdf", "code_doi", "code", "slides"]
-
-function print_entry(io::IO, d)
-    print(io, _fix(Bibliography.xnames(d)))
-    print(io, ". ")
-    title = _fix(d.title)
-    url = get(d.fields, "url", d.access.url)
-    if !isempty(url)
-        title = href(url, title)
-    end
-    tag(io, "strong", title)
-    print(io, ".")
-    venue = Bibliography.xin(d)
-    if isempty(venue)
-        display(d)
-        error("Missing venue")
-    end
-    print(io, " ")
-    tag(io, "em", _fix(venue))
-    print(io, ", ")
-    doi = d.access.doi
-    if !isempty(doi)
-        print(io, " ")
-        href(io, doi_url(doi), doi)
-    end
-    br_done = false
-    for name in KEYS
-        if haskey(d.fields, name)
-            if br_done
-                print(io, " ")
-            else
-                print(io, "<br/>")
-                br_done = true
-            end
-            value = d.fields[name]
-            if name == "code_doi"
-                url = doi_url(value)
-                content = "code " * value
-            else
-                if name == "arXiv"
-                    url = arXiv_url(value)
-                else
-                    url = value
-                end
-                content = replace(name, "_" => " ")
-            end
-            href(io, url, content)
-        end
-    end
-    println(io)
-end
 
 function Base.show(io::IO, b::Bibs)
     for bib_type in sort(collect(keys(b.sub)))
