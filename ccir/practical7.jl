@@ -93,14 +93,12 @@ model = Model(HiGHS.Optimizer)
 
 # Dependency: for each worker, the task depended on must be done before undertaking the task at hand
 
-for i in 1:M # For each task i
-    for j in dependency[i] # and for each task j that must be completed before worker w can undertake task i
-        @constraint(
-            model, 
-            [w in 1:N, t in 1:T], 
-            sum(x[w, t, i]) <= sum(x[w, 1:(t-1), j])
-        )
-    end
+for j in dependency[i] # and for each task j that must be completed before worker w can undertake task i
+    @constraint(
+        model, 
+        [w in 1:N, t in 1:T], 
+        sum(x[w, t, i]) <= sum(x[w, 1:(t-1), j])
+    )
 end
 
 # Each resource can be used at most once at each time step
