@@ -1,6 +1,24 @@
 @def title = "Talks"
 @def hascode = false
 
+## Upcoming talks
+
+~~~
+<ul>
+  <li id="2024_A4CP">
+    <a href="https://cp2024.a4cp.org/">The 30th International Conference on Principles and Practice of Constraint Programming</a>, 2-6th of September 2024<br><strong>Constraint Programming with JuMP</strong>
+  </li>
+  <li id="2024_ISMP">
+    <a href="https://ismp2024.gerad.ca/">25th International Symposium on Mathematical Programming (ISMP)</a>, 22nd of July 2024<br><a href="https://ismp2024.gerad.ca/schedule/MB/677"><strong>Reducing Sum-of-Squares constraints over a domain</strong></a>
+  </li>
+  <li id="2024_JuMP">
+    <a href="https://jump.dev/meetings/jumpdev2024/">JuMP-dev 2024</a>, 19th of July 2024<br><strong>Why you should stop using the monomial basis</strong>
+  </li>
+</ul>
+~~~
+
+## Past talks
+
 ~~~
 <ul>
   <li id="2023_KUL">
