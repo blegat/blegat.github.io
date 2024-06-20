@@ -80,7 +80,13 @@ function Base.show(io::IO, b::Bibs)
     end
 end
 
+add!("wangCertifyingGroundstateProperties2024",
+    url = "https://journals.aps.org/prx/accepted/8b07cK46Ye610e0417cd307887743f7f3318f51a1",
+    arXiv = "2310.05844",
+    code = "https://github.com/blegat/CondensedMatterSOS.jl/",
+)
 add!("legat2022computation",
+    url = "https://www.sciencedirect.com/science/article/pii/S1570865922000278",
     code_doi = "10.24433/CO.5065309.v1",
     bib_type = CHAPTER,
 )
@@ -150,6 +156,7 @@ add!("legat2021geometric",
     code_doi = "10.24433/CO.6266939.v1",
 )
 add!("legat2021abstractionbased",
+    pdf = "http://proceedings.mlr.press/v144/legat21a/legat21a.pdf",
     url = "https://proceedings.mlr.press/v144/legat21a.html",
     arXiv = "2011.11029",
     code = "https://github.com/dionysos-dev/Dionysos.jl",
@@ -186,6 +193,8 @@ add!("legat2016generating",
 #add!("legat2021mutablearithmetics")
 
 #show(BIBS)
+
+cp("_publications.md", "publications.md", force = true)
 open("publications.md", "a") do io
     print(io, BIBS)
 end
