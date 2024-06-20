@@ -4,8 +4,17 @@ import Bibliography
 BIB = nothing
 
 function load!()
-    BIB_FILE = joinpath(@__DIR__, "../Research/biblio.bib")
-    global BIB = Bibliography.import_bibtex(BIB_FILE, check = :warn)
+    file = joinpath(@__DIR__, "../Research/biblio.bib")
+    @info("Loading bibliography from `$file`...")
+    global BIB = Bibliography.import_bibtex(file, check = :warn)
+    @info("Loading completed.")
+end
+
+function bib()
+    if isnothing(BIB)
+        load!()
+    end
+    return BIB
 end
 
 KEYS = ["arXiv", "Optimization_Online", "pdf", "code_doi", "code", "slides"]
@@ -72,8 +81,12 @@ function print_entry(io::IO, key::String; kws...)
     print_entry(io, BIB[key]; kws...)
 end
 
+function citation_key(d)
+    return join([first(s.last) for s in d.authors]) * d.date.year[end-1:end]
+end
+
 function cite(d)
-    return "[" * join([first(s.last) for s in d.authors]) * d.date.year[end-1:end] * "]"
+    return "[" * citation_key(d) * "]"
 end
 
 function print_entry(io::IO, d; links = true, venue = true, doi = true, cite = false)

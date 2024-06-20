@@ -1,4 +1,6 @@
-include("biblio.jl")
+if !isdefined(Main, :Biblio)
+    include("biblio.jl")
+end
 
 @enum(BibType, THESIS, CHAPTER, JOURNAL, CONF)
 TYPE_MAP = Dict{String,BibType}(
@@ -15,10 +17,10 @@ function _get(d::Dict, key)
 end
 
 struct Bibs
-    sub::Dict{BibType,Vector{Base.valtype(BIB)}}
+    sub::Dict{BibType,Vector{Base.valtype(Biblio.bib())}}
 end
 
-BIBS = Bibs(Dict{String,Vector{Base.valtype(BIB)}}())
+BIBS = Bibs(Dict{String,Vector{Base.valtype(Biblio.bib())}}())
 
 function add!(
     b::Bibs,
@@ -27,7 +29,7 @@ function add!(
     kws...,
 )
     if !haskey(b.sub, bib_type)
-        b.sub[bib_type] = valtype(BIB)[]
+        b.sub[bib_type] = valtype(Biblio.bib())[]
     end
     entry = deepcopy(entry)
     for (key, value) in kws
@@ -47,7 +49,7 @@ function add!(
     key::String;
     kws...,
 )
-    add!(BIBS, BIB[key]; kws...)
+    add!(BIBS, Biblio.bib()[key]; kws...)
     return
 end
 
@@ -70,7 +72,7 @@ function Base.show(io::IO, b::Bibs)
         for entry in sub
             println(io, "  <li>")
             print(io, "    ")
-            print_entry(io, entry)
+            Biblio.print_entry(io, entry)
             println(io, "  </li>")
         end
         println(io, "</ul>")
@@ -183,7 +185,7 @@ add!("legat2016generating",
 )
 #add!("legat2021mutablearithmetics")
 
-show(BIBS)
+#show(BIBS)
 open("publications.md", "a") do io
     print(io, BIBS)
 end
