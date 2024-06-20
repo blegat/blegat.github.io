@@ -1,4 +1,6 @@
-include("biblio.jl")
+if !isdefined(Main, :Biblio)
+    include("biblio.jl")
+end
 
 @enum(BibType, THESIS, CHAPTER, JOURNAL, CONF)
 TYPE_MAP = Dict{String,BibType}(
@@ -15,10 +17,10 @@ function _get(d::Dict, key)
 end
 
 struct Bibs
-    sub::Dict{BibType,Vector{Base.valtype(BIB)}}
+    sub::Dict{BibType,Vector{Base.valtype(Biblio.bib())}}
 end
 
-BIBS = Bibs(Dict{String,Vector{Base.valtype(BIB)}}())
+BIBS = Bibs(Dict{String,Vector{Base.valtype(Biblio.bib())}}())
 
 function add!(
     b::Bibs,
@@ -27,7 +29,7 @@ function add!(
     kws...,
 )
     if !haskey(b.sub, bib_type)
-        b.sub[bib_type] = valtype(BIB)[]
+        b.sub[bib_type] = valtype(Biblio.bib())[]
     end
     entry = deepcopy(entry)
     for (key, value) in kws
@@ -47,7 +49,7 @@ function add!(
     key::String;
     kws...,
 )
-    add!(BIBS, BIB[key]; kws...)
+    add!(BIBS, Biblio.bib()[key]; kws...)
     return
 end
 
@@ -70,7 +72,7 @@ function Base.show(io::IO, b::Bibs)
         for entry in sub
             println(io, "  <li>")
             print(io, "    ")
-            print_entry(io, entry)
+            Biblio.print_entry(io, entry)
             println(io, "  </li>")
         end
         println(io, "</ul>")
@@ -78,7 +80,13 @@ function Base.show(io::IO, b::Bibs)
     end
 end
 
+add!("wangCertifyingGroundstateProperties2024",
+    url = "https://journals.aps.org/prx/accepted/8b07cK46Ye610e0417cd307887743f7f3318f51a1",
+    arXiv = "2310.05844",
+    code = "https://github.com/blegat/CondensedMatterSOS.jl/",
+)
 add!("legat2022computation",
+    url = "https://www.sciencedirect.com/science/article/pii/S1570865922000278",
     code_doi = "10.24433/CO.5065309.v1",
     bib_type = CHAPTER,
 )
@@ -148,6 +156,7 @@ add!("legat2021geometric",
     code_doi = "10.24433/CO.6266939.v1",
 )
 add!("legat2021abstractionbased",
+    pdf = "http://proceedings.mlr.press/v144/legat21a/legat21a.pdf",
     url = "https://proceedings.mlr.press/v144/legat21a.html",
     arXiv = "2011.11029",
     code = "https://github.com/dionysos-dev/Dionysos.jl",
@@ -183,7 +192,9 @@ add!("legat2016generating",
 )
 #add!("legat2021mutablearithmetics")
 
-show(BIBS)
+#show(BIBS)
+
+cp("_publications.md", "publications.md", force = true)
 open("publications.md", "a") do io
     print(io, BIBS)
 end

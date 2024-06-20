@@ -4,8 +4,17 @@ import Bibliography
 BIB = nothing
 
 function load!()
-    BIB_FILE = joinpath(@__DIR__, "../Research/biblio.bib")
-    global BIB = Bibliography.import_bibtex(BIB_FILE, check = :warn)
+    file = joinpath(@__DIR__, "../Research/biblio.bib")
+    @info("Loading bibliography from `$file`...")
+    global BIB = Bibliography.import_bibtex(file, check = :warn)
+    @info("Loading completed.")
+end
+
+function bib()
+    if isnothing(BIB)
+        load!()
+    end
+    return BIB
 end
 
 KEYS = ["arXiv", "Optimization_Online", "pdf", "code_doi", "code", "slides"]
@@ -13,11 +22,14 @@ KEYS = ["arXiv", "Optimization_Online", "pdf", "code_doi", "code", "slides"]
 # Fix for a BibTeX shortcoming
 function _fix(s::String)
     s = replace(s, "\\c{c}" => "ç")
+    s = replace(s, "{\\c c}" => "ç")
     s = replace(s, "{\\\"e}" => "ë")
     s = replace(s, "{\\\"{e}}" => "ë")
     s = replace(s, "\\\"{e}" => "ë")
     s = replace(s, "{\\'{e}}" => "é")
+    s = replace(s, "{\\'e}" => "é")
     s = replace(s, "{\\'a}" => "á")
+    s = replace(s, "{\\'o}" => "ó")
     s = replace(s, "{\\'{a}}" => "á")
     s = replace(s, "{\\o}" => "ø")
     s = replace(s, "{\\^{i}}" => "î")
@@ -27,6 +39,7 @@ function _fix(s::String)
     s = replace(s, "\\^{\\i} " => "î")
     s = replace(s, "{\\'c}" => "ć")
     s = replace(s, "{\\v{s}}" => "š")
+    s = replace(s, "{\\v s}" => "š")
     s = replace(s, "{" => "")
     s = replace(s, "}" => "")
     return s
@@ -72,8 +85,12 @@ function print_entry(io::IO, key::String; kws...)
     print_entry(io, BIB[key]; kws...)
 end
 
+function citation_key(d)
+    return join([first(s.last) for s in d.authors]) * d.date.year[end-1:end]
+end
+
 function cite(d)
-    return "[" * join([first(s.last) for s in d.authors]) * d.date.year[end-1:end] * "]"
+    return "[" * citation_key(d) * "]"
 end
 
 function print_entry(io::IO, d; links = true, venue = true, doi = true, cite = false)
