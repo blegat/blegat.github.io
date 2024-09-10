@@ -22,7 +22,7 @@ where appropriate -->
     <img class="left" style="width:16%;" src="assets/index/profpic.jpg">
 ~~~
 @@inline-images
-Benoît Legat is starting as Assistant Professor at
+Benoît Legat is an Assistant Professor at
 [![UCLouvain](assets/index/uclouvain.png)](https://uclouvain.be/)
 in the
 [Mathematical Engineering department (INMA)](https://uclouvain.be/fr/node/2107)
@@ -32,7 +32,7 @@ He received his Ph.D. degree in applied mathematics from the UCLouvain, Belgium,
 He then worked as postdoctoral researcher at
 [![MIT](assets/index/mit.png)](https://mit.edu)
 with [Prof. Pablo Parrilo](https://www.mit.edu/~parrilo/)
-in the [LIDS](https://lids.mit.edu/) and now
+in the [LIDS](https://lids.mit.edu/) and then
 at
 [![KU Leuven](assets/index/kuleuven.png)](https://www.kuleuven.be/wieiswie/en/person/00159064)
 with [Prof. Bart De Moor](https://www.bartdemoor.be/)
@@ -55,22 +55,18 @@ invariant set computation and optimal control.
 
 @@inline-images
 `benoit.legat@`
-![Are you a robot ?](assets/index/kuleuven.png)
+![Are you a robot ?](assets/index/uclouvain.png)
 `.be`
 ~~~
 <br/>
 ~~~
-My office address is the room B04.25 at
+My office address is the room a.116 of the Euler Building
 ~~~
 <br/>
 ~~~
-Department of Electrical Engineering ESAT
+Avenue Georges Lemaître, 4 - bte L4.05.01
 ~~~
 <br/>
 ~~~
-Kasteelpark Arenberg 10,
-~~~
-<br/>
-~~~
-3001 Leuven
+1348 Louvain-la-Neuve, Belgium
 @@
