@@ -1,8 +1,6 @@
 @def title = "Talks"
 @def hascode = false
 
-## Upcoming talks
-
 ~~~
 <ul>
   <li id="2024_A4CP">
@@ -14,13 +12,6 @@
   <li id="2024_JuMP">
     <a href="https://jump.dev/meetings/jumpdev2024/">JuMP-dev 2024</a>, 19th of July 2024<br><strong>Why you should stop using the monomial basis</strong>
   </li>
-</ul>
-~~~
-
-## Past talks
-
-~~~
-<ul>
   <li id="2023_KUL">
     KU Leuven, 24th of November 2023<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong><br><a href="https://drive.google.com/file/d/1yutRLs4izHT8JZFov4SbT0_GFSmcxnzc/view">slides</a>
   </li>
