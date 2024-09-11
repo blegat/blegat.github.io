@@ -4,7 +4,7 @@
 ~~~
 <ul>
   <li id="2024_A4CP">
-    <a href="https://cp2024.a4cp.org/">The 30th International Conference on Principles and Practice of Constraint Programming</a>, 2-6th of September 2024<br><strong>Constraint Programming with JuMP</strong>
+    <a href="https://cp2024.a4cp.org/">The 30th International Conference on Principles and Practice of Constraint Programming</a>, 2-6th of September 2024<br><strong>Constraint Programming with JuMP</strong><br><a href="https://github.com/blegat/CPWithJuMP">code</a>
   </li>
   <li id="2024_ISMP">
     <a href="https://ismp2024.gerad.ca/">25th International Symposium on Mathematical Programming (ISMP)</a>, 22nd of July 2024<br><a href="https://ismp2024.gerad.ca/schedule/MB/677"><strong>Reducing Sum-of-Squares constraints over a domain</strong></a>
