@@ -85,8 +85,17 @@ function print_entry(io::IO, key::String; kws...)
     print_entry(io, BIB[key]; kws...)
 end
 
+function first_letter(name::AbstractString)
+    i = findfirst(isuppercase, name)
+    if !isnothing(i)
+        return name[i]
+    end
+    i = findfirst(islowercase, name)
+    return name[i]
+end
+
 function citation_key(d)
-    return join([first(s.last) for s in d.authors]) * d.date.year[end-1:end]
+    return join([first_letter(s.last) for s in d.authors]) * d.date.year[end-1:end]
 end
 
 function cite(d)
