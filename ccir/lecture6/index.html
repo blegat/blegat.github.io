@@ -32,20 +32,25 @@ optimize!(model)
 <span class=hljs-keyword >end</span>
 viz()
 
-sum(x[edge_ids[<span class=hljs-number >3</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >3</span>))
-sum(x[edge_ids[from =&gt; <span class=hljs-number >3</span>]] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> Graphs.inneighbors(G, <span class=hljs-number >3</span>))
+value(sum(flow[Edge(<span class=hljs-number >3</span> =&gt; to)] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >3</span>)))
+value(sum(flow[Edge(from =&gt; <span class=hljs-number >3</span>)] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> Graphs.inneighbors(G, <span class=hljs-number >3</span>)))
 
-<span class=hljs-meta >@constraint</span>(model, sum(x[edge_ids[node =&gt; <span class=hljs-number >3</span>]] <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> inneighbors(G, <span class=hljs-number >3</span>)) == sum(x[edge_ids[<span class=hljs-number >3</span> =&gt; node]] <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> outneighbors(G, <span class=hljs-number >3</span>)))
-optimize!(model)
-viz()
-
-<span class=hljs-meta >@constraint</span>(
+<span class=hljs-meta >@expression</span>(
     model,
-    conservation_of_flow[node <span class=hljs-keyword >in</span> <span class=hljs-number >2</span>:(nv(G) - <span class=hljs-number >1</span>)],
-    sum(x[edge_ids[from =&gt; node]] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> inneighbors(G, node))
-    ==
-    sum(x[edge_ids[node =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> outneighbors(G, node)),
+    incoming_flow[v <span class=hljs-keyword >in</span> Graphs.vertices(G); v != <span class=hljs-number >1</span>],
+    sum(flow[Edge(from =&gt; v)] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> Graphs.inneighbors(G, v)),
 )
+
+<span class=hljs-meta >@expression</span>(
+    model,
+    outgoing_flow[v <span class=hljs-keyword >in</span> Graphs.vertices(G); v != Graphs.nv(G)],
+    sum(flow[Edge(v =&gt; to)] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, v)),
+)
+
+<span class=hljs-meta >@constraint</span>(model, [v <span class=hljs-keyword >in</span> Graphs.vertices(G); v != <span class=hljs-number >1</span> &amp;&amp; v != Graphs.nv(G)], incoming_flow[v] == outgoing_flow[v])
+
+<span class=hljs-meta >@objective</span>(model, Max, outgoing_flow[<span class=hljs-number >1</span>])
+
 optimize!(model)
 solution_summary(model)
 viz()</code></pre> <h1 id=min-cut ><a href="#min-cut" class=header-anchor >Min-Cut</a></h1> <pre><code class="julia hljs">model = Model(HiGHS.Optimizer)
