@@ -89,12 +89,26 @@ gplot(G, nodesize=0.1, nodelabel = 1:6, edgelabel = [w[e] * Int(value(cut[e])) f
 optimize!(model)
 solution_summary(model)
 
+using Colors
+
 gplot(
     G,
     nodesize=0.1,
-    nodefillc = [ifelse(round(value(side[node])) == 0, "red", "blue") for node in Graphs.vertices(G)],
     nodelabel = Graphs.vertices(G),
     edgelabel = [w[e] * Int(value(cut[e])) for e in Graphs.edges(G)],
-    edgelabelc = colorant"red",
-    edgestrokec = [ifelse(round(value(cut[edge])) == 0, "grey", "green") for edge in Graphs.edges(G)],
+    edgelabelc = Colors.JULIA_LOGO_COLORS.green,
+    nodefillc = map(Graphs.vertices(G)) do node
+        if value(side[node]) < 0.5
+            Colors.JULIA_LOGO_COLORS.red
+        else
+            Colors.JULIA_LOGO_COLORS.blue
+        end
+    end,
+    edgestrokec = map(Graphs.edges(G)) do edge
+        if value(cut[edge]) < 0.5
+            "grey"
+        else
+            Colors.JULIA_LOGO_COLORS.purple
+        end
+    end,
 )
