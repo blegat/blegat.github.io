@@ -38,20 +38,25 @@ function viz()
 end
 viz()
 
-sum(x[edge_ids[3 => to]] for to in Graphs.outneighbors(G, 3))
-sum(x[edge_ids[from => 3]] for from in Graphs.inneighbors(G, 3))
+value(sum(flow[Edge(3 => to)] for to in Graphs.outneighbors(G, 3)))
+value(sum(flow[Edge(from => 3)] for from in Graphs.inneighbors(G, 3)))
 
-@constraint(model, sum(x[edge_ids[node => 3]] for node in inneighbors(G, 3)) == sum(x[edge_ids[3 => node]] for node in outneighbors(G, 3)))
-optimize!(model)
-viz()
-
-@constraint(
+@expression(
     model,
-    conservation_of_flow[node in 2:(nv(G) - 1)],
-    sum(x[edge_ids[from => node]] for from in inneighbors(G, node))
-    ==
-    sum(x[edge_ids[node => to]] for to in outneighbors(G, node)),
+    incoming_flow[v in Graphs.vertices(G); v != 1],
+    sum(flow[Edge(from => v)] for from in Graphs.inneighbors(G, v)),
 )
+
+@expression(
+    model,
+    outgoing_flow[v in Graphs.vertices(G); v != Graphs.nv(G)],
+    sum(flow[Edge(v => to)] for to in Graphs.outneighbors(G, v)),
+)
+
+@constraint(model, [v in Graphs.vertices(G); v != 1 && v != Graphs.nv(G)], incoming_flow[v] == outgoing_flow[v])
+
+@objective(model, Max, outgoing_flow[1])
+
 optimize!(model)
 solution_summary(model)
 viz()
