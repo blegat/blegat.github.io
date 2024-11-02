@@ -64,34 +64,37 @@ viz()
 # # Min-Cut
 
 model = Model(HiGHS.Optimizer)
-@variable(model, 0 <= cut[1:ne(G)] <= 1)
+@variable(model, 0 <= cut[Graphs.edges(G)] <= 1)
 
-@objective(model, Min, sum(w[e] * cut[e] for e in 1:ne(G)))
+@objective(model, Min, sum(w[e] * cut[e] for e in Graphs.edges(G)))
 
 optimize!(model)
 solution_summary(model)
 
-2cut[1] / 3cut[2] + 1
-
-gplot(G, nodesize=0.1, nodelabel = 1:6, edgelabel = value.(cut), edgelabelc = colorant"red")
+gplot(G, nodesize=0.1, nodelabel = 1:6, edgelabel = [w[e] * Int(value(cut[e])) for e in Graphs.edges(G)], edgelabelc = colorant"red")
 
 # | `side[from]` | `side[to]` | `side[to] - side[from]` |
-# |-----|-----|---------|
-# |  0  |  1  |    1    |
-# |  1  |  0  |   -1    |
-# |  1  |  1  |    0    |
-# |  0  |  0  |    0    |
+# |--------------|------------|-------------------------|
+# |      0       |      1     |           1             |
+# |      1       |      0     |          -1             |
+# |      1       |      1     |           0             |
+# |      0       |      0     |           0             |
 
-@variable(model, side[1:nv(G)])
+@variable(model, 0 <= side[1:nv(G)] <= 1)
 @constraint(model, side[1] == 0)
 @constraint(model, side[nv(G)] == 1)
-@constraint(
-    model,
-    [from in 1:nv(G), to in outneighbors(G, from)],
-    cut[edge_ids[from => to]] >= side[to] - side[from],
-)
+
+@constraint(model, [edge in Graphs.edges(G)], cut[edge] >= side[edge.dst] - side[edge.src])
 
 optimize!(model)
 solution_summary(model)
 
-gplot(G, nodesize=0.1, nodelabel = ["$(Int(value(side[node])))/$node" for node in 1:6], edgelabel = Int.(value.(cut)) .* w, edgelabelc = colorant"red")
+gplot(
+    G,
+    nodesize=0.1,
+    nodefillc = [ifelse(round(value(side[node])) == 0, "red", "blue") for node in Graphs.vertices(G)],
+    nodelabel = Graphs.vertices(G),
+    edgelabel = [w[e] * Int(value(cut[e])) for e in Graphs.edges(G)],
+    edgelabelc = colorant"red",
+    edgestrokec = [ifelse(round(value(cut[edge])) == 0, "grey", "green") for edge in Graphs.edges(G)],
+)
