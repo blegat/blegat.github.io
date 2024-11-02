@@ -1,14 +1,10 @@
 <!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Lecture 6 &ndash; Max-Flow and Min-Cut</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=lecture_6_ndash_max-flow_and_min-cut ><a href="#lecture_6_ndash_max-flow_and_min-cut" class=header-anchor >Lecture 6 &ndash; Max-Flow and Min-Cut</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/lecture6.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/lecture6.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <h1 id=building_the_graph_and_visualizing_it ><a href="#building_the_graph_and_visualizing_it" class=header-anchor >Building the graph and visualizing it</a></h1> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Graphs
 <span class=hljs-keyword >function</span> build_graph()
     G = DiGraph(<span class=hljs-number >6</span>)
-    w = <span class=hljs-built_in >Int</span>[]
-    edge_ids = <span class=hljs-built_in >Dict</span>{<span class=hljs-built_in >Pair</span>{<span class=hljs-built_in >Int</span>,<span class=hljs-built_in >Int</span>},<span class=hljs-built_in >Int</span>}()
-    cur_id = <span class=hljs-number >0</span>
+    w = <span class=hljs-built_in >Dict</span>{Graphs.SimpleGraphs.SimpleEdge{<span class=hljs-built_in >Int</span>},<span class=hljs-built_in >Int</span>}()
     <span class=hljs-keyword >function</span> add(from, to, weight)
-        cur_id += <span class=hljs-number >1</span>
-        edge_ids[from =&gt; to] = cur_id
         add_edge!(G, from, to)
-        push!(w, weight)
+        w[Edge(from =&gt; to)] = weight
     <span class=hljs-keyword >end</span>
     add(<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>)
     add(<span class=hljs-number >1</span>, <span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
@@ -18,50 +14,30 @@
     add(<span class=hljs-number >4</span>, <span class=hljs-number >5</span>, <span class=hljs-number >4</span>)
     add(<span class=hljs-number >4</span>, <span class=hljs-number >6</span>, <span class=hljs-number >2</span>)
     add(<span class=hljs-number >5</span>, <span class=hljs-number >6</span>, <span class=hljs-number >3</span>)
-    <span class=hljs-keyword >return</span> G, w, edge_ids
+    <span class=hljs-keyword >return</span> G, w
 <span class=hljs-keyword >end</span>
-G, w, edge_ids = build_graph()
+G, w = build_graph()
 <span class=hljs-keyword >using</span> GraphPlot
-gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = w)
+<span class=hljs-keyword >using</span> Colors
 
-edge_ids
-
-w
-
-edge_ids[<span class=hljs-number >3</span> =&gt; <span class=hljs-number >5</span>]
-
-w[edge_ids[<span class=hljs-number >3</span> =&gt; <span class=hljs-number >5</span>]]
-
-Graphs.outneighbors(G, <span class=hljs-number >1</span>)
-
-[<span class=hljs-number >1</span> =&gt; to <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)]
-
-[edge_ids[<span class=hljs-number >1</span> =&gt; to] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)]
-
-[x[edge_ids[<span class=hljs-number >1</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)]
-
-sum([x[edge_ids[<span class=hljs-number >1</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)])
-
-sum(x[edge_ids[<span class=hljs-number >1</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>))</code></pre> <h1 id=max-flow ><a href="#max-flow" class=header-anchor >Max-Flow</a></h1> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
+gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = [w[e] <span class=hljs-keyword >for</span> e <span class=hljs-keyword >in</span> edges(G)], edgelabelsize = <span class=hljs-number >2.0</span>, edgelabelc = <span class=hljs-string >colorant&quot;red&quot;</span>)</code></pre> <h1 id=max-flow ><a href="#max-flow" class=header-anchor >Max-Flow</a></h1> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
 <span class=hljs-keyword >import</span> HiGHS
 model = Model(HiGHS.Optimizer)
-<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= x[i = <span class=hljs-number >1</span>:ne(G)] &lt;= w[i])
-<span class=hljs-meta >@objective</span>(model, Max, sum(x[edge_ids[<span class=hljs-number >1</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)))
+<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= flow[edge <span class=hljs-keyword >in</span> edges(G)] &lt;= w[edge])
+<span class=hljs-meta >@objective</span>(model, Max, sum(flow[Edge(<span class=hljs-number >1</span> =&gt; to)] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >1</span>)))
 optimize!(model)
 
-gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = [<span class=hljs-string >&quot;<span class=hljs-subst >$(<span class=hljs-built_in >Int</span>(value(x[i])</span>))/<span class=hljs-subst >$(w[i])</span>&quot;</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:ne(G)])
+<span class=hljs-keyword >function</span> viz()
+    gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = [<span class=hljs-string >&quot;<span class=hljs-subst >$(<span class=hljs-built_in >Int</span>(value(flow[edge])</span>))/<span class=hljs-subst >$(w[edge])</span>&quot;</span> <span class=hljs-keyword >for</span> edge <span class=hljs-keyword >in</span> edges(G)], edgelabelc = <span class=hljs-string >colorant&quot;red&quot;</span>)
+<span class=hljs-keyword >end</span>
+viz()
 
-value.(x)
+sum(x[edge_ids[<span class=hljs-number >3</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> Graphs.outneighbors(G, <span class=hljs-number >3</span>))
+sum(x[edge_ids[from =&gt; <span class=hljs-number >3</span>]] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> Graphs.inneighbors(G, <span class=hljs-number >3</span>))
 
-Graphs.outneighbors(G, <span class=hljs-number >1</span>)
-
-collect(<span class=hljs-number >2</span>:(nv(G) - <span class=hljs-number >1</span>))
-
-edge_ids[<span class=hljs-number >2</span> =&gt; <span class=hljs-number >3</span>]
-
-edge_ids[<span class=hljs-number >2</span> =&gt; <span class=hljs-number >4</span>]
-
-sum(x[edge_ids[<span class=hljs-number >2</span> =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> outneighbors(G, <span class=hljs-number >2</span>))
+<span class=hljs-meta >@constraint</span>(model, sum(x[edge_ids[node =&gt; <span class=hljs-number >3</span>]] <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> inneighbors(G, <span class=hljs-number >3</span>)) == sum(x[edge_ids[<span class=hljs-number >3</span> =&gt; node]] <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> outneighbors(G, <span class=hljs-number >3</span>)))
+optimize!(model)
+viz()
 
 <span class=hljs-meta >@constraint</span>(
     model,
@@ -70,18 +46,10 @@ sum(x[edge_ids[<span class=hljs-number >2</span> =&gt; to]] <span class=hljs-key
     ==
     sum(x[edge_ids[node =&gt; to]] <span class=hljs-keyword >for</span> to <span class=hljs-keyword >in</span> outneighbors(G, node)),
 )
-
-model[:x]
-
-println(model)
-
-<span class=hljs-meta >@objective</span>(model, Max,  sum(x[edge_ids[from =&gt; nv(G)]] <span class=hljs-keyword >for</span> from <span class=hljs-keyword >in</span> inneighbors(G, nv(G))))
-
 optimize!(model)
 solution_summary(model)
-
-gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = [<span class=hljs-string >&quot;<span class=hljs-subst >$(<span class=hljs-built_in >Int</span>(value(x[i])</span>))/<span class=hljs-subst >$(w[i])</span>&quot;</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:ne(G)])</code></pre> <h1 id=min-cut ><a href="#min-cut" class=header-anchor >Min-Cut</a></h1> <pre><code class="julia hljs">model = Model(HiGHS.Optimizer)
-<span class=hljs-meta >@variable</span>(model, cut[<span class=hljs-number >1</span>:ne(G)], Bin)
+viz()</code></pre> <h1 id=min-cut ><a href="#min-cut" class=header-anchor >Min-Cut</a></h1> <pre><code class="julia hljs">model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= cut[<span class=hljs-number >1</span>:ne(G)] &lt;= <span class=hljs-number >1</span>)
 
 <span class=hljs-meta >@objective</span>(model, Min, sum(w[e] * cut[e] <span class=hljs-keyword >for</span> e <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:ne(G)))
 
@@ -90,7 +58,7 @@ solution_summary(model)
 
 <span class=hljs-number >2</span>cut[<span class=hljs-number >1</span>] / <span class=hljs-number >3</span>cut[<span class=hljs-number >2</span>] + <span class=hljs-number >1</span>
 
-gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = value.(cut))</code></pre> <table><tr><th align=right ><code>side&#91;from&#93;</code><th align=right ><code>side&#91;to&#93;</code><th align=right ><code>side&#91;to&#93; - side&#91;from&#93;</code><tr><td align=right >0<td align=right >1<td align=right >1<tr><td align=right >1<td align=right >0<td align=right >-1<tr><td align=right >1<td align=right >1<td align=right >0<tr><td align=right >0<td align=right >0<td align=right >0</table> <pre><code class="julia hljs"><span class=hljs-meta >@variable</span>(model, side[<span class=hljs-number >1</span>:nv(G)], Bin)
+gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=hljs-number >1</span>:<span class=hljs-number >6</span>, edgelabel = value.(cut), edgelabelc = <span class=hljs-string >colorant&quot;red&quot;</span>)</code></pre> <table><tr><th align=right ><code>side&#91;from&#93;</code><th align=right ><code>side&#91;to&#93;</code><th align=right ><code>side&#91;to&#93; - side&#91;from&#93;</code><tr><td align=right >0<td align=right >1<td align=right >1<tr><td align=right >1<td align=right >0<td align=right >-1<tr><td align=right >1<td align=right >1<td align=right >0<tr><td align=right >0<td align=right >0<td align=right >0</table> <pre><code class="julia hljs"><span class=hljs-meta >@variable</span>(model, side[<span class=hljs-number >1</span>:nv(G)])
 <span class=hljs-meta >@constraint</span>(model, side[<span class=hljs-number >1</span>] == <span class=hljs-number >0</span>)
 <span class=hljs-meta >@constraint</span>(model, side[nv(G)] == <span class=hljs-number >1</span>)
 <span class=hljs-meta >@constraint</span>(
@@ -102,4 +70,4 @@ gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = <span class=h
 optimize!(model)
 solution_summary(model)
 
-gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = [<span class=hljs-string >&quot;<span class=hljs-subst >$(<span class=hljs-built_in >Int</span>(value(side[node])</span>))/<span class=hljs-variable >$node</span>&quot;</span> <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >6</span>], edgelabel = <span class=hljs-built_in >Int</span>.(value.(cut)) .* w)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: October 16, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
+gplot(G, nodesize=<span class=hljs-number >0.1</span>, nodelabel = [<span class=hljs-string >&quot;<span class=hljs-subst >$(<span class=hljs-built_in >Int</span>(value(side[node])</span>))/<span class=hljs-variable >$node</span>&quot;</span> <span class=hljs-keyword >for</span> node <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >6</span>], edgelabel = <span class=hljs-built_in >Int</span>.(value.(cut)) .* w, edgelabelc = <span class=hljs-string >colorant&quot;red&quot;</span>)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: November 02, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
