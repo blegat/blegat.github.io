@@ -111,9 +111,9 @@ version = "0.1.10"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "62ca0547a14c57e98154423419d8a342dca75ca9"
+git-tree-sha1 = "91e0e5c68d02bcdaae76d3c8ceb4361e8f28d2e9"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.16.4"
+version = "1.16.5"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
@@ -133,15 +133,15 @@ version = "0.10.2"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "bc3f416a965ae61968c20d0ad867556367f2817d"
+git-tree-sha1 = "1336e07ba2eb75614c99496501a8f4b233e9fafe"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.9"
+version = "1.10.10"
 
 [[deps.IJulia]]
 deps = ["Base64", "Conda", "Dates", "InteractiveUtils", "JSON", "Libdl", "Logging", "Markdown", "MbedTLS", "Pkg", "Printf", "REPL", "Random", "SoftGlobalScope", "Test", "UUIDs", "ZMQ"]
-git-tree-sha1 = "1702f79fa30f56b68d5b2fd6fb3a9a14ff6f9130"
+git-tree-sha1 = "1b1299f7d6617291f3d260e9f5b0250afdaac8c0"
 uuid = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
-version = "1.25.0"
+version = "1.26.0"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
