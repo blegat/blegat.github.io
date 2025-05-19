@@ -1,8 +1,26 @@
 @def title = "Talks"
 @def hascode = false
 
+## Upcoming talks
+
 ~~~
 <ul>
+  <li id="2025_JuMP">
+    <a href="https://jump.dev/meetings/jumpdev2025/">Large Scale JuMP Models with Constraint Generators</a>, 17th of November 2025<br><strong>Large Scale JuMP Models with Constraint Generators</strong>
+  </li>
+  <li id="2025_cgwa">
+    <a href="https://sites.google.com/view/cgwa25/program">FNRS Contact Group on "Wavelets and Applications"</a>, 20th of May 2025<br><strong>Hidden convexity in factorization problems</strong>
+  </li>
+</ul>
+~~~
+
+## Past talks
+
+~~~
+<ul>
+  <li id="2025_naXys">
+    <a href="https://www.naxys.be/event/benoit-legat-uclouvain/">naXys seminar</a>, 27th of February 2025<br><strong>Hidden convexity in linear neural networks</strong>
+  </li>
   <li id="2024_A4CP">
     <a href="https://cp2024.a4cp.org/">The 30th International Conference on Principles and Practice of Constraint Programming</a>, 2-6th of September 2024<br><strong>Constraint Programming with JuMP</strong><br><a href="https://github.com/blegat/CPWithJuMP">code</a>
   </li>
