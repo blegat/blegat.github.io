@@ -5,14 +5,6 @@
 the config file by setting hasmath = false for instance and just setting it to true
 where appropriate -->
 
-~~~
-<div class="colbox-blue" style="margin-top:1.5em; margin-bottom:1em; width:95%; border-radius:5px;">
-~~~
-⚠ **Hiring!** I have one open position for a **Ph.D. student**. Do not hesitate to contact me!
-~~~
-</div>
-~~~
-
 ## About me
 
 <!-- raw html to allow a responsive row  -->
