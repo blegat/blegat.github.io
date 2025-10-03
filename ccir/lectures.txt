@@ -1,7 +1,0 @@
-System of linear equations
-Why derivatives matter
-What is convexity and why does it matter
-Mixed Integer Linear Programming and branching
-Linear Programming duality and Branch and Bound
-Max-Flow and Min-Cut
-Traveling Salesman Problem
