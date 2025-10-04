@@ -1,0 +1,253 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Lecture 3 &ndash; What is convexity and why does it matter</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=lecture_3_ndash_what_is_convexity_and_why_does_it_matter ><a href="#lecture_3_ndash_what_is_convexity_and_why_does_it_matter" class=header-anchor >Lecture 3 &ndash; What is convexity and why does it matter</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/lecture3.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/lecture3.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <h1 id=julia_lambda_function ><a href="#julia_lambda_function" class=header-anchor >Julia: lambda function</a></h1> <pre><code class="julia hljs">f(x) = x * sin(x)
+
+plot_convexity(f, -<span class=hljs-number >1</span>, <span class=hljs-number >1</span>)
+
+plot_convexity(x -&gt; x * sin(x), -<span class=hljs-number >1</span>, <span class=hljs-number >1</span>)</code></pre> <h1 id=nonconvexity_and_local_minima ><a href="#nonconvexity_and_local_minima" class=header-anchor >Nonconvexity and local minima</a></h1> <p>A function <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span> is <em>convex</em> if <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy=false >(</mo><mi>λ</mi><mi>x</mi><mo>+</mo><mo stretchy=false >(</mo><mn>1</mn><mo>−</mo><mi>λ</mi><mo stretchy=false >)</mo><mi>y</mi><mo stretchy=false >)</mo><mo>≤</mo><mi>λ</mi><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo><mo>+</mo><mo stretchy=false >(</mo><mn>1</mn><mo>−</mo><mi>λ</mi><mo stretchy=false >)</mo><mi>f</mi><mo stretchy=false >(</mo><mi>y</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">f(\lambda x + (1 - \lambda) y) \le \lambda f(x) + (1 - \lambda) f(y)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">λ</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >1</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">λ</span><span class=mclose >)</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≤</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">λ</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >1</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">λ</span><span class=mclose >)</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mclose >)</span></span></span></span> for all pairs <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator=true >,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x, y</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> and <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>λ</mi><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 \le \lambda \le 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.7804em;vertical-align:-0.136em;"></span><span class=mord >0</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≤</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.8304em;vertical-align:-0.136em;"></span><span class="mord mathnormal">λ</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≤</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >1</span></span></span></span>.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots
+<span class=hljs-keyword >function</span> plot_convexity(f::<span class=hljs-built_in >Function</span>, min_x, max_x)
+    step = <span class=hljs-number >100</span>
+    xs = range(min_x, stop = max_x, length = <span class=hljs-number >10</span>step + <span class=hljs-number >1</span>)
+    plot(xs, f.(xs), label = <span class=hljs-string >&quot;&quot;</span>)
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> (step + <span class=hljs-number >1</span>):step:length(xs)
+        a = xs[i - step]
+        b = xs[i]
+        ys = [a, b]
+        cord = (f(a) + f(b)) / <span class=hljs-number >2</span>
+        graph = f((a + b) / <span class=hljs-number >2</span>)
+        color = <span class=hljs-keyword >if</span> cord ≈ graph
+            :orange
+        <span class=hljs-keyword >elseif</span> cord &lt;= graph
+            :red
+        <span class=hljs-keyword >else</span>
+            :green
+        <span class=hljs-keyword >end</span>
+        plot!(ys, f.(ys), color = color, label = <span class=hljs-string >&quot;&quot;</span>)
+    <span class=hljs-keyword >end</span>
+    plot!()
+<span class=hljs-keyword >end</span>
+
+plot_convexity(x -&gt; x * sin(x), -<span class=hljs-number >20</span>, <span class=hljs-number >20</span>)
+plot_convexity(x -&gt; abs(x), -<span class=hljs-number >5</span>, <span class=hljs-number >6</span>)
+
+<span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> Ipopt
+model = Model(Ipopt.Optimizer)
+set_silent(model)
+<span class=hljs-meta >@variable</span>(model, x, start=<span class=hljs-number >0.0</span>)
+<span class=hljs-meta >@NLobjective</span>(model, Min, x * sin(x))
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+set_start_value(x, <span class=hljs-number >1</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)</code></pre> <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3.4</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup></mrow><annotation encoding="application/x-tex">3.4 \times 10^{-10}</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >3.4</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >×</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8141em;"></span><span class=mord >1</span><span class=mord ><span class=mord >0</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">10</span></span></span></span></span></span></span></span></span></span></span></span> <pre><code class="julia hljs">set_start_value(x, <span class=hljs-number >6</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+<span class=hljs-number >10</span>^<span class=hljs-number >10</span>
+
+set_start_value(x, <span class=hljs-number >10</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)</code></pre> <h1 id=convexity ><a href="#convexity" class=header-anchor >Convexity</a></h1> <pre><code class="julia hljs">exp10(<span class=hljs-number >4</span>)</code></pre>
+<span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo stretchy=false >(</mo><msup><mi>e</mi><mi>x</mi></msup><mo stretchy=false >)</mo><mi mathvariant=normal >/</mi><mi>d</mi><mi>x</mi><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></mrow><annotation encoding="application/x-tex">d(e^x)/dx = e^x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">e</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span><span class=mclose >)</span><span class=mord >/</span><span class="mord mathnormal">d</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6644em;"></span><span class=mord ><span class="mord mathnormal">e</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span></span></span>
+<pre><code class="julia hljs">exp(<span class=hljs-number >1</span>)
+
+plot_convexity(x -&gt; exp(x) + exp(-<span class=hljs-number >3</span>x), -<span class=hljs-number >1</span>, <span class=hljs-number >3</span>)
+plot_convexity(x -&gt; -(exp(x) + exp(-<span class=hljs-number >3</span>x)), -<span class=hljs-number >1</span>, <span class=hljs-number >3</span>)
+
+<span class=hljs-meta >@NLobjective</span>(model, Min, exp(x) + exp(-<span class=hljs-number >3</span>x))
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+set_start_value(x, <span class=hljs-number >0</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+set_start_value(x, -<span class=hljs-number >6</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+<span class=hljs-meta >@NLobjective</span>(model, Max, exp(x) + exp(-<span class=hljs-number >3</span>x))
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+set_upper_bound(x, <span class=hljs-number >3</span>)
+set_lower_bound(x, -<span class=hljs-number >1</span>)
+
+println(model)
+
+<span class=hljs-meta >@NLobjective</span>(model, Max, exp(x) + exp(-<span class=hljs-number >3</span>x))
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+set_start_value(x, <span class=hljs-number >2.5</span>)
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+<span class=hljs-meta >@NLobjective</span>(model, Min, -(exp(x) + exp(-<span class=hljs-number >3</span>x)))
+optimize!(model)
+solution_summary(model)
+
+value(x)</code></pre>
+<p>Minimizing convex function or maximizing concave function over a convex feasible set:</p>
+<ul>
+<li><p>The set of local minimizers is a convex set and they are all global.</p>
+
+</ul>
+<p>Minimizing concave function or maximizing convex function over a convex feasible set:</p>
+<ul>
+<li><p>There are local minimizers that are not global. There exists one global minimum that is an extreme point.</p>
+
+</ul>
+<pre><code class="julia hljs">plot_convexity(x -&gt; max(exp(x) + exp(-<span class=hljs-number >3</span>x), <span class=hljs-number >5</span>), -<span class=hljs-number >1</span>, <span class=hljs-number >3</span>)
+
+model = Model(Ipopt.Optimizer)
+<span class=hljs-meta >@variable</span>(model, x)
+set_start_value(x, <span class=hljs-number >0.1</span>)
+set_lower_bound(x, -<span class=hljs-number >1</span>)
+set_upper_bound(x, <span class=hljs-number >3</span>)
+<span class=hljs-meta >@NLobjective</span>(model, Min, max(exp(x) + exp(-<span class=hljs-number >3</span>x), <span class=hljs-number >5</span>))
+optimize!(model)
+solution_summary(model)
+
+value(x)</code></pre>
+<h2 id=operations_of_convex_functions ><a href="#operations_of_convex_functions" class=header-anchor >Operations of convex functions</a></h2>
+<pre><code class="julia hljs">plot_convexity(x -&gt; <span class=hljs-number >2</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; -<span class=hljs-number >2</span>x, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >2</span> + x^<span class=hljs-number >4</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >3</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >4</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >5</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >6</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x^<span class=hljs-number >7</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; -x^<span class=hljs-number >2</span> + y^<span class=hljs-number >2</span> + (-<span class=hljs-number >2</span>x) + <span class=hljs-number >2</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; exp(x), -<span class=hljs-number >4</span>, <span class=hljs-number >3</span>)
+plot_convexity(x -&gt; -log(x), <span class=hljs-number >0.03</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; exp(x) + exp(-<span class=hljs-number >3</span>x), -<span class=hljs-number >1</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; exp(x) - log(x), <span class=hljs-number >0.001</span>, <span class=hljs-number >3</span>)</code></pre>
+<p>A function <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> is <em>concave</em> if <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">-f</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.8889em;vertical-align:-0.1944em;"></span><span class=mord >−</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> is convex.</p>
+<pre><code class="julia hljs">plot_convexity(x -&gt; -log(x), <span class=hljs-number >0.1</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; x * sin(x), -<span class=hljs-number >6</span>, <span class=hljs-number >6</span>)
+
+plot_convexity(x -&gt; x, <span class=hljs-number >0.1</span>, <span class=hljs-number >3</span>)
+
+plot_convexity(x -&gt; exp(x) + log(x), <span class=hljs-number >0.01</span>, <span class=hljs-number >2</span>)
+
+plot_convexity(x -&gt; <span class=hljs-number >2</span>exp(x), -<span class=hljs-number >1</span>, <span class=hljs-number >2</span>) <span class=hljs-comment ># exp(x)</span>
+plot_convexity(x -&gt; -exp(x), -<span class=hljs-number >1</span>, <span class=hljs-number >2</span>) <span class=hljs-comment ># exp(x)</span>
+plot_convexity(x -&gt; <span class=hljs-number >2</span>exp(x) + (-exp(x)), -<span class=hljs-number >1</span>, <span class=hljs-number >2</span>) <span class=hljs-comment ># exp(x)</span>
+
+plot_convexity(x -&gt; <span class=hljs-number >1</span> / x, -<span class=hljs-number >10</span>, -<span class=hljs-number >0.1</span>) <span class=hljs-comment ># exp(x)</span></code></pre>
+<h1 id=convex_sets_defined_by_inequality_with_convex_functions ><a href="#convex_sets_defined_by_inequality_with_convex_functions" class=header-anchor >Convex sets defined by inequality with convex functions</a></h1>
+<pre><code class="julia hljs">plot_convexity(x -&gt; x^<span class=hljs-number >2</span> - <span class=hljs-number >2</span>x - <span class=hljs-number >1</span>, -<span class=hljs-number >1</span>, <span class=hljs-number >3</span>)</code></pre>
+<p>x^2 - 2x - 1 &lt;&#61; 0 &#91;-0.3, 2.4&#93; -&gt; convex</p>
+<p>x^2 - 2x - 1 &gt;&#61; 0 &#93;-infty; -0.3&#93; ∪ &#91;2.4; infty&#91; -&gt; not convex</p>
+<pre><code class="julia hljs">plot_convexity(x -&gt; exp(x) - log(x), <span class=hljs-number >0.001</span>, <span class=hljs-number >3</span>)</code></pre>
+<p>exp&#40;x&#41; - log&#40;x&#41; &lt;&#61; 15 &#91;0.0001, 2.7&#93;</p>
+<p>x^2 - 2x - 1 &lt;&#61; 0 exp&#40;x&#41; - log&#40;x&#41; &lt;&#61; 15 &#91;0.0001, 2.4&#93;</p>
+<h1 id=linear_programs ><a href="#linear_programs" class=header-anchor >Linear Programs</a></h1>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> HiGHS
+model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model, x &gt;= -<span class=hljs-number >1</span>)
+<span class=hljs-meta >@variable</span>(model, y &gt;= -<span class=hljs-number >1</span>)
+<span class=hljs-meta >@constraint</span>(model, <span class=hljs-number >2</span>x + y &lt;= <span class=hljs-number >1</span>)
+<span class=hljs-meta >@constraint</span>(model, x + <span class=hljs-number >3</span>y &lt;= <span class=hljs-number >1</span>)
+<span class=hljs-meta >@objective</span>(model, Max, x + <span class=hljs-number >2</span>y)
+optimize!(model)
+solution_summary(model)
+
+value(x)
+
+value(y)
+
+<span class=hljs-keyword >using</span> Polyhedra
+plot(polyhedron(model), ratio = :equal)
+scatter!([value(x)], [(value(y))])
+xs = range(-<span class=hljs-number >0.5</span>, stop=<span class=hljs-number >1</span>, length=<span class=hljs-number >100</span>)
+plot!(xs, (objective_value(model) .- xs) / <span class=hljs-number >2</span>)
+
+model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model, -<span class=hljs-number >1</span> &lt;= x[<span class=hljs-number >1</span>:<span class=hljs-number >100</span>] &lt;= <span class=hljs-number >1</span>)
+<span class=hljs-comment >#@variable(model, x &gt;= -1)</span>
+<span class=hljs-comment >#@variable(model, y &gt;= -1)</span>
+<span class=hljs-comment >#@constraint(model, 2x + y &lt;= 1)</span>
+<span class=hljs-comment >#@constraint(model, x + 3y &lt;= 1)</span>
+<span class=hljs-meta >@objective</span>(model, Max, sum(x))
+optimize!(model)
+solution_summary(model)
+
+
+<span class=hljs-number >1</span>D: <span class=hljs-number >2</span>, <span class=hljs-number >2</span>
+<span class=hljs-number >2</span>D: <span class=hljs-number >4</span>, <span class=hljs-number >4</span>
+<span class=hljs-number >3</span>D: <span class=hljs-number >6</span>, <span class=hljs-number >8</span>
+<span class=hljs-number >4</span>D: <span class=hljs-number >8</span>, <span class=hljs-number >16</span>
+<span class=hljs-number >5</span>D: <span class=hljs-number >10</span>, <span class=hljs-number >32</span>
+<span class=hljs-number >6</span>D: <span class=hljs-number >12</span>, <span class=hljs-number >64</span>
+<span class=hljs-number >7</span>D: <span class=hljs-number >14</span>, <span class=hljs-number >128</span>
+<span class=hljs-number >8</span>D: <span class=hljs-number >16</span>, <span class=hljs-number >256</span>
+<span class=hljs-number >9</span>D: <span class=hljs-number >18</span>, <span class=hljs-number >512</span>
+<span class=hljs-number >10</span>D: <span class=hljs-number >20</span>, <span class=hljs-number >1024</span>
+<span class=hljs-number >30</span>D: <span class=hljs-number >60</span>, <span class=hljs-number >1</span>B
+nD: <span class=hljs-number >2</span>n, <span class=hljs-number >2</span>^n
+
+<span class=hljs-number >2</span>x + y == <span class=hljs-number >1</span>
+x + <span class=hljs-number >3</span>y == <span class=hljs-number >1</span>
+
+[<span class=hljs-number >2</span> <span class=hljs-number >1</span>
+<span class=hljs-number >1</span> <span class=hljs-number >3</span>] \ [<span class=hljs-number >1</span>, <span class=hljs-number >1</span>]
+
+
+model = Model()
+<span class=hljs-meta >@variable</span>(model, -<span class=hljs-number >1</span> &lt;= x[<span class=hljs-number >1</span>:<span class=hljs-number >50</span>] &lt;= <span class=hljs-number >1</span>)
+println(model)
+
+<span class=hljs-number >50</span>^<span class=hljs-number >2</span></code></pre>
+<hr />
+<p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div>
+    
+        
+
+
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

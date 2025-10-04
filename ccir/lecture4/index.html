@@ -1,0 +1,197 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Lecture 4 &ndash; Mixed Integer Linear Programming and branching</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=lecture_4_ndash_mixed_integer_linear_programming_and_branching ><a href="#lecture_4_ndash_mixed_integer_linear_programming_and_branching" class=header-anchor >Lecture 4 &ndash; Mixed Integer Linear Programming and branching</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/lecture4.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/lecture4.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <pre><code class="julia hljs">prices = [
+    <span class=hljs-number >3</span> <span class=hljs-number >2</span> <span class=hljs-number >8</span>
+    <span class=hljs-number >1</span> <span class=hljs-number >9</span> <span class=hljs-number >3</span>
+    <span class=hljs-number >5</span> <span class=hljs-number >3</span> <span class=hljs-number >2</span>
+]
+need = [<span class=hljs-number >5</span> <span class=hljs-number >3</span> <span class=hljs-number >19</span>]
+shops = <span class=hljs-number >1</span>:<span class=hljs-number >3</span>
+items = <span class=hljs-number >1</span>:<span class=hljs-number >3</span>
+
+<span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> HiGHS
+model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= buy[shops, items])
+<span class=hljs-keyword >for</span> item <span class=hljs-keyword >in</span> items
+    <span class=hljs-meta >@constraint</span>(model, sum(buy[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops) == need[item])
+<span class=hljs-keyword >end</span>
+<span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items))
+println(model)
+
+optimize!(model)
+solution_summary(model)
+
+value.(buy)
+
+<span class=hljs-meta >@variable</span>(model, buy[shops, items])
+
+collect(<span class=hljs-number >1</span>:<span class=hljs-number >9</span>)
+
+<span class=hljs-meta >@objective</span>(model, Min, sum(prices[i, j] * buy[i, j] <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >3</span>, j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >3</span>))
+
+item = <span class=hljs-number >1</span>
+sum(buy[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops)
+
+value(buy[<span class=hljs-number >2</span>,<span class=hljs-number >1</span>])
+
+optimize!(model)
+
+solution_summary(model)
+
+value.(buy)</code></pre> <h1 id=milp ><a href="#milp" class=header-anchor >MILP</a></h1> <pre><code class="julia hljs"><span class=hljs-meta >@variable</span>(model, go[shop <span class=hljs-keyword >in</span> shops], Bin)
+
+<span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items) + <span class=hljs-number >5</span>sum(go))
+
+
+<span class=hljs-meta >@constraint</span>(model, [shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items], buy[shop, item] &lt;= maximum(need) * go[shop])
+
+<span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >10</span>go[<span class=hljs-number >1</span>])
+<span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >2</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >10</span>go[<span class=hljs-number >2</span>])
+<span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >3</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >10</span>go[<span class=hljs-number >3</span>])
+
+<span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops
+    <span class=hljs-keyword >for</span> item <span class=hljs-keyword >in</span> items
+        <span class=hljs-meta >@constraint</span>(model, buy[shop,item] &lt;= <span class=hljs-number >10000000000</span> * go[shop])
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+println(model)
+
+optimize!(model)
+
+solution_summary(model)
+
+value.(buy)
+
+value.(go)
+
+<span class=hljs-meta >@constraint</span>(model, [shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items], buy[shop, item] &lt;= need[item] * go[shop])
+
+<span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops
+    <span class=hljs-keyword >for</span> item <span class=hljs-keyword >in</span> items
+        <span class=hljs-meta >@constraint</span>(model, buy[shop, item] &lt;= need[item] * go[shop])
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>] &lt;= go[<span class=hljs-number >1</span>])
+
+<span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >1</span>, <span class=hljs-number >3</span>] &lt;= go[<span class=hljs-number >1</span>])</code></pre> <h1 id=big-m_formulation ><a href="#big-m_formulation" class=header-anchor >Big-M formulation</a></h1> <p>If <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">b = 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >0</span></span></span></span> then <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">a \le 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">a</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≤</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >0</span></span></span></span>. This is encoded as <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≤</mo><mi>M</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">a \le Mb</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">a</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >≤</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">b</span></span></span></span> where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> is a big enough constant.</p> <pre><code class="julia hljs"><span class=hljs-meta >@constraint</span>(model, buy[<span class=hljs-number >1</span>, <span class=hljs-number >2</span>] &lt;= <span class=hljs-number >3</span>go[<span class=hljs-number >1</span>])
+
+optimize!(model)
+
+solution_summary(model)
+
+value.(buy)
+
+value.(go)
+
+<span class=hljs-literal >Inf</span> - <span class=hljs-literal >Inf</span>
+
+<span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops
+    <span class=hljs-keyword >for</span> item <span class=hljs-keyword >in</span> items
+        <span class=hljs-meta >@constraint</span>(model, buy[shop, item] &lt;= <span class=hljs-number >1000000000</span>go[shop])
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+optimize!(model)
+
+solution_summary(model)
+
+value.(buy)
+
+value.(go)
+
+println(model)
+
+<span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops
+    <span class=hljs-keyword >for</span> item <span class=hljs-keyword >in</span> items
+        <span class=hljs-meta >@constraint</span>(model, buy[shop, item] &lt;= need[item] * go[shop])
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+println(model)</code></pre> <h1 id=branch_and_bound ><a href="#branch_and_bound" class=header-anchor >Branch and Bound</a></h1> <pre><code class="julia hljs">prices = [
+    <span class=hljs-number >3</span> <span class=hljs-number >2</span> <span class=hljs-number >8</span>
+    <span class=hljs-number >1</span> <span class=hljs-number >9</span> <span class=hljs-number >3</span>
+    <span class=hljs-number >5</span> <span class=hljs-number >3</span> <span class=hljs-number >2</span>
+]
+need = [<span class=hljs-number >5.5</span> <span class=hljs-number >3</span> <span class=hljs-number >9</span>]
+<span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> HiGHS
+model = Model(HiGHS.Optimizer)
+shops = <span class=hljs-number >1</span>:<span class=hljs-number >3</span>
+items = <span class=hljs-number >1</span>:<span class=hljs-number >3</span>
+<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= buy[shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items])
+<span class=hljs-meta >@constraint</span>(model, [item <span class=hljs-keyword >in</span> items], sum(buy[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops) == need[item])
+shop_fixed_cost = <span class=hljs-number >10</span>
+<span class=hljs-comment >#@variable(model, 0 &lt;= go[shop in shops] &lt;= 1, Bin)</span>
+<span class=hljs-meta >@variable</span>(model, <span class=hljs-number >0</span> &lt;= go[shop <span class=hljs-keyword >in</span> shops] &lt;= <span class=hljs-number >1</span>)
+<span class=hljs-meta >@objective</span>(model, Min, sum(buy[shop, item] * prices[shop, item] <span class=hljs-keyword >for</span> shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items) + shop_fixed_cost * sum(go))
+<span class=hljs-meta >@constraint</span>(model, [shop <span class=hljs-keyword >in</span> shops, item <span class=hljs-keyword >in</span> items], buy[shop, item] &lt;= need[item] * go[shop])
+println(model)
+
+optimize!(model)
+
+value.(buy)
+
+value.(go)</code></pre> <h2 id=planar_example ><a href="#planar_example" class=header-anchor >Planar example</a></h2> <pre><code class="julia hljs">model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model,  <span class=hljs-number >0</span> &lt;= x[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >3</span>)
+<span class=hljs-meta >@constraint</span>(model, x[<span class=hljs-number >1</span>] + <span class=hljs-number >2</span>x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >4</span>)
+<span class=hljs-meta >@constraint</span>(model, <span class=hljs-number >2</span>x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >4</span>)
+<span class=hljs-meta >@objective</span>(model, Max, x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>])
+println(model)
+
+<span class=hljs-meta >@constraint</span>(model, x[<span class=hljs-number >1</span>] + x[<span class=hljs-number >2</span>] &lt;= <span class=hljs-number >2</span>)
+
+optimize!(model)
+value.(x)
+
+<span class=hljs-keyword >using</span> Plots, Polyhedra
+plot(polyhedron(model), ratio = :equal)
+<span class=hljs-comment >#plot!([8/3, 0], [0, 8/3])</span>
+scatter!([<span class=hljs-number >1.333333333</span>], [<span class=hljs-number >1.33333333</span>])
+scatter!([<span class=hljs-number >0</span>, <span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >2</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >0</span>])
+scatter!([<span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >2</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >0</span>])
+
+set_upper_bound(x[<span class=hljs-number >1</span>], <span class=hljs-number >1</span>)
+set_upper_bound(x[<span class=hljs-number >2</span>], <span class=hljs-number >1</span>)
+
+<span class=hljs-comment >#@constraint(model, x[1] &lt;= 1)</span>
+set_lower_bound(x[<span class=hljs-number >1</span>], <span class=hljs-number >2</span>)
+println(model)
+
+optimize!(model)
+value.(x)
+
+<span class=hljs-comment >#@constraint(model, x[1] &lt;= 1)</span>
+set_lower_bound(x[<span class=hljs-number >2</span>], <span class=hljs-number >2</span>)
+optimize!(model)
+value.(x)
+
+<span class=hljs-keyword >using</span> Plots, Polyhedra
+plot(polyhedron(model))
+plot!([<span class=hljs-number >2.5</span>, <span class=hljs-number >0</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >2.5</span>])
+scatter!([<span class=hljs-number >1</span>, <span class=hljs-number >0</span>, <span class=hljs-number >2</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >0</span>])
+
+model_11 = copy(model)
+set_upper_bound(x[<span class=hljs-number >2</span>], <span class=hljs-number >1</span>)
+println(model)
+
+optimize!(model)
+value.(x)
+
+<span class=hljs-keyword >using</span> Plots, Polyhedra
+plot(polyhedron(model))
+plot!([<span class=hljs-number >2</span>, <span class=hljs-number >0</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >2</span>])
+scatter!([<span class=hljs-number >1</span>], [<span class=hljs-number >1</span>])
+
+model_2 = copy(model)
+set_lower_bound(x[<span class=hljs-number >1</span>], <span class=hljs-number >2</span>)
+println(model)
+
+<span class=hljs-number >2</span>^<span class=hljs-number >30</span>
+
+<span class=hljs-keyword >using</span> Plots, Polyhedra
+plot(polyhedron(model))
+plot!([<span class=hljs-number >2</span>, <span class=hljs-number >0</span>], [<span class=hljs-number >0</span>, <span class=hljs-number >2</span>])
+scatter!([<span class=hljs-number >1</span>], [<span class=hljs-number >1</span>])
+
+objective_value(model)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>

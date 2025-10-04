@@ -1,0 +1,301 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Lecture 2 &ndash; Why derivatives matter</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=lecture_2_ndash_why_derivatives_matter ><a href="#lecture_2_ndash_why_derivatives_matter" class=header-anchor >Lecture 2 &ndash; Why derivatives matter</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/lecture2.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/lecture2.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <p>In this section, we illustrate the fundamental link between derivative and optimization.</p> <h2 id=univariate_optimization ><a href="#univariate_optimization" class=header-anchor >Univariate optimization</a></h2> <h3 id=linear_polynomial ><a href="#linear_polynomial" class=header-anchor >Linear polynomial</a></h3> <p>The arguably simplest functions are affine function so let&#39;s start with the minimization of an affine function. What is the minimum of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x + 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >1</span></span></span></span> ? Let&#39;s plot this function:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots
+x = range(-<span class=hljs-number >8</span>, stop=<span class=hljs-number >8</span>, length=<span class=hljs-number >50</span>)
+p(x) = x + <span class=hljs-number >1</span>
+plot(x, p.(x), label=<span class=hljs-string >&quot;&quot;</span>)
+
+ReLU(x) = (x &lt; <span class=hljs-number >0</span>) ? <span class=hljs-number >0.0</span> : x
+plot(x, p.(x), label=<span class=hljs-string >&quot;&quot;</span>)</code></pre> <p>In order to plot, we generate <code>100</code> equally spaced numbers between <code>-8</code> and <code>8</code>:</p> <pre><code class="julia hljs">x</code></pre>
+<p>We can see the elements in this range by converting into a vector with <code>collect</code>:</p>
+<pre><code class="julia hljs">collect(x)
+
+p.(x)</code></pre>
+<h3 id=quadratic_polynomial ><a href="#quadratic_polynomial" class=header-anchor >Quadratic polynomial</a></h3>
+<p>What is the minimum of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x^2 - 2x + 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.8974em;vertical-align:-0.0833em;"></span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >2</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >1</span></span></span></span> ?</p>
+<pre><code class="julia hljs">x = range(<span class=hljs-number >0</span>, stop=<span class=hljs-number >2</span>, length=<span class=hljs-number >50</span>)
+p(x) = x^<span class=hljs-number >2</span> - <span class=hljs-number >2</span>x + <span class=hljs-number >1</span> <span class=hljs-comment ># (x - 1)^2</span>
+plot(x, p.(x), label=<span class=hljs-string >&quot;&quot;</span>)
+scatter!([<span class=hljs-number >1</span>], [p(<span class=hljs-number >1</span>)], label=<span class=hljs-string >&quot;&quot;</span>)
+
+plotly()
+
+ε = <span class=hljs-number >1e-1</span>
+c = <span class=hljs-number >0.1</span>
+f = ReLU
+x0 = range(c-ε, stop=c+ε, length=<span class=hljs-number >50</span>)
+plot(x0, f.(x0), label=<span class=hljs-string >&quot;&quot;</span>, linewidth=<span class=hljs-number >4</span>, ratio=:equal)</code></pre>
+<pre><code class="julia hljs">dp(x) = <span class=hljs-number >2</span>*(x - <span class=hljs-number >1</span>)
+plot(x, dp.(x), label=<span class=hljs-string >&quot;&quot;</span>)
+scatter!([<span class=hljs-number >1</span>], [dp(<span class=hljs-number >1</span>)], label=<span class=hljs-string >&quot;&quot;</span>)
+
+plot(x, p.(x), label=<span class=hljs-string >&quot;&quot;</span>)
+tangent(x, y) = p(x) + (y - x) * dp(x)
+<span class=hljs-meta >@show</span> dp(<span class=hljs-number >2</span>)
+y2 = range(<span class=hljs-number >1</span>, stop=<span class=hljs-number >3</span>, length=<span class=hljs-number >100</span>)
+plot!(y2, tangent.(<span class=hljs-number >2</span>, y2))
+<span class=hljs-meta >@show</span> dp(<span class=hljs-number >4</span>)
+y4 = range(<span class=hljs-number >3</span>, stop=<span class=hljs-number >5</span>, length=<span class=hljs-number >100</span>)
+plot!(y4, tangent.(<span class=hljs-number >4</span>, y4))
+<span class=hljs-meta >@show</span> dp(<span class=hljs-number >1</span>)
+y1 = range(<span class=hljs-number >0</span>, stop=<span class=hljs-number >2</span>, length=<span class=hljs-number >100</span>)
+plot!(y1, tangent.(<span class=hljs-number >1</span>, y1))
+y_1 = range(-<span class=hljs-number >2</span>, stop=<span class=hljs-number >0</span>, length=<span class=hljs-number >100</span>)
+plot!(y_1, tangent.(-<span class=hljs-number >1</span>, y_1))</code></pre>
+<h3 id=quartic_univariate_polynomial ><a href="#quartic_univariate_polynomial" class=header-anchor >Quartic univariate polynomial:</a></h3>
+<p>How to minimize <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>8</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>6</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x^4 - 8x^3 + 4x^2 - 6x + 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.8974em;vertical-align:-0.0833em;"></span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8974em;vertical-align:-0.0833em;"></span><span class=mord >8</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8974em;vertical-align:-0.0833em;"></span><span class=mord >4</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >6</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >1</span></span></span></span> ?</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots
+x = range(-<span class=hljs-number >3</span>, stop=<span class=hljs-number >8</span>, length=<span class=hljs-number >1000</span>)
+p(x) = x^<span class=hljs-number >4</span> - <span class=hljs-number >8</span>x^<span class=hljs-number >3</span> + <span class=hljs-number >4</span>x^<span class=hljs-number >2</span> - <span class=hljs-number >6</span>*x + <span class=hljs-number >1</span>
+plot(x, p.(x))</code></pre>
+<p>Is that related to its derivative ?</p>
+<pre><code class="julia hljs">plot(x, x)
+plot(x, x.^<span class=hljs-number >2</span>)
+plot(x, x.^<span class=hljs-number >5</span>)
+plot(x, x.^<span class=hljs-number >4</span>)
+plot(x, -x.^<span class=hljs-number >4</span>)
+
+dp(x) = <span class=hljs-number >4</span>x^<span class=hljs-number >3</span> - <span class=hljs-number >24</span>x^<span class=hljs-number >2</span> + <span class=hljs-number >8</span>x - <span class=hljs-number >6</span>
+plot(x, dp.(x))
+
+ddp(x) = <span class=hljs-number >12</span>x^<span class=hljs-number >2</span> - <span class=hljs-number >48</span>x + <span class=hljs-number >8</span>
+plot(x, ddp.(x))</code></pre>
+<p>Is the zero-derivative condition sufficient ?</p>
+<pre><code class="julia hljs">x = range(-<span class=hljs-number >3</span>, stop=<span class=hljs-number >64</span>, length=<span class=hljs-number >1000</span>)
+plot(x, x -&gt; x * sin(x))
+
+plot(x, x .* cos.(x) + sin.(x))
+
+plot(x, cos.(x) - x .* sin.(x) + cos.(x))</code></pre>
+<p>Zero derivative is necessary for <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> to be a global minimizer but there are 3 cases of zero derivative:</p>
+<ol>
+<li><p>local minimum: when it&#39;s decreasing before <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and then increasing</p>
+
+<li><p>local maximum: when it&#39;s increasing before <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and then decreasing</p>
+
+<li><p>saddle point: when it&#39;s increasing &#40;resp. decreasing&#41; before <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and then increasing &#40;resp. decreasing&#41; after <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></p>
+
+</ol>
+<p>Say the first derivative of <code>f&#40;x&#41;</code> that is nonzero is the <code>k</code>-th derivative <code>f^&#123;&#40;k&#41;&#125;&#40;x&#41;</code> then</p>
+<ul>
+<li><p>if <code>k</code> is odd then it is not a local extremum</p>
+
+<li><p>if <code>k</code> is even and the value is positive then it is a local minimum</p>
+
+<li><p>if <code>k</code> is even and the value is negative then it is a local maximum</p>
+
+</ul>
+<pre><code class="julia hljs">x = range(-<span class=hljs-number >1</span>, stop=<span class=hljs-number >1</span>, length=<span class=hljs-number >100</span>)
+plot(x, -x.^<span class=hljs-number >5</span>)</code></pre>
+<h2 id=multivariate_optimization ><a href="#multivariate_optimization" class=header-anchor >Multivariate optimization</a></h2>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots
+x = range(-<span class=hljs-number >4</span>, stop=<span class=hljs-number >4</span>, length=<span class=hljs-number >100</span>)
+y = range(-<span class=hljs-number >4</span>, stop=<span class=hljs-number >4</span>, length=<span class=hljs-number >100</span>)
+p(x, y) = <span class=hljs-number >2</span>x^<span class=hljs-number >2</span> + x*y + <span class=hljs-number >2</span>y^<span class=hljs-number >2</span> - <span class=hljs-number >2</span>x + <span class=hljs-number >3</span>y + <span class=hljs-number >1</span>
+plotly()
+surface(x, y, p)</code></pre>
+<span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mi>p</mi><mo stretchy=false >(</mo><mi>x</mi><mo separator=true >,</mo><mi>y</mi><mo stretchy=false >)</mo><mo>=</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>x</mi><mi>y</mi><mo>+</mo><mn>2</mn><msup><mi>y</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>3</mn><mi>y</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">z = p(x, y) = 2x^2 + xy + 2y^2 - 2x + 3y + 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.8974em;vertical-align:-0.0833em;"></span><span class=mord >2</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1.0085em;vertical-align:-0.1944em;"></span><span class=mord >2</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >2</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8389em;vertical-align:-0.1944em;"></span><span class=mord >3</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >1</span></span></span></span>
+<p>∂z/∂x ∂z/∂y ∂z/∂&#40;x &#43; y&#41; &#61; ∂z/∂x &#43; ∂z/∂y ∂z/∂&#40;x &#43; 2y&#41; &#61; ∂z/∂x &#43; 2∂z/∂y</p>
+<span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant=normal >∂</mi><mi>p</mi></mrow><mrow><mi mathvariant=normal >∂</mi><mi>x</mi></mrow></mfrac><mo>=</mo><mn>4</mn><mi>x</mi><mo>+</mo><mi>y</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\frac{\partial p}{\partial x} = 4x + y - 2</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.2772em;vertical-align:-0.345em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.9322em;"><span style="top:-2.655em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">x</span></span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">p</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >4</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >2</span></span></span></span>
+<span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant=normal >∂</mi><mi>p</mi></mrow><mrow><mi mathvariant=normal >∂</mi><mi>y</mi></mrow></mfrac><mo>=</mo><mi>x</mi><mo>+</mo><mn>4</mn><mi>y</mi><mo>+</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\frac{\partial p}{\partial y} = x + 4y + 3</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.4133em;vertical-align:-0.4811em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.9322em;"><span style="top:-2.655em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">p</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.4811em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8389em;vertical-align:-0.1944em;"></span><span class=mord >4</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >3</span></span></span></span>
+<pre><code class="julia hljs">dx -&gt; +<span class=hljs-number >1</span> -&gt; <span class=hljs-number >0</span> * <span class=hljs-number >1</span> -&gt; <span class=hljs-number >0</span>
+dy -&gt; +<span class=hljs-number >2</span> -&gt; <span class=hljs-number >0</span> * <span class=hljs-number >2</span> -&gt; <span class=hljs-number >0</span>
+<span class=hljs-number >0</span> * <span class=hljs-number >1</span> + <span class=hljs-number >0</span> * <span class=hljs-number >2</span> -&gt; <span class=hljs-number >0</span></code></pre>
+<p>The notation <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant=normal >∂</mi></mrow><annotation encoding="application/x-tex">\partial</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6944em;"></span><span class=mord  style="margin-right:0.05556em;">∂</span></span></span></span> is defined such that <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant=normal >∂</mi><mi>y</mi></mrow><mrow><mi mathvariant=normal >∂</mi><mi>x</mi></mrow></mfrac><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{\partial y}{\partial x} = 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.2772em;vertical-align:-0.345em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.9322em;"><span style="top:-2.655em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">x</span></span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >0</span></span></span></span> and <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant=normal >∂</mi><mi>x</mi></mrow><mrow><mi mathvariant=normal >∂</mi><mi>y</mi></mrow></mfrac><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{\partial x}{\partial y} = 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.3612em;vertical-align:-0.4811em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.8801em;"><span style="top:-2.655em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.4811em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >0</span></span></span></span></p>
+<pre><code class="julia hljs">dpdx(x, y) = <span class=hljs-number >4</span>x + y - <span class=hljs-number >2</span>
+dpdy(x, y) = x + <span class=hljs-number >4</span>y + <span class=hljs-number >3</span></code></pre>
+<p>From the plot, it seems <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>1</mn><mo separator=true >,</mo><mo>−</mo><mn>1</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(1, -1)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >1</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord >−</span><span class=mord >1</span><span class=mclose >)</span></span></span></span> is close to be a local minimizer, is it ?</p>
+<pre><code class="julia hljs">p(<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>)
+
+dpdx(<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>)
+
+dpdy(<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>)</code></pre>
+<p><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant=normal >∂</mi><mi>p</mi></mrow><mrow><mi mathvariant=normal >∂</mi><mi>x</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial p}{\partial x}</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.2772em;vertical-align:-0.345em;"></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.9322em;"><span style="top:-2.655em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">x</span></span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class=pstrut  style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal mtight">p</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> is positive so it&#39;s increasing in <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>. So, should we increase or decrease <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> to get closer to a local minimizer ?</p>
+<pre><code class="julia hljs">p(<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>)
+
+p(<span class=hljs-number >1.1</span>, -<span class=hljs-number >1</span>)
+
+p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >1</span>)
+
+p(<span class=hljs-number >0.74</span>, -<span class=hljs-number >1</span>)
+
+p(<span class=hljs-number >0.77</span>, -<span class=hljs-number >1</span>)
+
+p(<span class=hljs-number >0.78</span>, -<span class=hljs-number >1</span>)
+
+dpdx(<span class=hljs-number >0.75</span>, -<span class=hljs-number >1</span>)
+
+dpdy(<span class=hljs-number >0.75</span>, -<span class=hljs-number >1</span>)</code></pre>
+<p>Now it&#39;s constant in <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> but decreasing in <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></p>
+<pre><code class="julia hljs">p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.94</span>)
+
+p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.93</span>)
+
+p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.938</span>)
+
+p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.939</span>)
+
+p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.937</span>)</code></pre>
+<p>The <em>gradient</em> is defined as the concatenation of all the partial derivatives. Having a zero gradient is <strong>necessary</strong> to be a local minimizer. Again, it&#39;s not <strong>sufficient</strong> as it could also be a local maximizer or a saddle point.</p>
+<pre><code class="julia hljs">∇p(x, y) = [dpdx(x, y), dpdy(x, y)]
+
+-∇p(<span class=hljs-number >0.75</span>, -<span class=hljs-number >0.938</span>)
+
+x = <span class=hljs-number >0.75</span>
+y = -<span class=hljs-number >0.938</span>
+
+xnew = x - <span class=hljs-number >0.2</span> * dpdx(x, y)
+
+ynew = y - <span class=hljs-number >0.2</span> * dpdy(x, y)
+
+x, y = x - <span class=hljs-number >0.2</span> * dpdx(x, y), y - <span class=hljs-number >0.2</span> * dpdy(x, y)
+
+v = [x, y]
+
+∇p(v...)
+
+<span class=hljs-keyword >function</span> gradient_descent(h, num_iters = <span class=hljs-number >100</span>, v = [<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>])
+    <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:num_iters
+        v = v - h * ∇p(v...)
+    <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >return</span> v
+<span class=hljs-keyword >end</span></code></pre>
+<p>With a step size of <code>1</code>, we diverge</p>
+<pre><code class="julia hljs">v = gradient_descent(<span class=hljs-number >1</span>)</code></pre>
+<p>With a step size of <code>0.1</code>, we converge</p>
+<pre><code class="julia hljs">v = gradient_descent(<span class=hljs-number >0.1</span>)
+
+v = <span class=hljs-meta >@time</span> gradient_descent(<span class=hljs-number >0.001</span>, <span class=hljs-number >1000000</span>)</code></pre>
+<p>Looking at the solution, it looks rational</p>
+<pre><code class="julia hljs">rationalize.(v, tol=<span class=hljs-number >1e-14</span>)</code></pre>
+<p>It seems that with a step size above <code>0.4</code> we do not converge and below <code>0.4</code> you converge. What happens with a step size of exactly <code>0.4</code> ? With the step 0.4: you converge to an orbit of period 2:</p>
+<pre><code class="julia hljs">v = gradient_descent(<span class=hljs-number >0.4</span>, <span class=hljs-number >100</span>)
+v1 = rationalize.(v, tol=<span class=hljs-number >1e-10</span>)</code></pre>
+<p>At the next step, we get another one</p>
+<pre><code class="julia hljs">v = gradient_descent(<span class=hljs-number >0.4</span>, <span class=hljs-number >101</span>)
+v2 = rationalize.(v, tol=<span class=hljs-number >1e-10</span>)</code></pre>
+<p>And then we cycle</p>
+<pre><code class="julia hljs">v = gradient_descent(<span class=hljs-number >0.4</span>, <span class=hljs-number >102</span>)
+rationalize.(v, tol=<span class=hljs-number >1e-10</span>)</code></pre>
+<p>Indeed, here is the difference:</p>
+<pre><code class="julia hljs">v1 - v2</code></pre>
+<p>With a step from <code>v1</code>, we go form <code>v1</code> to <code>v2</code></p>
+<pre><code class="julia hljs"><span class=hljs-number >4</span> // <span class=hljs-number >10</span> * ∇p(v1...)</code></pre>
+<p>With a step from <code>v2</code>, we go back to <code>v1</code></p>
+<pre><code class="julia hljs"><span class=hljs-number >4</span> // <span class=hljs-number >10</span> * ∇p(v2...)</code></pre>
+<p>Now what happens with a step too small ?</p>
+<pre><code class="julia hljs">gradient_descent(<span class=hljs-number >0.001</span>, <span class=hljs-number >1000</span>)</code></pre>
+<p>With a bit more steps ?</p>
+<pre><code class="julia hljs">gradient_descent(<span class=hljs-number >0.001</span>, <span class=hljs-number >1000</span>)</code></pre>
+<p>And with even more steps ?</p>
+<pre><code class="julia hljs">gradient_descent(<span class=hljs-number >0.001</span>, <span class=hljs-number >10000</span>)</code></pre>
+<p>So, we observed that</p>
+<ul>
+<li><p>With a step size that is <em>too large</em> &#40;in this case larger than 0.4&#41;, the gradient method may diverge.</p>
+
+<li><p>With a step size that is <em>too small</em>, the method will converge but very slowly.</p>
+
+</ul>
+<h2 id=gradient_method ><a href="#gradient_method" class=header-anchor >Gradient method</a></h2>
+<p>A local minimizer of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span> can be found numerically as follows:</p>
+<ol>
+<li><p>Compute gradient <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant=normal >∇</mi><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">\nabla f(x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord >∇</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span></p>
+
+<li><p>If approximately zero -&gt; done</p>
+
+<li><p>Follow direction <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi mathvariant=normal >∇</mi><mi>f</mi><mo stretchy=false >(</mo><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">-\nabla f(x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord >−</span><span class=mord >∇</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span>, find how long you follow it: line search and go to 1.</p>
+
+</ol>
+<p>For our example, <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant=normal >∇</mi><mi>p</mi><mo stretchy=false >(</mo><mi>x</mi><mo separator=true >,</mo><mi>y</mi><mo stretchy=false >)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nabla p(x, y) = 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord >∇</span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >0</span></span></span></span> is a linear system so we can find the global minimizer by solving this system:</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mn>4</mn><mi>x</mi><mo>+</mo><mi>y</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">4x + y = 2</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >4</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.6444em;"></span><span class=mord >2</span></span></span></span></span>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>x</mi><mo>+</mo><mn>4</mn><mi>y</mi><mo>=</mo><mo>−</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x + 4y = -3</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8389em;vertical-align:-0.1944em;"></span><span class=mord >4</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.7278em;vertical-align:-0.0833em;"></span><span class=mord >−</span><span class=mord >3</span></span></span></span></span>
+<pre><code class="julia hljs">A = [
+    <span class=hljs-number >4</span> <span class=hljs-number >1</span>
+    <span class=hljs-number >1</span> <span class=hljs-number >4</span>
+]
+
+b = [<span class=hljs-number >2</span>, -<span class=hljs-number >3</span>]
+
+x, y = A \ b
+
+dpdx(x, y)
+
+dpdy(x, y)
+
+∇p(x, y)
+
+rationalize(x)
+
+rationalize(y)</code></pre>
+<h2 id=finding_minimizers_numerically_with_jump ><a href="#finding_minimizers_numerically_with_jump" class=header-anchor >Finding minimizers numerically with JuMP</a></h2>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Pkg
+<span class=hljs-string >pkg&quot;add NLopt&quot;</span>
+
+<span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> NLopt
+model = Model(NLopt.Optimizer)
+set_optimizer_attribute(model, <span class=hljs-string >&quot;algorithm&quot;</span>, :LD_MMA)
+set_optimizer_attribute(model, <span class=hljs-string >&quot;ftol_rel&quot;</span>, <span class=hljs-number >1e-16</span>)
+set_optimizer_attribute(model, <span class=hljs-string >&quot;xtol_rel&quot;</span>, <span class=hljs-number >1e-16</span>)
+
+<span class=hljs-meta >@variable</span>(model, x)
+
+<span class=hljs-meta >@variable</span>(model, y)
+
+p(x, y)
+
+<span class=hljs-meta >@objective</span>(model, Min, p(x, y))
+
+model
+
+println(model)
+
+JuMP.optimize!(model)</code></pre>
+<p>NLopt found a point with gradient zero and for which the function is locally increasing in every direction around the point. It therefore knows that it is a local minimizer but does not know whether it is a global minimizer. For this reason, its termination status is <code>LOCALLY_SOLVED</code>.</p>
+<pre><code class="julia hljs">solution_summary(model)
+
+value(x)
+
+value(y)</code></pre>
+<p>We can try as well with Ipopt without having to change the model</p>
+<pre><code class="julia hljs"><span class=hljs-string >pkg&quot;add Ipopt&quot;</span>
+
+<span class=hljs-keyword >using</span> Ipopt
+set_optimizer(model, Ipopt.Optimizer)
+
+JuMP.optimize!(model)
+
+solution_summary(model)
+
+value(x)
+
+value(y)</code></pre>
+<p>It&#39;s important to check for the <code>solution_summary</code> to check that it&#39;s <code>LOCALLY_SOLVED</code>.</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
+model = Model(Ipopt.Optimizer)
+<span class=hljs-meta >@variable</span>(model, x)
+<span class=hljs-meta >@variable</span>(model, y)
+<span class=hljs-meta >@objective</span>(model, Max, p(x, y))
+JuMP.optimize!(model)
+
+value(x)
+
+value(y)
+
+solution_summary(model)</code></pre>
+<p>Here, it is <code>NORM_LIMIT</code> because it is unbounded</p>
+<hr />
+<p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div>
+    
+        
+
+
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

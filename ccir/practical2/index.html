@@ -1,0 +1,120 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Practical 2 &ndash; Multiple linear regressions in Julia and introduction to JuMP</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=practical_2_ndash_multiple_linear_regressions_in_julia_and_introduction_to_jump ><a href="#practical_2_ndash_multiple_linear_regressions_in_julia_and_introduction_to_jump" class=header-anchor >Practical 2 &ndash; Multiple linear regressions in Julia and introduction to JuMP</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/practical2.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/practical2.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <p><strong>Written by</strong>: Jean Bouchat</p> <h2 id=dataset_import ><a href="#dataset_import" class=header-anchor >Dataset import</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
+<span class=hljs-keyword >using</span> DataFrames
+
+df = DataFrame(CSV.File(<span class=hljs-string >&quot;./Life Expectancy Data.csv&quot;</span>, normalizenames=<span class=hljs-literal >true</span>))</code></pre> <h2 id=linear_regression ><a href="#linear_regression" class=header-anchor >Linear regression</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots
+<span class=hljs-keyword >using</span> LinearAlgebra
+<span class=hljs-keyword >using</span> Statistics
+
+new_df = dropmissing(df)
+
+new_df = new_df[new_df.Year .== <span class=hljs-number >2012</span>, :]</code></pre> <p>Data</p> <pre><code class="julia hljs">y = new_df.Life_expectancy
+A = new_df.BMI</code></pre> <p>Plot the data</p> <pre><code class="julia hljs">scatter(A, y, label=<span class=hljs-string >&quot;Data&quot;</span>)</code></pre>
+<p>Add a column of ones to the right of A&#39;</p>
+<pre><code class="julia hljs">new_A = hcat(A, ones(length(A)))</code></pre>
+<p>Solve the system Ax&#61;y to find x, i.e., the coefficients of the linear regression model</p>
+<pre><code class="julia hljs">coefs = new_A\y <span class=hljs-comment ># Cannot handle missing values</span></code></pre>
+<p>Plot the regression line</p>
+<pre><code class="julia hljs">x_plot = minimum(A):maximum(A)
+y_plot = coefs[<span class=hljs-number >1</span>]*x_plot .+ coefs[<span class=hljs-number >2</span>]
+label = string(coefs[<span class=hljs-number >1</span>], <span class=hljs-string >&quot;*x + &quot;</span>, coefs[<span class=hljs-number >2</span>])
+
+println(<span class=hljs-string >&quot;Regression line: <span class=hljs-subst >$(label)</span>&quot;</span>)
+println(<span class=hljs-string >&quot;R = <span class=hljs-subst >$(cor(new_df.Life_expectancy, new_df.BMI)</span>)&quot;</span>)
+
+plot!(x_plot, y_plot, label=label)
+
+names(df)
+
+features = [<span class=hljs-string >&quot;Life_expectancy&quot;</span>, <span class=hljs-string >&quot;Total_expenditure&quot;</span>, <span class=hljs-string >&quot;GDP&quot;</span>,
+    <span class=hljs-string >&quot;Income_composition_of_resources&quot;</span>, <span class=hljs-string >&quot;Adult_Mortality&quot;</span>, <span class=hljs-string >&quot;Schooling&quot;</span>]
+
+<span class=hljs-keyword >for</span> feature <span class=hljs-keyword >in</span> features
+    <span class=hljs-keyword >if</span> feature != <span class=hljs-string >&quot;Country&quot;</span> &amp;&amp; feature != <span class=hljs-string >&quot;Year&quot;</span> &amp;&amp; feature != <span class=hljs-string >&quot;Status&quot;</span></code></pre>
+<p>Data</p>
+<pre><code class="julia hljs">y = new_df.Life_expectancy
+        A = new_df[:, feature]</code></pre>
+<p>Preparing the figure</p>
+<pre><code class="julia hljs">fig = plot()</code></pre>
+<p>Plot the data</p>
+<pre><code class="julia hljs">scatter!(A, y, label=<span class=hljs-string >&quot;Data&quot;</span>)</code></pre>
+<p>Add a column of ones to the right of A&#39;</p>
+<pre><code class="julia hljs">new_A = hcat(A, ones(length(A)))</code></pre>
+<p>Solve the system Ax&#61;y to find x, i.e., the coefficients of the linear regression model</p>
+<pre><code class="julia hljs">coefs = new_A\y <span class=hljs-comment ># Cannot handle missing values</span></code></pre>
+<p>Plot the regression line</p>
+<pre><code class="julia hljs">x_plot = range(minimum(A), maximum(A), <span class=hljs-number >100</span>)
+        y_plot = coefs[<span class=hljs-number >1</span>]*x_plot .+ coefs[<span class=hljs-number >2</span>]
+        label = string(coefs[<span class=hljs-number >1</span>], <span class=hljs-string >&quot;*x + &quot;</span>, coefs[<span class=hljs-number >2</span>])
+        xlabel = feature
+        ylabel = <span class=hljs-string >&quot;Life expectancy in 2012&quot;</span>
+
+        display(<span class=hljs-string >&quot;Regression line: <span class=hljs-subst >$(label)</span>&quot;</span>)</code></pre>
+<p>Prdicting Life_expectancy from feature using regression model</p>
+<pre><code class="julia hljs">y_hat = coefs[<span class=hljs-number >1</span>].*A .+ coefs[<span class=hljs-number >2</span>]</code></pre>
+<p>Computing correlation coefficient</p>
+<pre><code class="julia hljs">display(<span class=hljs-string >&quot;R = <span class=hljs-subst >$(cor(y, y_hat)</span>)&quot;</span>)
+
+        plot!(x_plot, y_plot, label=label, xlabel=xlabel, ylabel=ylabel)</code></pre>
+<p>Displaying the figure</p>
+<pre><code class="julia hljs">display(fig)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre>
+<h2 id=multiple_linear_regressions ><a href="#multiple_linear_regressions" class=header-anchor >Multiple linear regressions</a></h2>
+<p>Data</p>
+<pre><code class="julia hljs">y = new_df.Life_expectancy</code></pre>
+<p>A is the key to go from single to multiple linear regression &#33;</p>
+<pre><code class="julia hljs">A = hcat(new_df.Adult_Mortality, new_df.Schooling, ones(size(new_df, <span class=hljs-number >1</span>)))</code></pre>
+<p>Solve the system Ax&#61;y to find x, i.e., the coefficients of the linear regression model</p>
+<pre><code class="julia hljs">coefs = A\y <span class=hljs-comment ># Cannot handle missing values</span>
+
+println(<span class=hljs-string >&quot;Regression line: <span class=hljs-subst >$(coefs[<span class=hljs-number >1</span>])</span>*x1 + <span class=hljs-subst >$(coefs[<span class=hljs-number >2</span>])</span>*x2 + <span class=hljs-subst >$(coefs[<span class=hljs-number >3</span>])</span>&quot;</span>)</code></pre>
+<p>Use the regression model to predict Life<em>expectancy from Adult</em>Mortality and Schooling</p>
+<pre><code class="julia hljs">y_hat = coefs[<span class=hljs-number >1</span>].*new_df.Adult_Mortality + coefs[<span class=hljs-number >2</span>].*new_df.Schooling .+ coefs[<span class=hljs-number >3</span>]</code></pre>
+<p>Compute correlation coefficient</p>
+<pre><code class="julia hljs">println(<span class=hljs-string >&quot;R = <span class=hljs-subst >$(cor(y, y_hat)</span>)&quot;</span>)</code></pre>
+<h4>ADD Correlation coefficient and coefficient of determination</h4>
+<h2 id=linear_regression_with_jump ><a href="#linear_regression_with_jump" class=header-anchor >Linear regression with JuMP</a></h2>
+<p>https://github.com/odow/jump-training-materials/blob/master/getting<em>started</em>with_JuMP.ipynb <code>JuMP</code> documentation https://jump.dev/JuMP.jl/stable/ <code>HiGHS</code> documentation https://www.maths.ed.ac.uk/hall/HiGHS/</p>
+<p>using Pkg Pkg.add&#40;&quot;JuMP&quot;&#41; Pkg.add&#40;&quot;HiGHS&quot;&#41;</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >using</span> HiGHS <span class=hljs-comment ># Solver</span></code></pre>
+<p>Simple linear regression via <a href="https://en.wikipedia.org/wiki/Least_squares">least squares</a></p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><msub><mtext>minimize</mtext><mrow><mi>a</mi><mo separator=true >,</mo><mi>b</mi></mrow></msub><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mo stretchy=false >(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msub><mi>r</mi><mi>i</mi></msub><msup><mo stretchy=false >)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\text{minimize}_{a, b} \sum_{i=1}^{N} (y_i-r_i)^2</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:3.106em;vertical-align:-1.2777em;"></span><span class=mord ><span class="mord text"><span class=mord >minimize</span></span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">b</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.8283em;"><span style="top:-1.8723em;margin-left:0em;"><span class=pstrut  style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class=pstrut  style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class=pstrut  style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:1.2777em;"><span></span></span></span></span></span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1.1141em;vertical-align:-0.25em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose ><span class=mclose >)</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>
+<p>such that</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>=</mo><mi>a</mi><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi><mo separator=true >,</mo><mspace width=1em /><mi>i</mi><mo>=</mo><mn>1</mn><mo separator=true >,</mo><mo>…</mo><mo separator=true >,</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">r_i = ax_i+b, \quad i=1,\ldots,N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.5806em;vertical-align:-0.15em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">a</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">b</span><span class=mpunct >,</span><span class=mspace  style="margin-right:1em;"></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.8778em;vertical-align:-0.1944em;"></span><span class=mord >1</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=minner >…</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span>
+<pre><code class="julia hljs">y = new_df.Life_expectancy
+x = new_df.Schooling
+N = length(x)
+
+model = Model(HiGHS.Optimizer)
+
+<span class=hljs-meta >@variable</span>(model, a)
+<span class=hljs-meta >@variable</span>(model, b)
+<span class=hljs-meta >@expression</span>(model, r[i = <span class=hljs-number >1</span>:N], a*x[i] + b)
+
+<span class=hljs-meta >@objective</span>(model, Min, sum((y[i] - r[i])^<span class=hljs-number >2</span> <span class=hljs-keyword >for</span> i=<span class=hljs-number >1</span>:N))
+
+optimize!(model)
+
+<span class=hljs-meta >@show</span> value(a)
+<span class=hljs-meta >@show</span> value(b);</code></pre>
+<h2 id=homework ><a href="#homework" class=header-anchor >Homework</a></h2>
+<p>The <a href="https://neos-guide.org/content/diet-problem">diet problem</a> was one of the first problems in optimization. George Joseph Stigler formulated the problem of the optimal diet in the late 1930s in an attempt to satisfy the concern of the North American army to find the most economical way to feed its troops while at the same time ensuring certain nutritional requirements.</p>
+<p>Your homework consists in solving the diet problem described in <a href="https://ftp.mcs.anl.gov/pub/tech_reports/reports/P602.pdf">Czyzyk and Wisniewski &#40;1996&#41;</a>, Section 2, pp. 2-3, using <a href="https://jump.dev/JuMP.jl/stable/"><code>JuMP</code></a>.</p>
+<hr />
+<p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div>
+    
+        
+
+
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

@@ -1,0 +1,112 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Practical 1 &ndash; Linear regressions</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=practical_1_ndash_linear_regressions ><a href="#practical_1_ndash_linear_regressions" class=header-anchor >Practical 1 &ndash; Linear regressions</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/practical1.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/practical1.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <p><strong>Written by</strong>: Jean Bouchat</p> <p>In this session, we&#39;ll get right into coding to import, visualize, and analyze a dataset gathered by the World Health Organization &#40;WHO&#41; on life expectancy. The goal is to familiarize yourself with Julia, the use of a Jupyter notebook, and get an overview of one of the most popular data analysis methods in research, linear regression.</p> <h2 id=dataset_import ><a href="#dataset_import" class=header-anchor >Dataset import</a></h2> <p>The very first step in any data analysis is to get the data. We downloaded the ones we will use today on <a href="https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who">Kaggle</a>.</p> <p>The data set we want to exploit is contained in a csv file, and Julia is not able to open these files natively. Two separate libraries are actually needed: <code>CSV</code> et <code>DataFrames</code> <a href="https://towardsdatascience.com/read-csv-to-data-frame-in-julia-programming-lang-77f3d0081c14">go further: Read CSV to Data Frame in Julia</a>.</p> <p>Let us install them, if it is not already done,</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Pkg
+Pkg.add(<span class=hljs-string >&quot;CSV&quot;</span>)
+Pkg.add(<span class=hljs-string >&quot;DataFrames&quot;</span>)</code></pre> <p>and then import them to be able to actually use them</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
+<span class=hljs-keyword >using</span> DataFrames</code></pre> <p>We can now read the csv file that we want to explore</p> <pre><code class="julia hljs">csv_file = CSV.File(<span class=hljs-string >&quot;./Life Expectancy Data.csv&quot;</span>)
+
+<span class=hljs-keyword >for</span> row <span class=hljs-keyword >in</span> csv_file[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]
+    println(row)
+<span class=hljs-keyword >end</span></code></pre> <p>As you can see, while <code>CSV</code> allows us to read &#40;and write&#41; into csv files, it is not made for data manipulation. The <code>DataFrames</code> package is much more convenient for manipulating data tables. Check out its documentation https://dataframes.juliadata.org/stable/ if you want to learn more about it.</p> <p>Let us now generate a dataframe with the contents of our csv file.</p> <pre><code class="julia hljs">df = DataFrame(csv_file)</code></pre>
+<p>To get a first understanding of the data table we are exploring, let us have a look at the names of its columns</p>
+<pre><code class="julia hljs">names(df)</code></pre>
+<p>and select the rows of the dataframe that relate to Afghanistan</p>
+<pre><code class="julia hljs">df[df.:<span class=hljs-string >&quot;Country&quot;</span> .== <span class=hljs-string >&quot;Afghanistan&quot;</span>, :]</code></pre>
+<h2 id=cleaning_names ><a href="#cleaning_names" class=header-anchor >Cleaning names</a></h2>
+<p>The spaces in the names makes it cumbersome to access.</p>
+<pre><code class="julia hljs">df.:<span class=hljs-string >&quot;Life expectancy &quot;</span></code></pre>
+<p>The keyword <code>normalizenames</code> removes trailing whitespaces and replace inner spaces by <code>_</code>.</p>
+<pre><code class="julia hljs">csv_file = CSV.File(<span class=hljs-string >&quot;./Life Expectancy Data.csv&quot;</span>, normalizenames=<span class=hljs-literal >true</span>)
+
+df = DataFrame(csv_file)
+
+names(df)</code></pre>
+<h2 id=dataset_exploration ><a href="#dataset_exploration" class=header-anchor >Dataset exploration</a></h2>
+<p>What we want to learn is if there is a link between life expectancy throughout the world and other demographic variables.</p>
+<pre><code class="julia hljs">df.Life_expectancy</code></pre>
+<p>Visualizing the data is ususally the main driver to understanding what they mean. For this, we need yet another package, <code>Plots</code>. Check out its documentation https://docs.juliaplots.org/stable/ if you want to learn more about it.</p>
+<pre><code class="julia hljs">Pkg.add(<span class=hljs-string >&quot;Plots&quot;</span>)
+
+<span class=hljs-keyword >using</span> Plots</code></pre>
+<p>To learn more about the evolution of life expectancy in Afghanistan through the recent years, we will plot its time series</p>
+<pre><code class="julia hljs">x = df[df.Country .== <span class=hljs-string >&quot;Afghanistan&quot;</span>, :].Year
+y = df[df.Country .== <span class=hljs-string >&quot;Afghanistan&quot;</span>, :].Life_expectancy
+
+plot(x, y, label=<span class=hljs-string >&quot;Afghanistan&quot;</span>, title=<span class=hljs-string >&quot;Life expectancy&quot;</span>, ylabel=<span class=hljs-string >&quot;Life expectancy&quot;</span>, markershape=:circle)</code></pre>
+<p>But it does not tell us much by itself. Often, comparisons allows for a more intimate understanding of such quantities, but we do not know which countries are actually listed in the dataset. We can find out by printing their names</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >for</span> country <span class=hljs-keyword >in</span> unique(df, :Country).Country
+    println(country)
+<span class=hljs-keyword >end</span></code></pre>
+<p>and plot time series of life expectancy for countries you might be familiar with</p>
+<pre><code class="julia hljs">fig = plot()
+<span class=hljs-keyword >for</span> country <span class=hljs-keyword >in</span> [<span class=hljs-string >&quot;Belgium&quot;</span>, <span class=hljs-string >&quot;Canada&quot;</span>, <span class=hljs-string >&quot;China&quot;</span>, <span class=hljs-string >&quot;Singapore&quot;</span>, <span class=hljs-string >&quot;United States of America&quot;</span>]
+    y = df[df.Country .== country, :].Life_expectancy
+    plot!(x, y, label=country, markershape=:circle)
+<span class=hljs-keyword >end</span>
+display(fig)</code></pre>
+<p>To begin to understand the relationship between life expectancy and the other features given in this table, let us reduce our analysis to the year 2012 &#40;for the example&#41;</p>
+<pre><code class="julia hljs">df = df[df.Year .== <span class=hljs-number >2012</span>, :];</code></pre>
+<p>and generate a scatter plot of life expectancy and BMI</p>
+<pre><code class="julia hljs">y = df.Life_expectancy
+x = df.BMI
+
+println(x)
+
+scatter(x, y, ylabel=<span class=hljs-string >&quot;Life expectancy&quot;</span>, xlabel=<span class=hljs-string >&quot;BMI&quot;</span>)</code></pre>
+<h2 id=linear_regression_analysis ><a href="#linear_regression_analysis" class=header-anchor >Linear regression analysis</a></h2>
+<p><code>LinearAlgebra</code> is standard library of Julia. It provides native implementations of the most common linear algebra operations. Check out its documentation https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/ to learn more about it.</p>
+<p>To quantify the linear relationship between life expectancy and BMI, we will fit a simple linear regression model by solving a least-squares problem with the backslash <code>\</code> operator <a href="https://stanford.edu/class/engr108/lectures/julia_least_squares_slides.pdf">go further: Least squares in Julia</a> which solves for <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> systems such that <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>x</mi><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">Ax=y</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>.</p>
+<pre><code class="julia hljs"><span class=hljs-comment >#Pkg.add(&quot;LinearAlgebra&quot;)</span>
+<span class=hljs-keyword >using</span> LinearAlgebra
+
+new_df = dropmissing(df);
+
+y = new_df.Life_expectancy
+A = new_df.BMI
+
+scatter(A, y, label=<span class=hljs-string >&quot;Data&quot;</span>)</code></pre>
+<p>Linear regression model: A<em>x&#43;b&#61;y -&gt; new_A</em>x&#61;y</p>
+<pre><code class="julia hljs">y = new_df.Life_expectancy
+A = new_df.BMI
+
+scatter(A, y, label=<span class=hljs-string >&quot;Data&quot;</span>)
+
+println(<span class=hljs-string >&quot;size(A) = &quot;</span>, size(A))
+println(<span class=hljs-string >&quot;size(A&#x27;) = &quot;</span>, size(A&#x27;))
+
+new_A = vcat(A&#x27;, ones(size(A))<span class=hljs-string >&#x27;)&#x27;</span>
+
+println(<span class=hljs-string >&quot;size(new_A) = &quot;</span>, size(new_A))
+println(<span class=hljs-string >&quot;size(y) = &quot;</span>, size(y))
+
+coefs = new_A\y <span class=hljs-comment ># Cannot handle missing values (hence dropmissing() above)</span>
+
+println(<span class=hljs-string >&quot;size(new_A\\y) = &quot;</span>, size(new_A\y))
+println(<span class=hljs-string >&quot;Regression line: &quot;</span>, coefs[<span class=hljs-number >1</span>], <span class=hljs-string >&quot;*x+&quot;</span>, coefs[<span class=hljs-number >2</span>])
+
+x = minimum(new_A):maximum(new_A)
+plot!(x, coefs[<span class=hljs-number >1</span>]*x.+coefs[<span class=hljs-number >2</span>], label=<span class=hljs-string >&quot;Linear regression&quot;</span>)</code></pre>
+<p>Finally, let us quantify the fit of the linear regression model to the data via quality metrics</p>
+<pre><code class="julia hljs">Pkg.add(<span class=hljs-string >&quot;Statistics&quot;</span>)
+
+<span class=hljs-keyword >using</span> Statistics
+
+println(<span class=hljs-string >&quot;Pearson&#x27;s correlation coefficient R = &quot;</span>, cor(new_df[:, :Life_expectancy], new_df[:, :BMI]))
+print(<span class=hljs-string >&quot;Coefficient of determination R^2 = &quot;</span>, cor(new_df[:, :Life_expectancy], new_df[:, :BMI])^<span class=hljs-number >2</span>)</code></pre>
+<h2 id=homework ><a href="#homework" class=header-anchor >Homework</a></h2>
+<p>Based on the results above, BMI seems not to be a very good predictor of life expectancy accross the world. Can you find a better explanatory variable using <a href="https://en.wikipedia.org/wiki/Simple_linear_regression">simple linear regression</a> models ? Try also using multiple explanatory variables in a <a href="https://en.wikipedia.org/wiki/Linear_regression#Simple_and_multiple_linear_regression">multiple linear regression</a> to see if they provide better results.</p>
+<hr />
+<p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div>
+    
+        
+
+
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>

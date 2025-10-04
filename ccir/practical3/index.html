@@ -1,0 +1,88 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/judoc.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=icon  href="/assets/infra/favicon.ico"> <title>Practical 3 &ndash; Linear Programming in JuMP: The diet problem</title> <header> <div class=blog-name ><a href="">Benoît Legat</a></div> <nav> <ul> <li><a href="/">Home</a> <li><a href="/publications/">Publications</a> <li><a href="/talks/">Talks</a> <li><a href="/softwares/">Softwares</a> <li><a href="/teaching/">Teaching</a> </ul> <img src="/assets/infra/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><h1 id=practical_3_ndash_linear_programming_in_jump_the_diet_problem ><a href="#practical_3_ndash_linear_programming_in_jump_the_diet_problem" class=header-anchor >Practical 3 &ndash; Linear Programming in JuMP: The diet problem</a></h1> <p> <a href="https://mybinder.org/v2/gh/blegat/blegat.github.io/gh-pages?filepath=/generated/notebooks/practical3.ipynb"><span class=badge > <img src="https://mybinder.org/badge_logo.svg" alt="" /> </span></a> <a href="https://nbviewer.jupyter.org/github/blegat/blegat.github.io/blob/gh-pages//generated/notebooks/practical3.ipynb"><span class=badge > <img src="https://img.shields.io/badge/show-nbviewer-579ACA.svg" alt="" /> </span></a> </p> <hr /> <p>The <a href="https://neos-guide.org/content/diet-problem">diet problem</a> was one of the first problems in optimization. George Joseph Stigler formulated the problem of the optimal diet in the late 1930s in an attempt to satisfy the concern of the North American army to find the most economical way to feed its troops while at the same time ensuring certain nutritional requirements. In this session, we will implement it in three different ways and solve it with <code>JuMP</code>.</p> <h2 id=hardcoded_diet_problem ><a href="#hardcoded_diet_problem" class=header-anchor >Hardcoded diet problem</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> JuMP
+<span class=hljs-keyword >import</span> HiGHS
+model = Model(HiGHS.Optimizer)
+<span class=hljs-meta >@variable</span>(model, corn &lt;= <span class=hljs-number >10</span>)
+<span class=hljs-meta >@variable</span>(model, milk &lt;= <span class=hljs-number >10</span>)
+<span class=hljs-meta >@variable</span>(model, bread &lt;= <span class=hljs-number >10</span>)
+<span class=hljs-meta >@objective</span>(model, Min, <span class=hljs-number >0.18</span>corn + <span class=hljs-number >0.23</span>milk + <span class=hljs-number >0.05</span>bread)
+<span class=hljs-meta >@constraint</span>(model, <span class=hljs-number >5000</span> &lt;= <span class=hljs-number >107</span>corn + <span class=hljs-number >500</span>milk &lt;= <span class=hljs-number >50000</span>)
+<span class=hljs-meta >@constraint</span>(model, <span class=hljs-number >2000</span> &lt;= <span class=hljs-number >72</span>corn + <span class=hljs-number >121</span>milk + <span class=hljs-number >65</span>bread &lt;= <span class=hljs-number >2250</span>)
+println(model)
+
+optimize!(model)
+solution_summary(model)
+
+value(corn), value(milk), value(bread)</code></pre> <h2 id=generic_diet_problem_with_linear_algebra ><a href="#generic_diet_problem_with_linear_algebra" class=header-anchor >Generic diet problem with linear algebra</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> LinearAlgebra <span class=hljs-comment ># for `⋅`</span>
+<span class=hljs-keyword >function</span> diet(max_serving, cost, min_requirements, max_requirements, quantity)
+    m, n = size(quantity)
+    model = Model()
+    <span class=hljs-meta >@variable</span>(model, x[i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:n] &lt;= max_serving[i])
+    <span class=hljs-meta >@objective</span>(model, Min, cost ⋅ x)
+    <span class=hljs-meta >@constraint</span>(model, min_requirements .&lt;= quantity * x .&lt;= max_requirements)
+    <span class=hljs-keyword >return</span> model
+<span class=hljs-keyword >end</span>
+
+max_serving = [<span class=hljs-number >10</span>, <span class=hljs-number >10</span>, <span class=hljs-number >10</span>]
+cost = [<span class=hljs-number >0.18</span>, <span class=hljs-number >0.23</span>, <span class=hljs-number >0.05</span>]
+min_requirements = [<span class=hljs-number >5000</span>, <span class=hljs-number >2000</span>]
+max_requirements = [<span class=hljs-number >50000</span>, <span class=hljs-number >2250</span>]
+quantity = [
+    <span class=hljs-number >107</span> <span class=hljs-number >500</span> <span class=hljs-number >0</span>
+    <span class=hljs-number >72</span> <span class=hljs-number >121</span> <span class=hljs-number >65</span>
+]
+model = diet(max_serving, cost, min_requirements, max_requirements, quantity)
+println(model)
+
+set_optimizer(model, HiGHS.Optimizer)
+optimize!(model)
+solution_summary(model)
+
+value.(model[:x])</code></pre> <h2 id=more_readable_generic_diet_problem ><a href="#more_readable_generic_diet_problem" class=header-anchor >More readable generic diet problem</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> diet(max_serving, cost, min_requirements, max_requirements, quantity)
+    model = Model()
+    requirements, food = axes(quantity)
+    <span class=hljs-meta >@variable</span>(model, x[f <span class=hljs-keyword >in</span> food] &lt;= max_serving[f])
+    <span class=hljs-meta >@objective</span>(model, Min, sum(cost[f] * x[f] <span class=hljs-keyword >for</span> f <span class=hljs-keyword >in</span> food))
+    <span class=hljs-meta >@constraint</span>(
+        model,
+        [r <span class=hljs-keyword >in</span> requirements],
+        min_requirements[r] &lt;= sum(quantity[r, f] * x[f] <span class=hljs-keyword >for</span> f <span class=hljs-keyword >in</span> food) &lt;= max_requirements[r],
+    )
+    <span class=hljs-keyword >return</span> model
+<span class=hljs-keyword >end</span>
+
+food = [<span class=hljs-string >&quot;Corn&quot;</span>, <span class=hljs-string >&quot;2% milk&quot;</span>, <span class=hljs-string >&quot;Wheat bread&quot;</span>]
+requirements = [<span class=hljs-string >&quot;Calories&quot;</span>, <span class=hljs-string >&quot;Vitamin A&quot;</span>]
+model = diet(
+    JuMP.Containers.DenseAxisArray(max_serving, food),
+    JuMP.Containers.DenseAxisArray(cost, food),
+    JuMP.Containers.DenseAxisArray(min_requirements, requirements),
+    JuMP.Containers.DenseAxisArray(max_requirements, requirements),
+    JuMP.Containers.DenseAxisArray(quantity, requirements, food),
+)
+println(model)
+
+set_optimizer(model, HiGHS.Optimizer)
+optimize!(model)
+solution_summary(model)
+
+value.(model[:x])</code></pre> <h2 id=homework ><a href="#homework" class=header-anchor >Homework</a></h2> <p>Your homework consists in solving the cannery problem described in <a href="https://www.rand.org/content/dam/rand/pubs/reports/2007/R366part1.pdf">Dantzig &#40;1963&#41;</a>, pp. 2-4, using <a href="https://jump.dev/JuMP.jl/stable/"><code>JuMP</code></a>.</p> <pre><code class="julia hljs">plants = [<span class=hljs-string >&quot;Portland&quot;</span>, <span class=hljs-string >&quot;Seattle&quot;</span>, <span class=hljs-string >&quot;San Diego&quot;</span>]
+capacity = JuMP.Containers.DenseAxisArray(
+    [<span class=hljs-number >250</span>, <span class=hljs-number >500</span>, <span class=hljs-number >750</span>],
+    plants,
+)
+
+markets = [<span class=hljs-string >&quot;New-York&quot;</span>, <span class=hljs-string >&quot;Chicago&quot;</span>, <span class=hljs-string >&quot;Kansas City&quot;</span>, <span class=hljs-string >&quot;Dallas&quot;</span>, <span class=hljs-string >&quot;San Francisco&quot;</span>]
+demand = JuMP.Containers.DenseAxisArray(
+    [<span class=hljs-number >300</span>, <span class=hljs-number >300</span>, <span class=hljs-number >300</span>, <span class=hljs-number >300</span>, <span class=hljs-number >300</span>],
+    markets,
+)
+
+price = JuMP.Containers.DenseAxisArray(
+    [
+        <span class=hljs-number >0.9</span> <span class=hljs-number >1.0</span> <span class=hljs-number >1.5</span> <span class=hljs-number >1.8</span> <span class=hljs-number >2.7</span>
+        <span class=hljs-number >2.5</span> <span class=hljs-number >1.7</span> <span class=hljs-number >1.8</span> <span class=hljs-number >2.0</span> <span class=hljs-number >0.9</span>
+        <span class=hljs-number >2.5</span> <span class=hljs-number >1.8</span> <span class=hljs-number >1.4</span> <span class=hljs-number >1.6</span> <span class=hljs-number >0.6</span>
+    ],
+    plants,
+    markets,
+)</code></pre> <hr /> <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p> <div class=page-foot > <div class=copyright > &copy; Benoît Legat. Last modified: October 04, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
