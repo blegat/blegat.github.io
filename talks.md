@@ -8,9 +8,6 @@
   <li id="2025_JuMP">
     <a href="https://jump.dev/meetings/jumpdev2025/">Large Scale JuMP Models with Constraint Generators</a>, 17th of November 2025<br><strong>Large Scale JuMP Models with Constraint Generators</strong>
   </li>
-  <li id="2025_JCON">
-    <a href="https://juliacon.org/local/paris2025/">Large Scale JuMP Models with Constraint Generators</a>, 3rd of October 2025<br><strong>Optimization with JuMP tutorial</strong><br/><a href="../slides/2025_JCON">slides</a><a href="../slides/2025_JCON.jl">source</a>
-  </li>
 </ul>
 ~~~
 
@@ -18,6 +15,9 @@
 
 ~~~
 <ul>
+  <li id="2025_JCON">
+    <a href="https://juliacon.org/local/paris2025/">Large Scale JuMP Models with Constraint Generators</a>, 3rd of October 2025<br><strong>Optimization with JuMP tutorial</strong><br/><a href="../slides/2025_JCON">slides</a> <a href="../slides/2025_JCON.jl">source</a>
+  </li>
   <li id="2025_cgwa">
     <a href="https://sites.google.com/view/cgwa25/program">FNRS Contact Group on "Wavelets and Applications"</a>, 20th of May 2025<br><strong>Hidden convexity in factorization problems</strong>
   </li>
