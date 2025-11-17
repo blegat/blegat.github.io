@@ -6,7 +6,7 @@
 ~~~
 <ul>
   <li id="2025_JuMP">
-    <a href="https://jump.dev/meetings/jumpdev2025/">Large Scale JuMP Models with Constraint Generators</a>, 17th of November 2025<br><strong>Large Scale JuMP Models with Constraint Generators</strong>
+    <a href="https://jump.dev/meetings/jumpdev2025/">Large Scale JuMP Models with Constraint Generators</a>, 17th of November 2025<br><strong>Large Scale JuMP Models with Constraint Generators</strong><br/><a href="../slides/2025_JuMP">slides</a> <a href="../slides/2025_JuMP.jl">source</a>
   </li>
 </ul>
 ~~~
