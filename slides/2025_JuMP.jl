@@ -39,6 +39,7 @@ This talk present a new JuMP/MOI extension : [GenOpt](https://github.com/blegat/
 2. Being able to write a **single** model compatible with both ExaModels and JuMP's AD backend.
    - Automatically dismantle these groups if the solvers cannot exploit them (with bridges!)
 3. Add a JuMP interface for the user to explicitly specify these groups
+4. Allow existing code base to use it without much changes
 """
 
 # ╔═╡ a3528c53-1163-456e-90f1-525119cdef4b
@@ -80,18 +81,40 @@ model = Model()
 @variable(model, u[1:N, 1:p])
 end
 
+# ╔═╡ 75f362c6-e69e-4cd1-8af7-6a7b6df06f25
+md"## Approach of GenOpt"
+
+# ╔═╡ 4c421cff-464a-41e2-b884-31011d5a07ec
+md"""
+Users already group constraints with containers, the container receives a function and the iterators, like `Base.Generator`.
+"""
+
+# ╔═╡ d06d4bdb-a4e4-4bfd-9243-1878723d2629
+@constraint(model, classical[i in 1:n], x[1, i] == x0[i])
+
+# ╔═╡ 326db900-7214-4121-aee5-ada44cc749f2
+delete(model, classical)
+
+# ╔═╡ 5ae8f51d-ad92-4862-8980-5ae5ed7b0be3
+md"`ExaModels.constraint` expect a `Base.Generator` as well so containers seems to be the right approach. We use a custom container that gives custom objects for `i` and handle interaction with `JuMP.NonlinearExpr` with **operator overloading**."
+
+# ╔═╡ 368b603a-198c-4a4d-a14e-98a3e270e33b
+begin
+@constraint(
+    model,
+    start[i in 1:n],
+    x[1, i] == x0[i],
+    container = GenOpt.ParametrizedArray,
+);
+println(start)
+end
+
 # ╔═╡ a0758565-57dd-4d51-bd63-97b993b45617
 md"## Constraints"
 
 # ╔═╡ 33939427-62ac-4da4-8ed9-09251adb3063
 begin
 container = GenOpt.ParametrizedArray
-@constraint(
-    model,
-    [i in 1:n],
-    x[1, i] == x0[i],
-    container = container,
-)
 @constraint(
     model,
     [i in 1:N],
@@ -343,6 +366,12 @@ $(PlutoUI.TableOfContents(depth=1))
 # ╟─eef717ab-ae1f-43ff-a929-65b511d47167
 # ╟─a7d672cc-3f55-496b-80c4-76e597a16bc1
 # ╠═abb9340f-167e-4b2c-bfc7-c9df0ef9319e
+# ╟─75f362c6-e69e-4cd1-8af7-6a7b6df06f25
+# ╟─4c421cff-464a-41e2-b884-31011d5a07ec
+# ╠═d06d4bdb-a4e4-4bfd-9243-1878723d2629
+# ╠═326db900-7214-4121-aee5-ada44cc749f2
+# ╟─5ae8f51d-ad92-4862-8980-5ae5ed7b0be3
+# ╠═368b603a-198c-4a4d-a14e-98a3e270e33b
 # ╟─a0758565-57dd-4d51-bd63-97b993b45617
 # ╠═33939427-62ac-4da4-8ed9-09251adb3063
 # ╟─50045b20-4134-424f-aa73-84ea8161d292
