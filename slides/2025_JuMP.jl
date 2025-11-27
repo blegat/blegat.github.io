@@ -1,17 +1,20 @@
 ### A Pluto.jl notebook ###
-# v0.20.20
+# v0.20.21
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ d86cdbb6-aa04-4cbb-9427-5118754b12c7
-using Pkg
-
-# ╔═╡ 1f7ad6eb-6a79-4a7f-adba-9f408e1c2ed6
-Pkg.activate("/home/blegat/.julia/dev/GenOpt")
-
 # ╔═╡ c3229e00-5d23-4986-994f-1d19911d9a03
 using PlutoUI, HypertextLiteral, PlutoTeachingTools, JuMP, HiGHS, LinearAlgebra, SparseArrays, NLPModelsIpopt, BenchmarkTools, GenOpt, MadNLP, MadNLPGPU, CUDA
+
+# ╔═╡ 89cfbbb0-c3a7-11f0-bea8-6b8a0e78862d
+@htl("""
+<p align=center style=\"font-size: 40px;\">Large Scale JuMP Models with Constraint Generators</p>
+<p align=right><i>Benoît Legat</i></p>
+$(img("https://jump.dev/assets/jump-dev-workshops/2025/jump-dev-nz.png", :width => 100))
+$(PlutoTeachingTools.ChooseDisplayMode())
+$(PlutoUI.TableOfContents(depth=1))
+""")
 
 # ╔═╡ 8e1d4a42-698d-469e-8c8b-b25ac806455e
 md"# Introduction"
@@ -346,15 +349,6 @@ function img(file::String, args...; kws...)
 end
 end
 
-# ╔═╡ 89cfbbb0-c3a7-11f0-bea8-6b8a0e78862d
-@htl("""
-<p align=center style=\"font-size: 40px;\">Large Scale JuMP Models with Constraint Generators</p>
-<p align=right><i>Benoît Legat</i></p>
-$(img("https://jump.dev/assets/jump-dev-workshops/2025/jump-dev-nz.png", :width => 100))
-$(PlutoTeachingTools.ChooseDisplayMode())
-$(PlutoUI.TableOfContents(depth=1))
-""")
-
 # ╔═╡ Cell order:
 # ╟─89cfbbb0-c3a7-11f0-bea8-6b8a0e78862d
 # ╟─8e1d4a42-698d-469e-8c8b-b25ac806455e
@@ -391,7 +385,5 @@ $(PlutoUI.TableOfContents(depth=1))
 # ╟─88b0d3fc-cdae-4704-b24a-f847509123ae
 # ╟─463bb8c3-7b1c-443d-9a70-44c2ff5623f6
 # ╟─2b17c40c-f312-420a-8ce7-90b41a9925c4
-# ╠═d86cdbb6-aa04-4cbb-9427-5118754b12c7
-# ╠═1f7ad6eb-6a79-4a7f-adba-9f408e1c2ed6
 # ╠═c3229e00-5d23-4986-994f-1d19911d9a03
 # ╟─0da26bb1-6908-46ad-b608-e4a2dbfd7b39
