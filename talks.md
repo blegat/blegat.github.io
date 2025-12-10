@@ -148,7 +148,7 @@
     <a href="https://jump.dev/meetings/bordeaux2018/"><em>2nd Annual JuMP-dev Workshop</em></a>, June 2018<br><strong>Automatic reformulation using constraint bridges</strong><br><a href="https://drive.google.com/file/d/1lVSUiXS1_oxIo7G4H9bMj771aSS3x-gu/view?usp=sharing">slides</a> <a href="https://github.com/JuliaOpt/MathOptInterface.jl/tree/master/src/Bridges">code</a>
   </li>
   <li id="2018_BNLM">
-    <a href="http://www.beneluxmeeting.nl/2018/"><em>37th Benelux Meeting on Systems and Control</em></a>, March 2018<br><strong>Computing controlled invariant sets using semidefinite programming</strong><br><a href="https://drive.google.com/open?id=1f2qtwBMXt5Ma-0EAjiy35fLbPIWXvloN">slides</a>
+    <a href="http://www.beneluxmeeting.nl/2018/"><em>37th Benelux Meeting on Systems and Control</em></a>, March 2018<br><strong>Computing controlled invariant sets using semidefinite programming</strong><br><a href="https://drive.google.com/file/d/1TjMn18K9cvJBofY08BPw7ptxQ2BS7lTl/view">pdf</a> <a href="https://drive.google.com/open?id=1f2qtwBMXt5Ma-0EAjiy35fLbPIWXvloN">slides</a>
   </li>
   <li id="2018_UANT">
     <a href="https://www.uantwerpen.be/"><em>UAntwerpen</em></a>, February 2018<br><strong><a href="https://www.uantwerpen.be/images/uantwerpen/personalpage33566/files/AG-Seminar-2018ss/2018-02-19-Legat.pdf">Optimal Stabilization of Constrained Switched Systems and Application to (Co-)simulation</a></strong><br><a href="https://drive.google.com/open?id=1n5NRpzpYX9moejqdghNcPuaEspP9M2Zp">slides</a>
@@ -160,7 +160,7 @@
     <a href="https://www.ecoledesponts.fr/"><em>Ecole des Ponts</em></a>, June 2017<br><strong>Parallel optimization on the Entropic Cone</strong><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKM0pTNEphcy0wY2c">slides</a>
   </li>
   <li id="2017_BNLM">
-    <a href="http://www.beneluxmeeting.nl/2017/"><em>36th Benelux Meeting on Systems and Control</em></a>, March 2017<br><strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKQ3d0TzZXTFB6NXc">pdf</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKT1hMNFJFMXItUlk">slides</a>
+    <a href="http://www.beneluxmeeting.nl/2017/"><em>36th Benelux Meeting on Systems and Control</em></a>, March 2017<br><strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong><br><a href="https://drive.google.com/file/d/0B1axlYz3_XXKQ3d0TzZXTFB6NXc/view?resourcekey=0-DwradQy7od7x74FzC34F7w">pdf</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKT1hMNFJFMXItUlk">slides</a>
   </li>
   <li id="2017_UCLA">
     <a href="https://www.ee.ucla.edu/"><em>UCLA Electrical Engineering Dept.</em></a>, March 2017<br><strong>Certifying unstability of Switched Systems using Sum of Squares Programming</strong><br><a href="https://drive.google.com/open?id=0B1axlYz3_XXKdmlIQmNrWjJvZGs">slides</a>
