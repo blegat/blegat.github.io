@@ -102,9 +102,9 @@ version = "0.1.10"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "d60eb76f37d7e5a40cc2e7c36974d864b82dc802"
+git-tree-sha1 = "6522cfb3b8fe97bec632252263057996cbd3de20"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.17.1"
+version = "1.18.0"
 weakdeps = ["HTTP"]
 
     [deps.FileIO.extensions]
@@ -134,9 +134,9 @@ version = "1.10.19"
 
 [[deps.IJulia]]
 deps = ["Base64", "Conda", "Dates", "InteractiveUtils", "Logging", "Markdown", "Pkg", "PrecompileTools", "Printf", "REPL", "Random", "SHA", "Sockets", "UUIDs", "ZMQ"]
-git-tree-sha1 = "13603b5774231264b3bb795ba1eb6a519f49fc21"
+git-tree-sha1 = "dff8af3ab4f632d959ef19726b85939328ba289c"
 uuid = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
-version = "1.33.0"
+version = "1.34.1"
 
     [deps.IJulia.extensions]
     IJuliaPythonCallExt = "PythonCall"
