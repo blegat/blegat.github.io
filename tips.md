@@ -7,10 +7,24 @@ LaTeX ignores these line breaks but when looking at Git diffs, it avoid the case
 
 ## Zotero
 
+When exporting for LaTeX, use BibTeX if forced to by a conference of journal LaTeX class, use [BibLaTeX](https://www.overleaf.com/learn/latex/Bibliography_management_with_biblatex) otherwise.
+
+### Zotero-Overleaf integration
+
 With overleaf, you can have automatic export using "Integrations" on the left -> Zotero.
+
+### Export Zotero library to BibLaTeX
 
 If using LaTeX locally, the automatic export of Zotero into BibTeX isn't good.
 Install this extension: https://retorque.re/zotero-better-bibtex/
 Then, to export, right click on a library -> Export library -> in format, select "Better BibLaTeX" and check "Keep updated" and "Background export".
 To avoid conflict with your colleagues, don't export the `file` fields since the path will differ.
 For this, got in Edit -> Settings -> Better BibTeX. In Export -> Fields, write "file".
+
+## Useful links
+
+* ICTEAM [Useful documents & links](https://www.uclouvain.be/en/research-institutes/icteam/restricted/useful-documents)
+* [INMA Documentation](https://sites.uclouvain.be/inma/doc)
+* [UCLouvain wiki](https://uclouvain.atlassian.net/servicedesk/customer/portals)
+* [Declare a departure abroad](https://app.uclouvain.be/Mission/)
+* [Book a room in Euler](https://reservation-web.uclouvain.be/euler)
