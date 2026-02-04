@@ -5,3 +5,4 @@
 
 * Adeline Colson
 * Sophie Lequeu
+* Yixuan Chen
