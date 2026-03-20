@@ -8,7 +8,7 @@ where appropriate -->
 ~~~
 <div class="colbox-blue" style="margin-top:1.5em; margin-bottom:1em; width:95%; border-radius:5px;">
 ~~~
-⚠ **Hiring!** I have one open position for a **Ph.D. student**. Do not hesitate to contact me!
+⚠ **Hiring!** We have open positions for **Ph.D. students**. Do not hesitate to contact me!
 ~~~
 </div>
 ~~~
