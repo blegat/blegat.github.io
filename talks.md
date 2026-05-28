@@ -34,7 +34,7 @@
     <a href="https://ismp2024.gerad.ca/">25th International Symposium on Mathematical Programming (ISMP)</a>, 22nd of July 2024<br><a href="https://ismp2024.gerad.ca/schedule/MB/677"><strong>Reducing Sum-of-Squares constraints over a domain</strong></a>
   </li>
   <li id="2024_JuMP">
-    <a href="https://jump.dev/meetings/jumpdev2024/">JuMP-dev 2024</a>, 19th of July 2024<br><strong>Why you should stop using the monomial basis</strong>
+    <a href="https://jump.dev/meetings/jumpdev2024/">JuMP-dev 2024</a>, 19th of July 2024<br><strong>Why you should stop using the monomial basis</strong><br><a href="https://jump.dev/assets/jump-dev-workshops/2024/legat.html">slides</a> <a href="https://youtu.be/CGPHaHxCG2w">video</a>
   </li>
   <li id="2023_KUL">
     KU Leuven, 24th of November 2023<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong><br><a href="https://drive.google.com/file/d/1yutRLs4izHT8JZFov4SbT0_GFSmcxnzc/view">slides</a>
