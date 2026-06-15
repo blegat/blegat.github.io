@@ -69,8 +69,8 @@ Pros:
 	md"""
 Cons:
 * Nonconvex:
-  - harder to optimizer
-  - can get stuck at local minima
+  - harder to optimize
+  - can get stuck at spurious local minima
 """,
 )
 
@@ -80,7 +80,7 @@ md"""
 ``X`` block-diagonal (scalars are ``1 \times 1`` blocks), ``A_i`` are symmetric sparse matrices
 ```math
 \begin{align}
-\min_{X \in \mathbb{R}^{n \times n}} & \;\; \sum_{j} \langle C_j, X_j \rangle
+\min_{X_j \in \mathbb{R}^{n_j \times n_j}} & \;\; \sum_{j} \langle C_j, X_j \rangle
 \\
 \;\;\text{s.t.} \;\; & \sum_j \langle A_{ij}, X_j \rangle = b_i\\
 & X_j \text{ is PSD}
@@ -110,8 +110,8 @@ md"""
 * [Hypatia](https://github.com/jump-dev/Hypatia.jl) : ``X`` only accessed via orthogonal rank-1 ``A_i``.
 * [SketchyCGAL (2021)](https://github.com/alpyurtsever/SketchyCGAL) : ``A_i = I``.
 * [BMSOS (2022)](https://github.com/JuliaAlgebra/BMSOS.jl) : ``A_i`` matrix-free with FFT.
-* [cuHALLaR (2025)](https://arxiv.org/pdf/2505.13719) : ``A_i = F_iD_iF_i^\top``, ``D_i \in \mathbb{R}^{r_i \times r_i}`` **not** necessarily diagonal.
 * [SDPLRPlus (2024)](https://github.com/luotuoqingshan/SDPLRPlus.jl): ``A_i`` in either CSC or COO format. COO better if nnz ``\ll O(n)``.
+* [cuHALLaR (2025)](https://arxiv.org/pdf/2505.13719) : ``A_i = F_iD_iF_i^\top``, ``D_i \in \mathbb{R}^{r_i \times r_i}`` **not** necessarily diagonal.
 """
 
 # ╔═╡ 98cdc556-d8c5-4f87-8377-c5b3d216bb52
@@ -123,7 +123,7 @@ md"""## The format liberator
 # ╔═╡ 569d52de-1eb0-4a16-86c2-8758557fa23a
 TwoColumn(
 	md"""
-`SetDotProducts{WITHOUT_SET}` (for Hypatia)
+`SetDotProducts{WITHOUT_SET}`
 ```math
 \{(\langle A_1, X \rangle, \ldots, \langle A_m, X \rangle) \mid X \text{ is PSD}\}
 ```
@@ -133,16 +133,82 @@ TwoColumn(
 ```
 """,
 	md"""
-`SetDotProducts{WITHOUT_SET}` (for Hypatia)
+`LinearCombinationInSet{WITHOUT_SET}`
 ```math
 \{ y \in \mathbb{R}^{m} : \sum_{i=1}^m y_i A_i \text{ is PSD} \}.
 ```
-if `W` is `WITH_SET`, this is the set:
+`LinearCombinationInSet{WITH_SET}`
 ```math
 \{ (y, C) \in \mathbb{R}^{m} : \sum_{i=1}^m y_i A_i - C \text{ is PSD} \}.
 ```
 """,
 )
+
+# ╔═╡ 2e54be0f-8ba3-4076-940c-810aa740f304
+md"""
+## Decoupling SDP solvers
+
+[LowRankOpt](github.com/blegat/LowRankOpt.jl/) transforms SDP in MOI + `LinearCombinationInSet{WITH_SET}` into `NLPModels`.
+"""
+
+# ╔═╡ 1c8215e4-f0e1-42ec-9231-9037433b66ac
+TwoColumn(
+	md"""
+Solver on ``X``
+
+* Extends `NLPModels` interface for PSD specifics
+* Solver never accesses ``A_i`` or ``C`` directly
+* Proof of concept with [Loraine](https://github.com/kocvara/Loraine.jl/pull/29)
+""",
+	md"""
+Burer-Monteiro on ``U``
+
+* No need to extend `NLPModels` → existing `NLPModels` can be used
+* Implicit dualization: `NLPModels` solver searches ``U``, user formulates with ``y``.
+* Solvers like [SDPLRPlus](https://github.com/luotuoqingshan/SDPLRPlus.jl) can also exploit specifics of BM (e.g. easy line-search, rank update).
+""",
+)
+
+# ╔═╡ 0d7799dc-71cb-41a3-92ca-044e756aeb6e
+md"""
+> This decoupling makes it **easier** to write an SDP solver, no need for an MOI interface. The solver **exploit new custom** ``A_i`` structure for free.
+"""
+
+# ╔═╡ 31f2c438-d1a2-4ebe-8414-0b8c29adf65d
+md"## Extending NLPModels"
+
+# ╔═╡ 9bee7b40-b906-430f-9260-ebca684272ca
+TwoColumn(
+	md"""
+Solver on ``X``: [Loraine.jl](https://github.com/kocvara/Loraine.jl)
+
+* KKT → System on ``\Delta X``, ``\Delta y``, ``\Delta Z``
+* Nesterov–Todd scaling →
+* System on ``\Delta y`` **only** : ``H \Delta y = r``
+* Need ``r`` and *Schur complement* ``H``
+""",
+	md"""
+Burer-Monteiro on ``U``: [SDPLRPlus.jl](https://github.com/luotuoqingshan/SDPLRPlus.jl)
+
+* Line-search : Minimizes univariate quartic polynomial with [Polynomials](https://github.com/JuliaMath/Polynomials.jl)
+* [Riemannian staircase](https://www.nicolasboumal.net/papers/The_staircase_method.pdf): Change the number of columns of ``U`` **during solve**
+""",
+)
+
+# ╔═╡ 8fa41b95-f05c-408c-8f66-8f989f50769f
+md"""
+## Supporting arbitrary matrix types
+
+* Number of matrix types in a given model is small
+* Transform `Vector{AbstractMatrix}` -> `Vector{Union{...}}` before calling the solver
+* No runtime dispatch thanks to [Julia's union-splitting](https://julialang.org/blog/2018/08/union-splitting/)
+```julia
+convert(Array{Union{unique(typeof.(A))...}}, A)
+```
+"""
+
+# ╔═╡ 64a3ccea-60c8-42a5-890c-d60e6454d6ba
+md"## Benchmark"
 
 # ╔═╡ 5466dcad-20c2-443c-9b3f-75d467a74bc1
 html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
@@ -186,16 +252,29 @@ function img(file::String, args...; kws...)
         img(Path(file), args...; kws...)
     end
 end
-end
+end;
 
 # ╔═╡ b0789776-5c1a-11f1-9355-0b1c7aa428ee
 @htl("""
-<p align=center style=\"font-size: 40px;\">Second-Order GPU solver for Burer-Monteiro</p>
-<p align=right><i>Benoît Legat</i></p>
-$(img("https://jump.dev/assets/jump-dev-workshops/2026/logo.png", :width => 100))
+<p align=center style=\"font-size: 30px;\">Second-Order GPU solver for Burer-Monteiro</p>
+<p align=right><i>Benoît Legat</i>, 1st June 2026</p>
+$(img("https://upload.wikimedia.org/wikipedia/commons/7/72/UCLouvain_logo.svg", :height => 32))
+$(img("https://jump.dev/assets/jump-dev-workshops/2026/logo.png", :height => 64))
 $(PlutoTeachingTools.ChooseDisplayMode())
 $(PlutoUI.TableOfContents(depth=1))
 """)
+
+# ╔═╡ d917bc6f-89c8-4ba2-b110-f26a91ee0016
+TwoColumnWideLeft(
+	img("$(pwd())/bench.png"),
+	md"""
+Benchmark instance of Section 7 of [arxiv#2205.11466](https://arxiv.org/abs/2205.11466), rank-4. [SumOfSquares](https://github.com/jump-dev/SumOfSquares.jl/) Trigo + Lagrange bases
+* NLopt → [JSOSolvers](https://github.com/JuliaSmoothOptimizers/JSOSolvers.jl)' `lbfgs` and `trunk`.
+* FFT uses [AbstractFFTs](https://github.com/JuliaMath/AbstractFFTs.jl) : [FFTW.jl](https://github.com/JuliaMath/FFTW.jl) on CPU and [`CUDA.CUFFT`](https://github.com/JuliaGPU/CUDA.jl) on GPU
+* NVIDIA RTX PRO 1000 Blackwell Laptop gen
+* Done with François Pacaud
+""",
+)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -529,8 +608,16 @@ version = "1.64.0+1"
 # ╟─77650a10-43fa-47fc-855d-04a10f567b12
 # ╟─98cdc556-d8c5-4f87-8377-c5b3d216bb52
 # ╟─569d52de-1eb0-4a16-86c2-8758557fa23a
+# ╟─2e54be0f-8ba3-4076-940c-810aa740f304
+# ╟─1c8215e4-f0e1-42ec-9231-9037433b66ac
+# ╟─0d7799dc-71cb-41a3-92ca-044e756aeb6e
+# ╟─31f2c438-d1a2-4ebe-8414-0b8c29adf65d
+# ╟─9bee7b40-b906-430f-9260-ebca684272ca
+# ╟─8fa41b95-f05c-408c-8f66-8f989f50769f
+# ╟─64a3ccea-60c8-42a5-890c-d60e6454d6ba
+# ╟─d917bc6f-89c8-4ba2-b110-f26a91ee0016
 # ╟─5466dcad-20c2-443c-9b3f-75d467a74bc1
-# ╠═6ae6c41e-70f4-4d0e-b5b2-230143d6845b
-# ╠═dd939c2f-93a2-46e1-be93-490eb99f74ca
+# ╟─6ae6c41e-70f4-4d0e-b5b2-230143d6845b
+# ╟─dd939c2f-93a2-46e1-be93-490eb99f74ca
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
