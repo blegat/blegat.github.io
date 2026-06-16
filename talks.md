@@ -5,6 +5,9 @@
 
 ~~~
 <ul>
+  <li id="2026_IFORS">
+    <a href="https://ifors2026.at">24th Conference of the International Federation of Operational Research Societies</a>, 13th of July 2026<br><a href="https://www.euro-online.org/conf/ifors2026/treat_abstract?frompage=edit_session&sessid=57&paperid=4713"><strong>Accelerating energy system optimization on GPUs</strong></a>
+  </li>
 </ul>
 ~~~
 
@@ -12,6 +15,15 @@
 
 ~~~
 <ul>
+  <li id="2026_SIOP">
+    <a href="https://www.siam.org/conferences-events/siam-conferences/op26/">JuMP-dev 2026</a>, 5th of June 2026<br><strong>Adding array support for JuMP’s Automatic Differentiation</strong><br/><a href="https://jump.dev/assets/jump-dev-workshops/2026/slides_siam_benoit.pdf">slides</a>
+  </li>
+  <li id="2026_JuMP">
+    <a href="https://jump.dev/meetings/jumpdev2026/">JuMP-dev 2026</a>, 1st of June 2026<br><strong>Second-Order GPU solver for Burer-Monteiro</strong><br/><a href="../slides/2026_JuMP">slides</a> <a href="../slides/2026_JuMP.jl">source</a>
+  </li>
+  <li id="2026_NexOR">
+    <a href="https://jump.dev/meetings/jumpdev2026/">JuMP-dev 2026</a>, 31st of May 2026<br><strong>Optimize Your Fleet with Odoo and JuMP</strong>
+  </li>
   <li id="2026_CAS">
     Centre Automatique et Systèmes seminar, Ecole des Mines Paris, 13th of January 2026<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong>
   </li>
