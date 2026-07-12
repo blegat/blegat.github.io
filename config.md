@@ -6,6 +6,7 @@
 @def website_url   = "https://blegat.github.io/"
 
 @def author = "Benoît Legat"
+@def ignore = ["slides"]
 
 # Add here global latex commands to use throughout your
 # pages. It can be math commands but does not need to be.
