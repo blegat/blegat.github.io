@@ -40,6 +40,8 @@ jobs:
             include("literate.jl");
             using Franklin;
             optimize()'
+    - name: Remove slides from built site
+      run: rm -rf __site/slides
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
