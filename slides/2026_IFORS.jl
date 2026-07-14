@@ -35,6 +35,7 @@ md"""
 * ExaModels tries to rebuild this structure in its JuMP interface
 * [GenOpt](https://github.com/blegat/GenOpt.jl) extends JuMP to allow communicating this structure
 * [ArrayDiff](https://github.com/blegat/ArrayDiff.jl/) allows to model AC-OPF in a vectorized form to be GPU-friendly.
+  - Easy to integrate neural networks and other DL models
 
 $(DOI("10.1016/j.epsr.2024.110651"))
 """
@@ -111,8 +112,6 @@ Lazy sum with filter
 # ╔═╡ 50045b20-4134-424f-aa73-84ea8161d292
 md"""
 ## Objective
-
-We shouldn't expand the sum, just leave a sum operator in the expression graph.
 """
 
 # ╔═╡ 5dc820bf-49c8-4bfe-9189-7d61ba503754
@@ -705,13 +704,13 @@ end
 # ╠═aeb3615c-a5b1-42cc-b77e-0d7ee8193dfc
 # ╟─676a1af3-6984-4ed3-a4c7-e45f26b36454
 # ╠═7b2bb794-05b6-4e97-bdf1-6869b3c070ee
+# ╟─7b628883-f2ba-4db9-a2f6-118590e49f89
+# ╟─8b1574cb-73d0-49c8-98d8-4b8d84cf8cb2
 # ╠═8dcabc6b-e6bc-42aa-af1d-2d029d02867b
 # ╠═483ebe34-e0ba-44d9-927f-fe370d4f678a
 # ╠═b14c80bf-342f-474d-9a56-d16656e06870
 # ╠═ab1ffdf3-0f20-4fcb-958a-741012c860f5
 # ╠═c8038d45-05cf-46c9-b194-8e7647ea3593
-# ╟─7b628883-f2ba-4db9-a2f6-118590e49f89
-# ╟─8b1574cb-73d0-49c8-98d8-4b8d84cf8cb2
 # ╟─a571ead2-d002-4c35-a1c3-af3461008196
 # ╟─44875521-8ed5-4c84-b0ad-24238df0ca30
 # ╟─ad6a2913-f3e6-4a88-b09b-deae7f750629
