@@ -8,10 +8,11 @@ Courses at [![UCLouvain](../assets/index/uclouvain.png)](https://uclouvain.be/)
 @@
 
 @@inline-images
-* [*LINMA2472* **Algorithms in data science**](https://uclouvain.be/en-cours-2025-linma2472) : [![][git-logo]](https://github.com/blegat/LINMA2472) [![][pluto-logo]](https://blegat.github.io/LINMA2472/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=1189)
-* [*LSINC1113* **Compléments de mathématiques**](https://uclouvain.be/cours-2025-lsinc1113) : [![][git-logo]](https://github.com/blegat/LSINC1113) [![][pluto-logo]](https://blegat.github.io/LSINC1113/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=5040)
-* [*LINMA2710* **Scientific computing**](https://uclouvain.be/cours-2025-linma2710) : [![][git-logo]](https://github.com/blegat/LINMA2710) [![][pluto-logo]](https://blegat.github.io/LINMA2710/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=2951)
-* [*LEPL1503* **Projet 3**](https://uclouvain.be/cours-2025-lepl1503) : [![][git-logo]](https://github.com/blegat/LEPL1503) [![][pluto-logo]](https://blegat.github.io/LEPL1503/) [![][git-logo]](https://github.com/obonaventure/SyllabusC) [🕮](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=3842)
+* [*LDACS1110* **Foundations of Machine Learning and Cryptography**](https://uclouvain.be/cours-2026-ldacs1110) : [![][git-logo]](https://github.com/blegat/LINMA2472) [![][pluto-logo]](https://blegat.github.io/LINMA2472/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=1189)
+* [*LEPL1503* **Projet 3**](https://uclouvain.be/cours-2026-lepl1503) : [![][git-logo]](https://github.com/blegat/LEPL1503) [![][pluto-logo]](https://blegat.github.io/LEPL1503/) [![][git-logo]](https://github.com/obonaventure/SyllabusC) [🕮](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=3842)
+* [*LINMA2472* **Algorithms in data science**](https://uclouvain.be/en-cours-2026-linma2472) : [![][git-logo]](https://github.com/blegat/LINMA2472) [![][pluto-logo]](https://blegat.github.io/LINMA2472/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=1189)
+* [*LINMA2710* **Scientific computing**](https://uclouvain.be/en-cours-2026-linma2710) : [![][git-logo]](https://github.com/blegat/LINMA2710) [![][pluto-logo]](https://blegat.github.io/LINMA2710/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=2951)
+* [*LSINC1113* **Compléments de mathématiques**](https://uclouvain.be/cours-2026-lsinc1113) : [![][git-logo]](https://github.com/blegat/LSINC1113) [![][pluto-logo]](https://blegat.github.io/LSINC1113/) [![][moodle-logo]](https://moodle.uclouvain.be/course/view.php?id=5040)
 @@
 
 @@inline-images
