@@ -3,6 +3,9 @@
 
 ## Current students
 
+* Sacha Benarroch-Lelong
+* Florentin Canart
 * Adeline Colson
 * Sophie Lequeu
-* Yixuan Chen
+* Ariane Sauvenier
+* Charles Van Hees
