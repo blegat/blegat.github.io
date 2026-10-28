@@ -1,0 +1,30 @@
+\begin{theorem}
+  \label{theo:stabcert}
+  Consider \defAGe{}.
+  We have
+  \[ \lim_{k \to \infty} \cjsrk \leq \gamubopt. \]
+  \begin{proof}
+    Consider a norm $\|\cdot\|$ of $\R^n$ and its corresponding induced matrix norm of $\R^{n \times n}$.
+    For each $v \in \Nodes$, we know by compactness of the unit ball in $\R^n$, continuity and strict positivity of $f_v(x)$ that there exist $0 < \alpha_v \leq \beta_v$ such that
+    \[ \alpha_v \|x\| \leq f_v(x) \leq \beta_v\|x\| \]
+    for all $x \in \R^n$.
+    Let $\alpha = \min_{v \in \Nodes} \alpha_v$ and $\beta = \max_{v \in \Nodes} \beta_v$.
+
+    For a $\G$-admissible $k$-uple $(\sigma_1, \sigma_2, \ldots, \sigma_k)$,
+    \[ \|A_{\sigma_k} \cdots A_{\sigma_1}\| = \sup_{x \neq 0} \frac{\|A_{\sigma_k} \cdots A_{\sigma_1}x\|}{\|x\|}. \]
+    Consider a path such that the $i$th edge has label $\sigma_i$ for $i = 1, \ldots, k$
+    and denote the intermediary nodes of that path as $v_0, v_1, \ldots, v_k$.
+    For any $x \in \R^n$, we have
+    \begin{align*}
+      \|A_{\sigma_k} \cdots A_{\sigma_1}x\| %
+                                            \leq \alpha_{v_k} f_{v_k}(A_{\sigma_k} \cdots A_{\sigma_1} x)%
+                                            \leq \alpha_{v_k} \gamub f_{v_{k-1}}(A_{\sigma_{k-1}} \cdots A_{\sigma_1} x)%
+                                            \leq \alpha_{v_k} \gamub^{k} f_{v_0}(x)
+    \end{align*}
+    and
+    \[ \|x\| \geq \beta_{v_0} p_{v_0}(x) \]
+    hence
+    \[ \|A_{\sigma_k} \cdots A_{\sigma_1}\| \leq \frac{\beta_{v_0}}{\alpha_{v_k}} \gamub^k \leq \frac{\beta}{\alpha} \gamub^k. \]
+    Taking the $k$th root, the limit $k \to \infty$ and using \defref{cjsr} we obtain the result.
+  \end{proof}
+\end{theorem}

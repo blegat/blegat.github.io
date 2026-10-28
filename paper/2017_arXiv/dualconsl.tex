@@ -1,0 +1,40 @@
+\begin{lemma}
+  \label{lem:dualconsl}
+  Given \defAG{}, %
+  if $\pmu$ is a feasible solution of \progref{dual} then,
+  for any edge $(\bar{u},\bar{v},\bar{\sigma}) \in \Arcs$,
+  the following holds:
+  \begin{equation}
+    \label{eq:dualconsl}
+    \sum_{s \in \Arcsin_k(\bar{u})} \pushf{A_s}{\pmu_{s[1]}} \succeq \gamma^{2dk} \pmu_{\bar{u}\bar{v}\bar{\sigma}}
+  \end{equation}
+  where $\pmu_1 \succeq \pmu_2$ denotes $\pmu_1 - \pmu_2 \in \Soshd$.
+  \begin{proof}
+    We prove \eqref{eq:dualconsl} by induction, the case of $k=0$ being trivial.
+    Suppose that
+    \begin{equation}
+      \label{eq:indhyp}
+      \sum_{s' \in \Arcsin_{k-1}(\bar{u})}\pushf{A_{s'}}{\pmu_{s'[1]}} \succeq \gamma^{2d(k-1)} \pmu_{\bar{u}\bar{v}\bar{\sigma}}.
+    \end{equation}
+    We can rewrite the left-hand side of \eqref{eq:dualconsl} as
+    \begin{equation}
+      \label{eq:splitdualconsl}
+      \sum_{s \in \Arcsin_k(\bar{u})} \pushf{A_s}{\pmu_{s[1]}} = \sum_{s' \in \Arcsin_{k-1}(\bar{u})} \pushf{A_{s'}}{\sum_{(u,s'(1),\sigma) \in \Arcs} \pushf{A_\sigma}{\pmu_{us'(1)\sigma}}}.
+    \end{equation}
+    By \eqref{eq:dual1},
+    \[
+      \sum_{(u,s'(1),\sigma) \in \Arcs} \pushf{A_{\sigma}}{\pmu_{us'(1)\sigma}}
+      \succeq \gamma^{2d} \sum_{(s'(1),w,\sigma') \in \Arcs} \pmu_{s'(1)w\sigma'}.
+    \]
+    Since the dual variables $\pmu_{s'(1)w\sigma'}$ of the right-hand side are in the dual of the SOS cone,
+    and one of them is $\pmu_{s'[1]}$, we have
+    \[
+      \sum_{(u,s'(1),\sigma) \in \Arcs} \pushf{A_{\sigma}}{\pmu_{us'(1)\sigma}}
+      \succeq \gamma^{2d} \pmu_{s'[1]}.
+    \]
+    Applying $\pushf{A_{s'}}{}$ on both sides and using \eqref{eq:splitdualconsl} gives
+    \[
+      \sum_{s \in \Arcsin_k(\bar{u})} \pushf{A_s}{\pmu_{s[1]}} \succeq \gamma^{2d} \sum_{s' \in \Arcsin_{k-1}(\bar{u})}\pushf{A_{s'}}{\pmu_{s'[1]}} \stackrel{\eqref{eq:indhyp}}{\succeq} \gamma^{2dk} \pmu_{\bar{u}\bar{v}\bar{\sigma}}.
+    \]
+  \end{proof}
+\end{lemma}

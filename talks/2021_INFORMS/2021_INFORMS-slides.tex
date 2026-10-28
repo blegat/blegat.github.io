@@ -1,0 +1,250 @@
+\documentclass{beamer}
+\usetheme[block=fill]{metropolis}
+\usepackage{boolexpr}
+\usepackage{kpfonts}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{../../latex/tkz-graph}
+\usetikzlibrary{
+    arrows,
+    shapes,
+}
+\tikzset{
+    ->,
+    my_node/.style={
+        minimum height=1.5cm,
+        minimum width=3cm,
+        draw,
+    },
+    mpb_node/.style={
+        minimum height=3cm,
+        minimum width=12cm,
+        draw,
+    },
+}
+\DeclareMathOperator{\gauge}{g}
+\usepackage{mathtools}
+\newcommand{\verteq}{\rotatebox{90}{$=$}}
+\newcommand{\xd}{x_{[d]}}
+\newcommand{\xdt}{x_{[d]}^\Tr}
+
+\usepackage{scalerel,amssymb}
+\def\mcirc{\mathbin{\scalerel*{\circ}{j}}}
+\def\msquare{\mathord{\scalerel*{\Box}{gX}}}
+
+\newcommand{\piB}{\pi_{\Image(B)^\perp}}
+
+
+\newcommand{\monoton}{monotone}
+\newcommand{\solto}{solution to}
+
+\usepackage[normalem]{ulem}
+
+\usepackage[labelformat=empty]{caption}
+\usepackage[official]{eurosym}
+
+\usepackage{siunitx}
+
+\usepackage[math]{iwona}
+\usepackage{scalerel}
+\def\lVert{\mid\!\mid}
+\def\rVert{\mid\!\mid}
+
+\usepackage[normalem]{ulem}
+\usepackage{mathtools}
+
+\usepackage{../../latex/custom}
+\usepackage{graphicx}
+\graphicspath{{../../latex/images}}
+\usepackage{amsfonts}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+
+\usepackage{framed}
+
+\newcommand{\subfa}[5]{
+  \includegraphics[trim=#1cm 0cm #2cm 0cm, clip, width=0.3\textwidth]{2021_BOOK/#5.png}
+}
+
+
+
+\newcommand{\polyset}[1]{
+      \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.2\textwidth]{2021_ADHS/primal_#1.png}%
+  ~~~~~~%
+      \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.2\textwidth]{2021_ADHS/polar_#1.png}
+}
+
+
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\aeur}{\alpha_\text{\euro}}
+\newcommand{\adol}{\alpha_\$}
+\newcommand{\apou}{\alpha_\text{\pounds}}
+
+\title{Matrix representations for MathOptInterface}
+\subtitle{INFORMS 2021}
+\institute{%
+  \hfill\includegraphics[width=0.3\textwidth]{JuMP.png}%
+}
+\date{October, 2021}
+\author{Beno\^it~Legat}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+\begin{document}
+  \maketitle
+
+  \begin{frame}[fragile]
+    \frametitle{MathOptInterface (MOI)}
+    MOI in a nutshell:
+    \begin{itemize}
+      \item \verb|add_variable(model)|.
+      \item \verb|add_constraint(model, func, set)|, e.g. $2x + 3y = 1$ $\to$ (\verb|2*x + 3*y|)-in-\verb|EqualTo(1.0)|.
+      \item \verb|set|, \verb|get| attributes, e.g., \verb|ObjectiveSense|, \verb|ObjectiveFunction|.
+    \end{itemize}
+    Extensible framework:
+    \begin{itemize}
+      \item \alert{Generic} on attribute, function and set types. New ones can be defined \alert{independently}.
+      \item Solver-\alert{specific} features easily exposed to JuMP/MOI users through \alert{custom} attributes.
+      \item Expose \alert{specialized} problem structure easily through \alert{custom} functions, sets.
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Genericity and performance}
+    What is the \alert{cost} of this \alert{genericity} ?
+
+    Can MOI be both \alert{extensible} and \alert{performant} ?
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Matrix representation}
+    Many \alert{LP} solvers use the following form:
+\[
+    \begin{array}{rl}
+        \min\limits_{\mathbf{x}\in\mathbb{R}^N} & \mathbf{c}^\top \mathbf{x}\\
+        \text{subject to:} & \mathbf{l} \le A\mathbf{x} \le \mathbf{u}\\
+                           & \mathbf{x_l} \le \mathbf{x} \le \mathbf{x_u}
+    \end{array}
+\]
+    Many \alert{conic} solvers use the following form:
+\[
+    \begin{array}{rl}
+        \min\limits_{\mathbf{x}\in\mathbb{R}^N} & \mathbf{c}^\top \mathbf{x}\\
+        \text{subject to:} & A\mathbf{x} + \mathbf{b} \in \mathcal{K}\\
+                           & \mathbf{x}\ \mathsf{free}.
+    \end{array}
+    \qquad
+    \begin{array}{rl}
+        \max\limits_{\mathbf{x}\in\mathbb{R}^N} & -\mathbf{b}^\top \mathbf{y}\\
+        \text{subject to:} & A^\Tr \mathbf{y} = \mathbf{c}\\
+                           & \mathbf{y} \in \mathcal{K},
+    \end{array}
+\]
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Sparse matrices}
+    $A$ is a \alert{sparse} $m \times n$ matrix of $k$ entries. Common formats:
+    \begin{itemize}
+      \item COO: 3 $k$-vectors: row indices, columns indices, entries (may be duplicates).
+      \item CSC: 2 $k$-vectors: row indices, entries. 1 $(n+1)$-vector: column pointers.
+      \item CSR: 2 $k$-vectors: column indices, entries. 1 $(n+1)$-vector: row pointers.
+    \end{itemize}
+    Need for \alert{conversion}:
+    \begin{itemize}
+      \item \texttt{MOI.VectorAffineFunction}: COO
+      \item Multiple \texttt{MOI.ScalarAffineFunction}: CSR-like (not sorted, with duplicate)
+      \item Most solvers: CSC
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Conversions}
+    \begin{block}{COO $\to$ CSC}
+      \begin{enumerate}
+        \item \alert{Sort} and merge entries $\bigoh(k \log k)$ (may improve with bucket sort)
+        \item \alert{Allocate} vectors $\bigoh(k + n)$
+        \item \alert{Fill} vectors $\bigoh(k + n)$
+      \end{enumerate}
+    \end{block}
+    \begin{block}{CSR $\to$ CSC (or CSC transpose)}
+      \begin{enumerate}
+        \item First \alert{pass}: \alert{Count} number of entries per columns $\bigoh(k)$
+        \item \alert{Allocate} vectors $\bigoh(k + n)$
+        \item Second \alert{pass}: \alert{Fill} vectors $\bigoh(k + n)$
+      \end{enumerate}
+    \end{block}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Canonical functions}
+    \begin{itemize}
+      \item \texttt{is\_canonical}: $\bigoh(k)$ time, 0 allocations.
+      \item \texttt{canonical}: $\bigoh(k\log k)$ time, $\bigoh(k)$ allocations.
+    \end{itemize}
+    \begin{itemize}
+      \item First and second pass need \alert{canonical} MOI functions, i.e., sorted and without duplicates.
+      \item JuMP creates \alert{canonical} functions.
+      \item Bridges may \alert{break} canonicalization.
+      \item \texttt{MOI.modify} may \alert{break} canonicalization.
+    \end{itemize}
+
+    \begin{itemize}
+      \item \texttt{MOI.Utilities.Model} need to \alert{copy} function given by user: might as well canonicalize them as well.
+      \item So \texttt{MOI.Utilities.Model} functions are \alert{canonical} unless \texttt{MOI.modify}'d
+      \item \texttt{CanonicalConstraintFunction} check \texttt{is\_canonical} and canonicalize only if needed.
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Copy without bridges}
+    \texttt{VectorOfConstraints} to \texttt{MatrixOfConstraints}
+    \begin{enumerate}
+      \item First pass: Collect functions with \texttt{CanonicalConstraintFunction}
+        and \alert{count} number of entries by column: no allocation if \texttt{modify} not called. Function not mapped with \texttt{IndexMap} to avoid allocation.
+      \item \alert{Allocate} CSC representation.
+      \item Second pass: Go through collected function and
+        \alert{fill} CSC representation.
+    \end{enumerate}
+    \begin{itemize}
+      \item Canonicalization done \alert{once} as functions are collected.
+      \item Indices are mapped \alert{twice} (once per pass) but mapped function not allocated and mapping is \alert{cheap} (\texttt{CleverDicts} is a \texttt{Vector} if no variable were deleted).
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Copy with bridges}
+    \begin{itemize}
+      \item All constraint types not bridged passed \alert{through} bridge layers with \texttt{pass\_nonvariable\_constraints} to avoid \alert{allocating} mapped functions.
+      \item Bridged constraints add function with \alert{mapped} indices that need to be canonicalized.
+      \item \alert{Mix} of functions with indices mapped or not mapped.
+    \end{itemize}
+    \begin{itemize}
+      \item The bridge layer still \alert{allows} performance optimization.
+      \item The bridging of some constraints types does \alert{not affect} performance
+        of other constraint types.
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Only two copies}
+    The number of nonzero entries $k$ might be \alert{large}: we don't want to allocate to many \alert{copies}.
+    \begin{itemize}
+      \item \texttt{CachingOptimizer}: One copy of \alert{user} model in \texttt{VectorOfConstraints} form.
+      \item \texttt{LazyBridgeOptimizer}: Bridged layer.
+      \item \texttt{CachingOptimizer}: One copy of \alert{solver} model in \texttt{MatrixOfConstraints} form (0-based indexed if needed).
+      \item Solver.
+    \end{itemize}
+    Copy of solver model is solver \alert{specific}: depends on supported constraints, 0-based vs 1-based, splitting of matrices between constraint types...
+  \end{frame}
+\end{document}

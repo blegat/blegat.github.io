@@ -1,0 +1,1349 @@
+\documentclass{sig-alternate-05-2015}
+
+\usepackage{tabu}
+
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{acmcopyright}
+
+\newcommand{\PrimalFig}[2]{
+  $2d = #1$
+  & \NodeFig{#2}{1}
+  & \NodeFig{#2}{2}
+  & \NodeFig{#2}{3}
+  & \NodeFig{#2}{4}\\
+}
+
+\newcommand{\NodeFig}[2]{
+   \includegraphics[width=0.085\textwidth]{../../latex/images/run#1node#2.pdf}
+}
+
+\usepackage{tkz-graph}
+\usepackage{tikz}
+\usetikzlibrary{arrows,matrix,decorations.pathreplacing,positioning,chains,fit,shapes,calc} %
+
+\newcommand{\bigoh}{\mathcal{O}}
+
+\DeclareMathOperator{\newdiff}{d} %
+\newcommand{\dif}{\newdiff\!}
+
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\mini}{minimize}
+\DeclareMathOperator*{\maxi}{maximize}
+\DeclareMathOperator*{\subto}{\text{subject to}\quad}
+\DeclareMathOperator{\BlockDiag}{BlockDiag}
+\DeclareMathOperator{\inte}{int}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\ld}[1]{{#1}^{[d]}}
+\newcommand{\Rh}{\R_{\mathbf{2d}}}
+\newcommand{\Sh}{\Sigma_{\mathbf{2d}}}
+\newcommand{\Shs}{\Sigma_{\mathbf{2d}}^*}
+\newcommand{\din}{d^{-}}
+\newcommand{\mdin}{\Delta^{-}}
+
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+
+\theoremstyle{definition}
+\newtheorem{myprop}{Proposition}
+\newtheorem{mytheo}{Theorem}
+\newtheorem{mylemm}{Lemma}
+\newtheorem{myconj}{Conjecture}
+\newtheorem{myprob}{Problem}
+\newtheorem{mycons}{Constraint}
+\newtheorem{mycor}{Corollary}
+\newtheorem{mydef}{Definition}
+\newtheorem{myexem}{Example}
+\newtheorem{myrem}{Remark}
+\newtheorem{myprog}{Program}
+\newtheorem{myassu}{Assumption}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rn}{\R^n}
+\newcommand{\Rnn}{\R^{n \times n}}
+\newcommand{\Tr}{\top}
+
+\newcommand{\A}{\mathcal{M}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\G}{G}
+\newcommand{\ujsrsos}[1][2d]{\rho_{\mathrm{SOS},#1}(\A)}
+\newcommand{\jsrsos}[1][2d]{\rho_{\mathrm{SOS},#1}(\G,\A)}
+\newcommand{\jsrsosa}[1][2d]{\rho_{\mathrm{SOS},#1}}
+\newcommand{\jsr}{\rho(\A)}
+\newcommand{\cjsr}{\rho(\G,\A)}
+\newcommand{\cjsrk}[1][k]{\hat{\rho}_{#1}(\G,\A)}
+\newcommand{\cjsrp}{\rho(\G',\A')}
+\newcommand{\cjsrkp}[1][k]{\hat{\rho}_{#1}(\G',\A')}
+\newcommand{\pE}{\widetilde{\mathbb{E}}}
+\newcommand{\pmu}{\widetilde{\mu}}
+
+\newcommand{\mapc}{\mathcal{B}}
+
+\newcommand{\Sect}{Section~}
+\newcommand{\eqdef}{\triangleq}
+\newcommand{\witch}{witched}
+
+\newcommand{\Nodes}{V}
+\newcommand{\node}{node}
+\newcommand{\nodes}{nodes}
+\newcommand{\Arcs}{E}
+\newcommand{\arc}{edge}
+\newcommand{\arcs}{edges}
+
+\newcommand{\defAG   }{a finite set of matrices $\A$ constrained by an automaton $\G$}
+\newcommand{\defAGm  }{a finite set of $m$ matrices $\A$ constrained by an automaton $\G$}
+\newcommand{\defAGn  }{a finite set of matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G$}
+\newcommand{\defAGe  }{a finite set of matrices $\A$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGmn }{a finite set of $m$ matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G$}
+\newcommand{\defAGme }{a finite set of $m$ matrices $\A \subset \mathbb{R}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGne }{a finite set of matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGmne}{a finite set of $m$ matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGie  }{a finite set of invertible matrices $\A$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+
+\DeclareMathOperator{\Diag}{Diag}
+
+\begin{document}
+
+\CopyrightYear{2016} \setcopyright{acmcopyright}
+\conferenceinfo{HSCC'16,}{April 12--14, 2016, Vienna, Austria.}
+\isbn{978-1-4503-3955-1/16/04}\acmPrice{\$15.00}
+\doi{http://dx.doi.org/10.1145/2883817.2883821}
+
+
+\clubpenalty=10000
+\widowpenalty = 10000
+
+\title{Generating Unstable Trajectories for Switched Systems \\
+via Dual Sum-Of-Squares Techniques}
+\subtitle{[Extended Abstract]}
+
+\numberofauthors{3}
+\author{
+\alignauthor
+Beno\^{i}t Legat\titlenote{This research took place in the framework of the MIT-UCL Internship Program supported by the International Lhoist Berghmans Innovation Chair.}\\
+       \affaddr{Universit\'e catholique de Louvain}\\
+       \affaddr{4 Av. G. Lema\^itre,}\\
+       \affaddr{1348 Louvain-la-Neuve, Belgium}\\
+       \email{benoit.legat\\@student.uclouvain.be}
+\alignauthor
+Rapha\"{e}l M. Jungers\titlenote{R. M. J. is a F.R.S.-FNRS Research Associate. His research is supported by the Belgian Interuniversity Attraction
+Poles, and by the ARC grant 13/18-054 from Communaut\'e fran\c{c}aise de Belgique.}\\
+       \affaddr{ICTEAM}\\
+       \affaddr{Universit\'e catholique de Louvain}\\
+       \affaddr{4 Av. G. Lema\^itre,}\\
+       \affaddr{1348 Louvain-la-Neuve, Belgium}\\
+       \email{raphael.jungers\\@uclouvain.be}
+\alignauthor
+Pablo A. Parrilo\\
+       \affaddr{Laboratory for Information and Decision Systems}\\
+       \affaddr{Massachusetts Institute of Technology}\\
+       \affaddr{77 Massachusetts Avenue}\\
+       \affaddr{Cambridge MA 02139, USA}\\
+       \email{parrilo@mit.edu}
+}
+
+\maketitle
+\begin{abstract}
+The joint spectral radius (JSR) of a set of matrices characterizes the
+maximal asymptotic growth rate of an infinite product of matrices of
+the set.  This quantity appears in a number of applications including
+the stability of s\witch{} and hybrid systems.  Many algorithms exist
+for estimating the JSR but not much is known about how to generate an
+infinite sequence of matrices with an optimal asymptotic growth rate.
+To the best of our knowledge, the currently known algorithms select a
+small sequence with large spectral radius using brute force (or
+branch-and-bound variants) and repeats this sequence infinitely.
+
+In this paper we introduce a new approach to this question, using the
+dual solution of a sum of squares optimization program for JSR
+approximation. Our algorithm produces an infinite sequence of matrices
+with an asymptotic growth rate arbitrarily close to the JSR.  The
+algorithm naturally extends to the case where the allowable switching
+sequences are determined by a graph or finite automaton.  Unlike the
+brute force approach, we provide a guarantee on the closeness of the
+asymptotic growth rate to the JSR.  This, in turn, provides new bounds on the
+quality of the JSR approximation.
+We provide numerical examples illustrating the good performance of the algorithm.
+\end{abstract}
+
+\keywords{Joint spectral radius; Sum of squares programming;
+S\witch{} Systems; Path-complete Lyapunov functions.}
+
+\section{Introduction}
+
+In recent years, the study of the stability of hybrid systems
+has been the subject of extensive research using methods based on classical ideas from Lyapunov theory
+and modern mathematical optimization techniques.
+Even for s\witch{} linear systems, arguably the simplest class of hybrid systems,
+determining stability is undecidable and approximating the maximal asymptotic growth rate is NP-hard \cite{blondel2000boundedness}.
+Despite these negative results, the vast range of applications has motivated a wealth of algorithms to approximate
+this quantity.
+
+A s\witch{} linear system is characterized by a finite set of matrices $\A \eqdef \{A_1, A_2, \ldots, A_m\} \subset \mathbb{R}^{n \times n}$ and the iteration
+\[ x_k = A_{\sigma_k} x_{k-1}, \quad \sigma_k \in \{1, \ldots, m\}. \]
+The maximal asymptotic growth rate of this iteration is given by the \emph{joint spectral radius} (JSR).
+The JSR $\jsr$ of a finite set of matrices $\A$
+is defined as
+\[ \jsr = \lim_{k \to \infty} \max_{\sigma \in \{1, \ldots, m\}^k} \|A_{\sigma_k} \cdots A_{\sigma_2} A_{\sigma_1}\|^{1/k}. \]
+This definition is independent of the norm used.
+
+The JSR was introduced by Rota and Strang~\cite{rota1960note}
+and has many other applications such as wavelets, the capacity of some particular codes, zero-order stability of ordinary differential equations, congestion control in computer networks, curve design and networked and delayed control systems; see \cite{jungers2009joint} for a survey on the JSR and its applications.
+Many algorithms exist for estimating the JSR but not much is known on how to generate an infinite
+sequence of matrices with an asymptotic growth rate close to the JSR.
+However generating such sequence can be of particular interest, depending on the application,
+such as exhibiting unstable trajectories for s\witch{} linear systems.
+To the best of our knowledge,
+the currently known algorithms select a small sequence of matrices with high spectral radius
+using brute force (or branch-and-bound variants) and repeats this sequence infinitely \cite{gripenberg1996computing,guglielmi2008algorithm,jungers2014lifted}.
+
+Parrilo and Jadbabaie~\cite{parrilo2008approximation} give an efficient approximation algorithm for computing the JSR using sum of squares (SOS) programming.
+In this paper we compute the dual of the corresponding SOS program and
+give an algorithm that generates an infinite sequence of matrices with
+an asymptotic growth rate arbitrarily close to the JSR.
+Unlike the brute force approach,
+we provide a guarantee on the quality of the asymptotic growth rate.
+As a by-product of the algorithm, the spectral radius of a finite part of
+this infinite sequence can be used to give lower bounds on the JSR.
+We show on numerical examples that the technique works well in practice.
+
+In some applications the values that $\sigma_k$ can take may depend on $\sigma_{k-1}, \sigma_{k-2}, \ldots$.
+These constraints are often conveniently represented using a \emph{finite automaton} and the JSR under such constraints
+is called constrained joint spectral radius (CJSR) \cite{dai2012gel}; an example of constrained s\witch{} system is given by Example~\ref{exem:run1} and its automaton is illustrated by Figure~\ref{fig:run}.
+Philippe et al.\  generalize the SOS-based approximation algorithm for the CJSR in \cite[\Sect3]{philippe2015stability}.
+Our technique is well suited for analysing the more general constrained systems as well.
+
+We provide a new estimate of the accuracy of the SOS-based approximation algorithm for the CJSR which is better
+than the previously existing one for sufficiently large SOS degree.
+The existing estimate only depends on the dimension of the matrices
+while our new one relates the accuracy of the SOS-based approximation algorithm with the combinatorial structure of the automaton representing the constraints.
+
+The automaton representing the constraints can be represented by a
+strongly connected labelled directed graph $\G(\Nodes,\Arcs)$,
+possibly with parallel \arcs{}.  The labels are elements of the set
+$\{1, \ldots, m\}$ and $\Arcs$ is a subset of $\Nodes \times \Nodes
+\times \{1, \ldots, m\}$.  We say that $(u,v,\sigma) \in \Arcs$ if
+there is an \arc{} between node $u$ and node $v$ with label $\sigma$.
+
+The following will serve as a running example.
+
+\begin{myexem}[Running example\footnote{The source code and instructions are available at the author's web site
+to reproduce the numerical results obtained for the running example.
+The s\witch{} system considered in Example~\ref{exem:simple1}, Example~\ref{exem:simple2} and Example~\ref{exem:simple3}
+is simpler than the running example and the results given in those examples can be obtained by hand.
+}]
+  \label{exem:run1}
+  We borrow the example of \cite[\Sect4]{philippe2015stability}.
+  The set of matrices $\A$ is composed of the following four matrices
+  \begin{align*}
+    A_1 & = A+B
+    \begin{pmatrix}
+      k_1 & k_2
+    \end{pmatrix},&
+    A_2 & = A+B
+    \begin{pmatrix}
+      0 & k_2
+    \end{pmatrix},\\
+    A_3 & = A+B
+    \begin{pmatrix}
+      k_1 & 0
+    \end{pmatrix},&
+    A_4 & = A.
+  \end{align*}
+  where $k_1 = -0.49$, $k_2 = 0.27$,
+  \[
+    A =
+    \begin{pmatrix}
+      0.94 & 0.56\\
+      0.14 & 0.46
+    \end{pmatrix} \text{ and }
+    B =
+    \begin{pmatrix}
+      0\\
+      1
+    \end{pmatrix}.
+  \]
+
+  The automaton is represented by Figure~\ref{fig:run}.
+
+  \begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[x=40,y=18]
+       \Vertex{1}
+       \NO[unit=4](1){2}
+       \SOEA[unit=2](2){3}
+       \EA[unit=2](3){4}
+       \tikzset{EdgeStyle/.style = {->}}
+       \tikzset{LoopStyle/.style = {->}}
+       \tikzset{EdgeStyle/.append style = {bend right=18}}
+       \Edge[label=1](1)(3)
+       \Edge[label=3](1)(2)
+       \Edge[label=2](2)(1)
+       \Edge[label=1](2)(3)
+       \Edge[label=2](3)(1)
+       \Edge[label=3](3)(2)
+       \Edge[label=4](3)(4)
+       \draw[thick,->] (3) to [out=115,in=65,looseness=10] node [midway, fill=white] {1} (3);
+       \Edge[label=1](4)(3)
+     \end{tikzpicture}
+     \caption{Automaton for the running example.
+     The numbers on the \arcs{} are their respective labels.
+     }
+     \label{fig:run}
+  \end{figure}
+\end{myexem}
+
+
+In \Sect\ref{sec:primal}, we explain the SOS-based approximation
+algorithm for the CJSR and give our new estimate for its accuracy.
+The new bounds explicitly depend on the allowable transitions, through
+the graph $G(V,E)$.
+
+In \Sect\ref{sec:dualalgo}, we compute the dual of the corresponding
+SOS program and we give our algorithm for generating a sequence of
+matrices with an asymptotic growth rate close to the CJSR.
+
+\paragraph{Notations}
+We define the automaton $\G^\Tr (\Nodes,\Arcs^\Tr )$ where
+\(\Arcs^\Tr  = \{\, (v,u,\sigma) : (u,v,\sigma) \in \Arcs \,\}.\)
+We denote as $\Arcs_k$ the subset of $\Arcs^k$ that represents valid paths of length $k$.
+The $k$-uple $(\sigma_1, \sigma_2, \ldots, \sigma_k)$ is said to be $\G$-\emph{admissible} if $\sigma_1, \ldots, \sigma_k$ are the respective labels of a path of length $k$.
+The \emph{arbitrary switching} case,
+that is, when every tuple is $\G$-admissible,
+can be seen as the particular case when the automaton has only one node and $m$ self-loops with labels $1, \ldots, m$.
+We denote the set of all $k$-uples of $\{1, \ldots, m\}^k$ that are $\G$-admissible as $\G_k$.
+The sequence $\sigma_1, \sigma_2, \ldots$ is $\G$-admissible (resp. $\G^\Tr $-admissible) if $(\sigma_1, \ldots, \sigma_k)$ (resp. $(\sigma_k, \ldots, \sigma_1)$) is $\G$-admissible for any $k \geq 1$.
+We denote $A_{\sigma_k}\cdots A_{\sigma_1}$ as $A_s$ where $s = (\sigma_1, \ldots, \sigma_k)$ or $s$ is a path with those respective labels.
+
+We denote the set of homogeneous polynomials of degree $2d$ as $\Rh[x]$,
+the cone of homogeneous SOS polynomials of degree $2d$ as $\Sh$
+and the dual of $\Sh$ as $\Shs$.
+
+\section{Automaton-dependent bounds}
+\label{sec:primal}
+
+The definition of the JSR is generalized as follows for constrained systems.
+\begin{mydef}[\cite{dai2012gel}]
+  \label{def:cjsr}
+  The \emph{constrained joint spectral radius} (CJSR) of
+  \defAG{}, denoted as $\cjsr$,
+  is
+  \[ \cjsr = \lim_{k \to \infty}
+    \max \Big\{ \|A_s\|^{1/k}\\: s \in \G_k \Big\}.
+  \]
+\end{mydef}
+
+\subsection{CJSR Approximation via SOS}
+\label{sec:sos}
+A key result used in the SOS-based approximation algorithm for the unconstrained JSR \cite{parrilo2008approximation} is the following:
+\begin{myprop}[{\cite[Proposition~1]{rota1960note}}]
+  \label{prop:norm}
+  Consider a finite set of matrices $\A$.
+  For any $\epsilon > 0$ there exists a norm $\|\cdot\|$ such that
+  \[ \|A_\sigma x\| \leq (\jsr+\epsilon)\|x\| \]
+  for all $x \in \Rn$ and $\sigma = 1, \ldots, m$.
+\end{myprop}
+
+Philippe et al.\  recently gave a generalization of that algorithm, relying on the following extension of Proposition~\ref{prop:norm} to constrained s\witch{} systems.
+
+\vfill\eject
+\begin{myprop}[{\cite[Proposition~2.2]{philippe2015stability}}]
+  \label{prop:multinorm}
+  Consider \defAGe{}.
+  For any $\epsilon > 0$, there exists a set of norms $\{\, \|\cdot\|_v : v \in \Nodes \,\}$
+  such that
+  \[ \|A_\sigma x\|_{v} \leq (\cjsr + \epsilon) \|x\|_{u} \]
+  holds for all \arc{} $(u,v,\sigma) \in \Arcs$.
+\end{myprop}
+
+Strictly positive homogeneous polynomials are not necessarily norms because their sublevel sets may not be convex.
+However we can provide upper bounds for the CJSR using polynomials instead of norms.
+
+\begin{mytheo}
+  \label{theo:pos}
+  Consider \defAGe{}.
+  If there exists a strictly positive homogeneous polynomial $p_v(x)$ of degree $2d$ for all $v \in \Nodes$
+  such that
+  \[ p_{v}(A_\sigma x) \leq \gamma^{2d}p_{u}(x) \]
+  holds for all \arc{} $(u,v,\sigma) \in \Arcs$.
+  Then $\cjsr \leq \gamma$.
+  \begin{proof}
+    Consider a norm $\|\cdot\|$ of $\Rn$ and its corresponding induced matrix norm of $\R^{n \times n}$.
+    For each $v \in \Nodes$, we know by compactness of the unit ball in $\Rn$, continuity and strict positivity of $p_v(x)$ that there exist $0 < \alpha_v \leq \beta_v$ such that
+    \[ \alpha_v \|x\|^{2d} \leq p_v(x) \leq \beta_v\|x\|^{2d} \]
+    for all $x \in \Rn$.
+    Let $\alpha = \min_{v \in \Nodes} \alpha_v$ and $\beta = \max_{v \in \Nodes} \beta_v$.
+
+    For a $\G$-admissible $k$-uple $(\sigma_1, \sigma_2, \ldots, \sigma_k)$,
+    \[ \|A_{\sigma_k} \cdots A_{\sigma_1}\| = \sup_{x \neq 0} \frac{\|A_{\sigma_k} \cdots A_{\sigma_1}x\|}{\|x\|}. \]
+    Consider a path such that the $i$th edge has label $\sigma_i$ for $i = 1, \ldots, k$
+    and denote the intermediary nodes of that path as $v_0, v_1, \ldots, v_k$.
+    For any $x \in \Rn$, we have
+    \begin{align*}
+      \|A_{\sigma_k} \cdots A_{\sigma_1}x\| & \leq \alpha_{v_k}^{-\frac{1}{2d}} p_{v_k}(A_{\sigma_k} \cdots A_{\sigma_1} x)^{\frac{1}{2d}}\\
+                                            & \leq \alpha_{v_k}^{-\frac{1}{2d}} \gamma p_{v_{k-1}}(A_{\sigma_{k-1}} \cdots A_{\sigma_1} x)^{\frac{1}{2d}}\\
+                                            & \leq \alpha_{v_k}^{-\frac{1}{2d}} \gamma^{k} p_{v_0}(x)^{\frac{1}{2d}}
+    \end{align*}
+    and
+    \[ \|x\| \geq \beta_{v_0}^{-\frac{1}{2d}} p_{v_0}(x)^{\frac{1}{2d}} \]
+    hence
+    \[ \|A_{\sigma_k} \cdots A_{\sigma_1}\| \leq \Big(\frac{\beta_{v_0}}{\alpha_{v_k}}\Big)^{\frac{1}{2d}} \gamma^k \leq \Big(\frac{\beta}{\alpha}\Big)^{\frac{1}{2d}} \gamma^k. \]
+    Taking the $k$th root, the limit $k \to \infty$ and using Definition~\ref{def:cjsr} we obtain the result.
+  \end{proof}
+\end{mytheo}
+
+We relax the positivity condition of Theorem~\ref{theo:pos} by the more tractable sum of squares (SOS) condition and
+define $\jsrsos$ as the solution of the following SOS program:
+\begin{myprog}[Primal]
+  \label{prog:primal}
+  \begin{align}
+    \notag
+    \inf_{p_v(x) \in \Rh[x],\gamma \in \R} \gamma\\
+    \label{eq:soscons1}
+    p_v(x) & \text{ is SOS} \quad \forall v \in \Nodes\\
+    \label{eq:soscons3}
+    p_v(x) & \text{ is strictly positive} \quad \forall v \in \Nodes\\
+    \notag
+    \gamma^{2d} p_u(x) - p_v(A_\sigma x) & \text{ is SOS} \quad \forall (u, v, \sigma) \in \Arcs.
+  \end{align}
+\end{myprog}
+
+\begin{myrem}
+  In practice we can replace \eqref{eq:soscons1} and \eqref{eq:soscons3} by ``$p_v(x) - \epsilon\|x\|_2^{2d}$ is SOS''
+  for any $\epsilon > 0$.
+  Note that this constrains $p_v(x)$ to be in the interior of the SOS cone,
+  which is sufficient for $p_v(x)$ to be strictly positive.
+  The bounds given in \Sect\ref{sec:quality} are valid
+  if $p_v(x)$ is in the interior of the SOS cone.
+\end{myrem}
+
+By Theorem~\ref{theo:pos},
+a feasible solution of Program~\ref{prog:primal} gives an upper bound for $\cjsr$,
+and thus, for any positive degree $2d$,
+\begin{equation}
+  \label{eq:upperbound}
+  \cjsr \leq \jsrsos.
+\end{equation}
+
+
+\begin{myexem}
+  \label{exem:simple1}
+  Consider the unconstrained system \cite[Example~2.1]{ahmadi2012joint} with $m=3$:
+  \[ \A = \{ A_1 = e_1e_2^\Tr , A_2 = e_2e_3^\Tr , A_3 = e_3e_1^\Tr  \} \]
+  where $e_i$ denotes the $i$th canonical basis vector.
+
+  For any $d$, a solution to Program~\ref{prog:primal} is given by
+  \[ (p(x), \gamma) = (x_1^{2d} + x_2^{2d} + x_3^{2d}, 1). \]
+  Indeed, for example, with $A_1$ we have
+  \[ p(e_1e_2^\Tr x) = p(x_2, 0, 0) = x_2^{2d} + 0 + 0 \leq x_1^{2d} + x_2^{2d} + x_3^{2d}. \]
+\end{myexem}
+
+
+
+\begin{myexem}
+  \label{exem:run2}
+  Let us reconsider our running example; see Example~\ref{exem:run1}.
+  The optimal solution of Program~\ref{prog:primal}
+  is represented by
+  Figure~\ref{fig:primal} for $2d = 2$, 4, 6, 8, 10 and 12.
+  We can see a big difference between the shape of the sublevel sets
+  for $2d = 2$ and $2d = 4$
+  while between $2d=4$ and $2d=12$,
+  the difference seems to be more subtle.
+  \begin{figure}[!ht]
+    \centering
+    \tabulinesep=0.5mm
+    \begin{tabu}{{X[0.85,c,m]X[r,m]X[r,m]X[r,m]X[r,m]}}
+      & Node 1 & Node 2 & Node 3 & Node 4\\
+      \PrimalFig{2}{1}
+      \PrimalFig{4}{2}
+      \PrimalFig{6}{3}
+      \PrimalFig{8}{4}
+      \PrimalFig{10}{5}
+      \PrimalFig{12}{6}
+    \end{tabu}
+    \caption{
+    Representation of the solutions to Program~\ref{prog:primal}
+    with different values of $d$ for the running example.
+    The blue curve represents the boundary of the
+    1-sublevel set of the optimal
+    solution $p_v$ at each node $v \in \Nodes$.
+    The dashed curve is the boundary of the unit circle.}
+    \label{fig:primal}
+  \end{figure}
+\end{myexem}
+
+\subsection{Approximation guarantees}
+\label{sec:quality}
+Philippe et al.\  show, based on \cite{parrilo2008approximation},  the following accuracy guarantees for Program~\ref{prog:primal}.
+\begin{mytheo}[{\cite[Theorem~3.6]{philippe2015stability}}]
+  \label{theo:matt}
+  Consider \defAGn{} and a positive integer $d$.
+  The approximation given by Program~\ref{prog:primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \[ \jsrsos \leq {n+d-1 \choose d}^{\frac{1}{2d}} \cjsr. \]
+\end{mytheo}
+
+This guarantee only depends on the dimension of the matrices and neither on the number of matrices nor on the automaton.
+In this section, we show the following guarantee that relates the accuracy of Program~\ref{prog:primal} to the evolution
+of the number of paths in $\G$ for increasing length.
+\begin{mytheo}
+  \label{theo:second}
+  Consider \defAG{} and a positive integer $d$.
+  The approximation given by Program~\ref{prog:primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \[ \jsrsos \leq \rho(A(\G))^{\frac{1}{2d}}\cjsr \]
+  where $A(\G)$ is the adjacency matrix of $\G$.
+\end{mytheo}
+
+\begin{myrem}
+  \label{rem:path}
+  Consider the matrix norm $\|\cdot\|_\infty$ on $\Rnn$ induced by the infinity norm on $\Rn$.
+  It is well known that
+  \[ \|A\|_{\infty} = \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}| \]
+  where $a_{ij}$ is $(i,j)$ entry of $A$.
+  It is also well known that the $(u,v)$ entry of $A(\G)^k$ gives
+  the number of paths of length $k$ starting at node $u$ and ending at node $v$ in $\G$.
+  Hence $\|A(\G)^k\|_\infty$ is the maximum, over all nodes of $\G$,
+  of the number of paths of length $k$ starting at that node.
+  By the Gelfand's formula,
+  \[
+    \rho(A(\G)) = \lim_{k \to \infty} \|A(\G)^k\|_\infty^{1/k}.
+  \]
+  Therefore the spectral radius $\rho(A(\G))$ represents the ``maximal asymptotic growth rate of the number of paths''.
+  This is somewhat related to how constrained the automaton is: the more constrained, the better the approximation.
+\end{myrem}
+
+As a corollary of Theorem~\ref{theo:second}, in the trivial cases such that $\rho(A(\G)) = 1$, the approximation is exact.
+This corresponds to the case where every node of $\G$ has indegree and outdegree 1.
+In that case, the graph forms a cycle of some length $k$ and the CJSR is simply the $k$th root of the spectral radius of the product of the matrices along this cycle.
+
+The results of Theorem~\ref{theo:matt}, Theorem~\ref{theo:second} and \eqref{eq:upperbound} are summarized by the following corollary.
+\begin{mycor}
+  \label{cor:mix}
+  Consider \defAGn{} and a positive integer $d$,
+  the approximation given by Program~\ref{prog:primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \begin{multline*}
+    \min\Big\{{n+d-1 \choose d}, \rho(A(\G))\Big\}^{-\frac{1}{2d}} \jsrsos\\\leq \cjsr \leq \jsrsos.
+  \end{multline*}
+  where $A(G)$ is the adjacency matrix of the automaton $\G$.
+\end{mycor}
+We see that we can have arbitrary accuracy by increasing $d$.
+
+For the arbitrary switching case, $\rho(A(\G)) = m$.
+Theorem~\ref{theo:second} was already known in this particular case \cite[Theorem~4.3]{parrilo2008approximation}.
+This section can thus be seen as a generalization of \cite[\Sect4]{parrilo2008approximation}.
+
+Our proof technique relies on the analysis of an iteration in the vector space of polynomials of degree $2d$.
+When this iteration converges, it converges to a feasible solution of Problem~\ref{prog:primal}.
+By analysing this iteration as affine iterations in this vector space, we derive a sufficient condition for its convergence
+and thus an upper bound for $\jsrsos$.
+
+Consider the iteration
+\begin{align}
+  \notag
+  P_{v,0}(x) & = 0,\\
+  \label{eq:iter}
+  P_{v,k+1}(x) & = Q_v(x) + \frac{1}{\beta}
+  \sum_{(u,v,\sigma) \in \Arcs} P_{u,k}(A_\sigma x), \quad  v \in \Nodes
+\end{align}
+for fixed homogeneous polynomial $Q_v(x)$ of degree $2d$ in $n$ variables (not necessarily different)
+and a constant $\beta > 0$.
+
+When this iteration converges, it converges to a feasible solution of Program~\ref{prog:primal}.
+\begin{mytheo}
+  \label{theo:conv}
+  Consider a constant $\beta > 0$.
+  If there exists homogeneous polynomials $Q_v(x)$ in the interior of the SOS cone such that
+  the iteration \eqref{eq:iter} converges then
+  \[
+    \jsrsos \leq \beta^{\frac{1}{2d}}.
+  \]
+  \begin{proof}
+    Suppose the iteration converges to the polynomials $P_{v,\infty}(x)$.
+    It is easy to show by induction that $P_{v,k}(x)$ is SOS for all $k$.
+    It is trivial for $k = 0$ and if it is true for $k$ then it is also true for $k+1$ by \eqref{eq:iter}.
+    Since the SOS cone is closed, $P_{v,\infty}$ is SOS.
+    Now by \eqref{eq:iter}, for each $v \in \Nodes$,
+    \[ P_{v,\infty}(x) = Q_v(x) + \frac{1}{\beta}
+    \sum_{(u,v,\sigma) \in \Arcs} P_{u,\infty}(A_\sigma x) \]
+    so $P_{v,\infty}(x)$ is also in the interior of the SOS cone.
+    For each edge $(u,v,\sigma)$, by manipulating the above equation, we have
+    \[ \beta P_{v,\infty}(x) - P_{u,\infty}(A_\sigma x) = \beta Q_v(x) +
+    \sum_{\substack{(u',v,\sigma') \in \Arcs\\(u',\sigma') \neq (u, \sigma)}} P_{u',\infty}(A_{\sigma'} x) \]
+    so $\beta P_{v,\infty}(x) - P_{u,\infty}(A_\sigma x)$ is in the interior of the SOS cone.
+    Therefore $(\{\, P_{v,\infty}(x) : v \in \Nodes \,\}, \beta^{\frac{1}{2d}})$ is a feasible solution of Program~\ref{prog:primal}.
+  \end{proof}
+\end{mytheo}
+
+\begin{myrem}
+  Before going into the details, we first provide an intuition on how we
+  prove Theorem~\ref{theo:second} using the iteration~\eqref{eq:iter}.
+  Consider the following iteration (it is not the same as
+  \eqref{eq:iter} but the sufficient condition of convergence that we
+  develop in Theorem~\ref{theo:cond} is the same for both iterations)
+  \begin{align*}
+    P_{v,0}(x) & = Q_v(x),\\
+    P_{v,k+1}(x) & = \frac{1}{\beta}
+    \sum_{(u,v,\sigma) \in \Arcs} P_{u,k}(A_\sigma x), \quad  v \in \Nodes.
+  \end{align*}
+  We can see that
+  \begin{equation}
+    P_{v,k+1}(x) = \frac{\cjsr^{2dk}}{\beta^k}\sum_{\substack{s \in \Arcs_k,\\s(k+1)=v}} Q_{s(1)}\Big(\frac{A_s}{\cjsr^{k}} x\Big)
+  \end{equation}
+  where $s(i)$ denotes the $i$th \node{} of the path $s$.
+  As $k \to \infty$, $A_s / \cjsr^{k}$ tends to zero.
+  However, the number of terms in the right-hand side may tend to infinity.
+  It is equal to the number of paths of length $k$ whose last node is $v$.
+  Therefore $\beta/\cjsr^{2d}$ should be at least the asymptotic value of the $k$th root of the number of paths of length $k$.
+  We have seen in Remark~\ref{rem:path} that this value is $\rho(A(\G))$.
+\end{myrem}
+
+In view of Theorem~\ref{theo:conv}, it is thus natural to analyse
+under which condition the iteration~\ref{eq:iter} converges. While we
+could convert the idea behind Remark 3 into a full proof, we present
+here a slightly different approach. Recall that
+iteration~\ref{eq:iter} is an affine map on the vector space of
+homogeneous polynomials of degree $2d$.  We would like to choose a
+basis for this vector space to represent the linear operator as a
+matrix and use a sufficient condition for convergence depending on the
+spectral radius of the matrix.  A simple choice is the monomial basis
+$x^\alpha$ with $\alpha$ such that $|\alpha| = d$ where $x^\alpha$
+denotes $x_1^{\alpha_1}\cdots x_n^{\alpha_n}$ and $|\alpha|$ denotes
+$\alpha_1 + \cdots + \alpha_n$.  We choose instead a basis for which
+each monomial $x^\alpha$ is scaled by the coefficient ${d \choose
+  \alpha} = \frac{d!}{\alpha_1!\alpha_2!\cdots\alpha_n!}$ so that the
+corresponding lift operation for vectors of $\R^n$ that we define
+below preserves the Euclidean norm (up to power).
+
+\begin{mydef}[$d$-lift]
+  Let $N_d = {n+d-1 \choose d}$.
+  The $d$-lift of a vector $x \in \R^n$ is the vector $x^{[d]} \in \R^{N_d}$
+  (indexed by the $n$-uples $\alpha \in \mathbb{N}^n$
+  such that $|\alpha| = d$)
+  such that
+  \( x_\alpha^{[d]} = {d \choose \alpha} x^\alpha. \)
+\end{mydef}
+
+For any matrix $A \in \R^{n \times n}$, the $d$-lift induces an associated map $A^{[d]} \in \R^{N_d \times N_d}$
+which is the unique $N_d \times N_d$ matrix that satisfies $(Ax)^{[d]} = A^{[d]}x^{[d]}$.
+We also denote $\A^{[d]} \eqdef \{A_1^{[d]}, \ldots, A_m^{[d]}\}$.
+
+As mentioned above, we have chosen to scale the monomials so that $\|x^{[d]}\|_2 = \|x\|_2^d$ where $\|\cdot\|_{2}$ is the Euclidean norm.
+The purpose of this choice is to have the following lemma for the lift operation.
+\begin{mylemm}[{\cite[Lemma~3.5]{philippe2015stability}}]
+  \label{lemm:Ad}
+  Consider \defAG{} and a positive integer $d$.
+  The following identity holds:
+  \[ \rho(\G, \A^{[d]}) = \cjsr^d. \]
+\end{mylemm}
+
+We can now formulate a sufficient condition for the convergence of the iteration~\ref{eq:iter}.
+\begin{mytheo}
+  \label{theo:cond}
+  Let
+  \[ B_{2d} = \sum_{(u,v,\sigma) \in \Arcs} (e_ue_v^\Tr ) \otimes A_\sigma^{[2d]} \]
+  where $\otimes$ is the Kronecker product.
+  If
+  \( \beta < \rho(B_{2d}) \)
+  then the iteration~\eqref{eq:iter} converges
+  for any homogeneous polynomials $Q_v(x)$ of degree $2d$ in the interior of the SOS cone.
+  \begin{proof}
+    We can rewrite the polynomials in terms of the basis of scaled monomials.
+    For each $v \in \Nodes$, we consider the vector $q_v \in \R^{N_{2d}}$ such that $Q_v(x) = \langle q_v, x^{[2d]} \rangle$.
+    We see that $Q_v(A_\sigma x) = \langle q_v, A^{[2d]}_\sigma x^{[2d]} \rangle = \langle (A^{[2d]}_\sigma)^\Tr q_v,  x^{[2d]} \rangle$.
+    The iteration~\eqref{eq:iter} is
+    \begin{align}
+      \notag
+      p_{v,0} & = 0,\\
+      \notag
+      p_{v,k+1} & = q_j + \frac{1}{\beta} \sum_{u \in \Nodes} \Big(\sum_{(u,v,\sigma) \in \Arcs} A_\sigma^{[2d]}\Big)^\Tr p_{u,k}, \quad v \in \Nodes
+    \end{align}
+    which can be rewritten as
+    \begin{equation}
+      \label{eq:compactit}
+      p_{0} = 0, \quad p_{k+1} = q + \frac{1}{\beta} B_{2d}^\Tr p_k.
+    \end{equation}
+    where
+    the vectors $p_k \in \R^{|\Nodes|N_{2d}}$ are (resp. $q \in \R^{|\Nodes|N_{2d}}$ is) the concatenation of $p_{1,k}, \ldots, p_{|\Nodes|,k}$ (resp. $q_1, \ldots, q_{|\Nodes|}$).
+
+
+    The iteration in Equation \eqref{eq:compactit} is an affine iteration, and it is well known that it converges if $\rho(B_{2d}) < \beta$,
+    independently of $q$.
+  \end{proof}
+\end{mytheo}
+
+\begin{myrem}
+  If $\rho(B_{2d}) < \beta$, $p_\infty \eqdef \lim_{k\to\infty} p_k$ can be computed by solving the linear system $(I - B_{2d}/\beta)^\Tr p_\infty = q$.
+\end{myrem}
+
+As a corollary of Theorem~\ref{theo:conv} and Theorem~\ref{theo:cond},
+\begin{equation}
+  \label{eq:convcond}
+  \jsrsos \leq \rho(B_{2d})^{\frac{1}{2d}}.
+\end{equation}
+To prove Theorem~\ref{theo:second}, it remains to find a relation between $\rho(B_{2d})$ and $\cjsr$.
+
+Given a sub-multiplicative norm $\|\cdot\|$ on $\R^{n_1 \times n_1}$,
+consider the sub-multiplicative norm $\vertiii{\cdot}$ on $\R^{n_2n_1 \times n_2n_1}$ induced by $\|\cdot\|$ defined in \cite{kozyakin2014berger} as
+\begin{equation}
+  \label{eq:blocknorm}
+  \vertiii{M} \eqdef \max_{1 \leq i \leq N} \sum_{j=1}^{n_2} \|m_{ij}\|
+\end{equation}
+for a block $n_2 \times n_2$ matrix $M = (m_{ij})_{i,j=1}^{n_2}$ with $m_{ij} \in \R^{n_1 \times n_1}$.
+We can show that
+\begin{mylemm}
+  \label{lemm:cs}
+  Given a norm $\|\cdot\|$ on $\R^{n_1 \times n_1}$ and the norm $\vertiii{\cdot}$ defined by \eqref{eq:blocknorm},
+  for any matrices $A_1, \ldots, A_m \in \R^{n_1 \times n_1}$ and any nonnegative matrices $B_1, \ldots, B_m \in \R^{n_2 \times n_2}$,
+  we have
+  \[
+    \vertiii{\sum_{k=1}^m B_k \otimes A_k}
+    \leq \bigg\|\sum_{k=1}^m B_k\bigg\|_\infty \max_{1 \leq k \leq m} \|A_k\|.
+  \]
+  \begin{proof}
+    Using \eqref{eq:blocknorm} and the subadditivity of the norm $\|\cdot\|$,
+    \begin{align*}
+      \vertiii{\sum_{k=1}^m B_k \otimes A_k}
+      & = \max_{1 \leq i \leq N} \sum_{j=1}^N \left\|\sum_{k=1}^m (B_k)_{ij} A_k\right\|\\
+      & \leq \max_{1 \leq i \leq N} \sum_{j=1}^N \sum_{k=1}^m (B_k)_{ij} \|A_k\|\\
+      & \leq \big(\max_{1 \leq k \leq m} \|A_k\|\big) \max_{1 \leq i \leq N} \sum_{j=1}^N \sum_{k=1}^m (B_k)_{ij}\\
+      & \leq \left\|\sum_{k=1}^m B_k\right\|_\infty \max_{1 \leq k \leq m} \|A_k\|.
+    \end{align*}
+  \end{proof}
+\end{mylemm}
+
+This Lemma allows us to prove the following generalization of~\cite[Lemma~1]{blondel2005computationally}.
+\begin{mylemm}
+  \label{lemm:srsjsr}
+  For any finite set of matrices $\A = \{A_1, \ldots, A_m\}$ of $\R^{n_1 \times n_1}$, any nonnegative matrices $B_1, \ldots, B_m \in \R^{n_2 \times n_2}$ and any automaton $\G(\Nodes,\Arcs)$ such that for each path $p$ that is not $\G$-admissible, $B_p = 0$,
+  we have
+  \[
+    \rho(\sum_{i=1}^m B_i \otimes A_i) \leq \rho(\sum_{i=1}^m B_i) \rho(\G, \A).
+  \]
+  \begin{proof}
+    By Lemma~\ref{lemm:cs},
+    \begin{align*}
+      \vertiii{\Big(\sum_{i=1}^m B_i \otimes A_i\Big)^k}
+      & = \vertiii{\sum_{s \in \Arcs^k} B_p \otimes A_s}\\
+      & = \vertiii{\sum_{s \in \Arcs_k} B_p \otimes A_s}\\
+      & \leq \Big\|\sum_{s \in \Arcs_k} B_p\Big\|_\infty \max_{s \in \Arcs_k} \|A_s\|\\
+      & = \Big\|\Big(\sum_{i=1}^m B_i\Big)^k\Big\|_\infty \max_{s \in \Arcs_k} \|A_s\|.
+    \end{align*}
+    Taking the $k$th root and the limit of $k \to \infty$ we obtain the result.
+  \end{proof}
+\end{mylemm}
+
+We are now ready to prove Theorem~\ref{theo:second}.
+
+\begin{proof}[Proof of Theorem~\ref{theo:second}]
+  We have
+  \begin{align*}
+    \jsrsos
+    & \leq \rho(B_{2d})^{\frac{1}{2d}}\\
+    & \leq \Bigg[\rho\Big(\sum_{(i,j,\sigma) \in \Arcs} e_ie_j^\Tr \Big) \rho(\G,\A^{[2d]})\Bigg]^{\frac{1}{2d}}\\
+    & = [\rho(A(\G)) \rho(\G,\A^{[2d]})]^{\frac{1}{2d}}\\
+    & = \rho(A(\G))^{\frac{1}{2d}} \rho(\G,\A).
+  \end{align*}
+  where the first inequality is \eqref{eq:convcond},
+  the second is given by Lemma~\ref{lemm:srsjsr},
+  the first equality is given by the fact that
+  \[ \sum_{(i,j,\sigma) \in \Arcs} e_ie_j^\Tr  = A(\G) \]
+  and the second equality is given by Lemma~\ref{lemm:Ad}.
+\end{proof}
+
+\section{Finding high-growth sequences}
+\label{sec:dualalgo}
+\subsection{Dual SOS program}
+\label{sec:dual}
+Consider the feasibility version of Program~\ref{prog:primal},
+i.e. $\gamma$ is fixed and we want to find polynomials such that the
+constraints hold.
+
+The dual variables are in the dual of the SOS cones,
+i.e. they are linear functionals over homogeneous polynomials of degree $2d$
+that gives a positive value when applied to a SOS polynomials.
+Barak et al.~\cite{barak2012hypercontractivity} introduced the \emph{pseudo-expectation} $\pE$ as a way to interpret those linear functionals.
+It can be seen as the expectation of a \emph{pseudo-distribution} $\pmu$.
+That is,
+\begin{equation}
+  \label{eq:exp}
+  \la \pE, p(x) \ra = \pE[p(x)] = \int_{\mathbb{S}^{n-1}} p(x) \dif \pmu.
+\end{equation}
+We say that $\pmu$
+is only a `pseudo-distribution' (and not a classical distribution) in the sense that it
+is not necessarily a positive measure,
+it might be possible that $\pE[p(x)] < 0$ while $p(x)$ is nonnegative.
+However, if $p(x)$ is an homogeneous SOS polynomial of degree $2d$
+then $\pE[p(x)] \geq 0$ since $\pE$ belongs to the dual of the SOS cone.
+
+Note that for any matrix $A \in \R^{n \times n}$, the polynomial $p(A x)$ depends linearly on $p(x)$.
+Let $\mathcal{A}$ be the linear map such that $\mathcal{A}(p(x)) = p(Ax)$ for all $p(x) \in \R[x]_{\mathbf{2d}}$.
+We define the adjoint map $\mathcal{A}^*$,
+the linear map such that $\la \mathcal{A}^* \pE, p(x) \ra = \la \pE, \mathcal{A}(p(x)) \ra$ for all $\pE \in (\R[x]_{\mathbf{2d}})^*$ and $p(x) \in \R[x]_{\mathbf{2d}}$.
+
+The dual of the feasibility version of the primal is given by
+\begin{myprog}[Dual]
+  \label{prog:dual}
+  \begin{align}
+    \label{eq:dualconsexp1}
+    \sum_{(u,v,\sigma) \in E} \mathcal{A}_\sigma^* \pE_{uv\sigma} & \succeq \gamma^{2d} \sum_{(v,w,\sigma) \in \Arcs} \pE_{vw\sigma}, \forall v \in \Nodes,\\
+    \notag
+    \pE_{uv\sigma} & \in \Shs, \qquad \forall (u,v,\sigma) \in \Arcs,\\
+    \label{eq:dualconsexp3}
+    \sum_{(u,v,\sigma) \in E} \pE_{uv\sigma}\Big[\sum_{i=1}^n x_i^{2d}\Big] & = 1.
+  \end{align}
+\end{myprog}
+
+Note that the dual constraint \eqref{eq:dualconsexp1} is equivalent to:
+\begin{equation}
+  \label{eq:dualconsexp}
+  \sum_{(u,v,\sigma) \in \Arcs} \pE_{uv\sigma}[p(A_\sigma x)] \geq \gamma^{2d} \sum_{(v,w,\sigma) \in \Arcs} \pE_{vw\sigma}[p(x)]
+\end{equation}
+for all $v \in \Nodes$ and for all $p(x) \in \Sigma_{\mathbf{2d}}$.
+
+\begin{myexem}
+  \label{exem:simple2}
+  Consider Example~\ref{exem:simple1}.
+  For $i = 1, 2, 3$, let $\pE_i$ be the dual solution at the \arc{} corresponding to the matrix $A_i$.
+  For any $d$, we can see that the dual solution for $\gamma = 1$ is such that
+  the only monomial $x^\alpha$ such that $\pE_1[x^\alpha]$ (resp. $\pE_2[x^\alpha]$, $\pE_3[x^\alpha]$) is non-zero is $x_1^{2d}$ (resp. $x_2^{2d}$, $x_3^{2d}$)
+  and $\pE_1[x_1^{2d}] = \pE_2[x_2^{2d}] = \pE_3[x_3^{2d}] = 1/3$.
+  Note that it means that $\pmu_1 = \delta_{(1,0,0)}/3$, $\pmu_2 = \delta_{(0,1,0)}/3$ and $\pmu_3 = \delta_{(0,0,1)}/3$
+  where $\delta_x$ is the Dirac measure centered on $x$.
+  Since there also exists a primal solution for $\gamma = 1$ (see Example~\ref{exem:simple1}) we have $\jsrsos = 1$ for any $d$.
+\end{myexem}
+
+\begin{myexem}
+  \label{exem:run3}
+  We continue the running example; see Example~\ref{exem:run1} and Example~\ref{exem:run2}.
+
+  For all $d$, $\pE_{212} = \pE_{323} = \pE_{344} = \pE_{431} = 0$
+  hence the node 4 is ``unused'' by the dual.
+  For $2d = 2, 4, 6, 8$, $\pE_{123} = \pE_{231} = 0$ so
+  the node $2$ is ``unused'' for low degree.
+
+  At first, one could think that the dual variables can be used to reduce the systems,
+  e.g. remove nodes or edges.
+  However, as we will see, it would be a mistake to remove the node 2.
+
+  For $2d = 10$, $\pE_{123}$ and $\pE_{231}$ are not zero and are of the ``same order or magnitude'' than $\pE_{131}$ and $\pE_{312}$.
+  Then for $2d = 12$, $\pE_{123}$ and $\pE_{231}$ have ``larger magnitude'' than $\pE_{131}$ and $\pE_{312}$.
+  This observation will be useful for Example~\ref{exem:run4}.
+
+  We can see that while the shape of the primal variables change a lot between $2d = 2$ and $2d = 4$ as mentioned in Example~\ref{exem:run2},
+  the ``important'' change for the dual variables happens around $2d = 10$.
+
+  It is also interesting to notice that the matrices corresponding to the dual variables have low rank.
+  For example, for $2d = 2$, the measure corresponding to the dual variable $\pE_{131}$
+  (resp. $\pE_{312}$, $\pE_{331}$) is the Dirac measure $0.324 \times \delta_{(0.917,0.399)}$
+  (resp. $0.229 \times \delta_{(0.875,0.485)}$, $0.447 \times \delta_{(0.757,-0.653)}$).
+\end{myexem}
+
+\subsection{Basic algorithm}
+\label{sec:seq}
+In this section we give an algorithm that generates an infinite sequence of matrices such that
+the asymptotic value of the norm of the product of the matrices is arbitrarily close to the CJSR.
+Note that by Definition~\ref{def:cjsr}, this asymptotic value must be smaller than the CJSR.
+
+\begin{myrem}
+  The algorithm generates the sequence of matrices in the \emph{reverse order}.
+  We can either see the sequence as $\G$-admissible and left infinite
+  or $\G^\Tr $-admissible and right infinite.
+\end{myrem}
+
+Denote the indegree of a node $v \in \Nodes$ as $\din(v)$ and the
+maximum indegree of $\G$ as $\mdin(\G) = \max_{v \in \Nodes} \din(v)$.
+Suppose that we are given a polynomial $p_0(x) \in \inte(\Sh)$,
+i.e. in the interior of the cone of SOS homogeneous polynomials of degree $2d$.
+Since it is in the interior, $\pE_{uv\sigma}[p_0(x)] > 0$ for all $(u,v,\sigma) \in \Arcs$ such that $\pE_{uv\sigma}$ is not zero.
+By \eqref{eq:dualconsexp3}, at least one dual variable is nonzero and we can choose one of such \arcs{}, say $(v_1,v_0,\sigma_0)$.
+
+The design of the algorithm is to
+build a $\G^\Tr $-admissible sequence $(v_1,v_0,\sigma_0), (v_2,v_1,\sigma_1), \ldots$
+such that
+\[
+  \theta_k \eqdef \pE_{v_{k+1}v_k\sigma_k}[p_{0}(A_{\sigma_1} \cdots A_{\sigma_k}x)]
+\]
+remains large for increasing $k$.
+Indeed, this would suggest that the product $A_{\sigma_1} \cdots A_{\sigma_k}$ has a large norm.
+The key idea is that maintaining a large value for $\theta_k$ is possible thanks to \eqref{eq:dualconsexp}.
+
+  \begin{algorithm}
+    \caption{Producing a sequence of matrices with an asymptotic growth rate close to the CJSR.}
+    \label{algo:prod}
+    \begin{algorithmic}
+      \STATE{Pick an arbitrary polynomial $p_0(x) \in \inte(\Sh)$}
+      \STATE{Pick an \arc{} $(v_1,v_0,\sigma_0) \in \Arcs$ such that $\pE_{v_1v_0\sigma_0}[p_0(x)] > 0$}
+      \STATE{Set $p_1(x) \leftarrow p_0(x)$}
+      \FOR{$k = 1,2,\ldots$}
+      \STATE $(v_{k+1},v_k,\sigma_k) \leftarrow \argmax_{(u,v_k,\sigma) \in \Arcs} \pE_{uv_k\sigma}[p_k(A_\sigma x)]$
+      \STATE $p_{k+1} \leftarrow p_k(A_{\sigma_k} x)$
+      \ENDFOR
+    \end{algorithmic}
+  \end{algorithm}
+
+Expanding $p_{k+1}(x)$, we obtain
+\[ p_{k+1}(x) = p_0(A_{\sigma_1}A_{\sigma_2} \cdots A_{\sigma_k} x). \]
+
+The dual constraint \eqref{eq:dualconsexp} enables us to guarantee the following.
+
+\begin{mylemm}
+  \label{lemm:maxdegpath}
+  Consider \defAGe{}.
+  For any positive integer $d$,
+  using Program~\ref{prog:dual} with any $\gamma < \jsrsos$,
+  Algorithm~\ref{algo:prod} produces a $\G^\Tr $-admissible sequence
+  $(v_1,v_0,\sigma_0), (v_2,v_1,\sigma_1), \ldots$ %
+  that satisfies the following inequality for all $k \geq 1$:
+  \begin{equation*}
+    \theta_{k}
+    \geq \frac{\gamma^{2d}}{\din(v_k)}
+    \theta_{k-1}.
+  \end{equation*}
+  \begin{proof}
+    For any integer $k \geq 1$, since $p_0(x)$ is SOS,
+    \[ p_0(A_{\sigma_1} \cdots A_{\sigma_{k-1}}x) \text{ is SOS.} \]
+    Therefore, by \eqref{eq:dualconsexp},
+    \begin{multline*}
+      \sum_{(u,v_k,\sigma) \in \Arcs} \pE_{uv_k\sigma}[p_0(A_{\sigma_1} \cdots A_{\sigma_{k-1}} A_\sigma x)]\\
+      \geq \gamma^{2d} \sum_{(v_k,w,\sigma) \in \Arcs} \pE_{v_kw\sigma}[p_0(A_{\sigma_1} \cdots A_{\sigma_{k-1}} x)]
+    \end{multline*}
+    Since the dual variables $\pE_{v_kw\sigma}$ of the right-hand side are in the dual of the SOS cone,
+    all the terms of the right-hand side are positive.
+    Since one of them is $\theta_{k-1}$,
+    \[
+      \sum_{(u,v_k,\sigma) \in \Arcs} \pE_{uv_k\sigma}[p_0(A_{\sigma_1} \cdots A_{\sigma_{k-1}} A_\sigma x)]\\
+      \geq \gamma^{2d} \theta_{k-1}.
+    \]
+    Since the left-hand side has $\din(v_k)$ positive terms and
+    Algorithm~\ref{algo:prod} picks the term with highest value, the result follows.
+  \end{proof}
+\end{mylemm}
+
+To give a guarantee for the norm of the product of the matrices of the sequence,
+we introduce the following two Lemmas.
+
+\begin{mylemm}
+  \label{lemm:svd}
+  For any matrix $A \in \R^{n \times n}$ and symmetric positive semidefinite matrix $Q$,
+  the following inequality holds
+  \[ \rho(A^\Tr QA) \leq \rho(Q) \rho(A^\Tr A). \]
+\end{mylemm}
+
+\begin{mylemm}
+  \label{lemm:sosbound}
+  For any polynomial $p(x) \in \inte(\Sh)$ and any matrix $A \in \Rnn$, there exists a constant $\beta$ that does not depend on $A$
+  such that
+
+  \[ \beta\|A\|_2^{2d} p(x) - p(Ax) \quad \text{is SOS}. \]
+  Moreover we can choose $\beta = \kappa(Q)$ where $Q \in \mathcal{S}^{{n+d \choose d}}$
+  is the symmetric matrix such that $p(x) = (x^{[d]})^\Tr Qx^{[d]}$
+  and $\kappa(Q) = \rho(Q) \rho(Q^{-1})$ is the condition number of $Q$.
+  \begin{proof}
+    Consider the matrix $Q$ defined in the statement of the lemma.
+    Note that since $p(x) \in \inte(\Sh)$, $Q$ is positive definite.
+    We can see that
+    \[ ((Ax)^{[d]})^\Tr Q(Ax)^{[d]} = (\ld{x})^\Tr (A^{[d]})^\Tr Q\ld{A}\ld{x}. \]
+    Moreover, for all $x \in \Rn$,
+    \[ (\ld{x})^\Tr Q\ld{x} \geq \|\ld{x}\|_2/\rho(Q^{-1}) \]
+    and by Lemma~\ref{lemm:svd},
+    \[ (\ld{x})^\Tr (A^{[d]})^\Tr Q\ld{A}\ld{x} \leq \rho(Q)\rho((\ld{A})^\Tr \ld{A})\|\ld{x}\|_2. \]
+    Using the fact that $\rho(A^{[d]}) = \rho(A)^d$ and $(AB)^{[d]} = A^{[d]}B^{[d]}$ for any matrix $A$ and $B$,
+    we have
+    \[ \kappa(Q) \rho(A^\Tr A)^{d} Q - (A^{[d]})^\Tr QA^{[d]} \succeq 0. \]
+  \end{proof}
+\end{mylemm}
+
+\begin{mytheo}
+  \label{theo:third}
+  Consider \defAGie{}.
+  For any positive integer $d$,
+  using Program~\ref{prog:dual} with any $\gamma < \jsrsos$,
+  Algorithm~\ref{algo:prod} produces a $\G^\Tr $-admissible sequence
+  $(v_1,v_0,\sigma_0),\allowbreak(v_2,v_1,\sigma_1), \ldots$ %
+  such that
+  \begin{equation}
+    \lim_{k \to \infty} \|A_{\sigma_1} \cdots A_{\sigma_k}\|_2^{\frac{1}{k}} \geq \frac{\gamma}{[\mdin]^{\frac{1}{2d}}}.
+  \end{equation}
+  \begin{proof}
+    Consider the sequence produced by Algorithm~\ref{algo:prod}.
+    Since the set of \arcs{} $\Arcs$ is finite,
+    there must be an \arc{} $(\bar{u},\bar{v},\bar{\sigma}) \in \Arcs$ that appears infinitely many times in the sequence.
+    Let $k_1$ be the smallest integer such that $(v_{k_1+1},v_{k_1},\sigma_{k_1}) = (\bar{u},\bar{v},\bar{\sigma})$ and
+    let $q(x) = p_{k_1+1}(x)$.
+    Since the matrices of $\A$ are invertible and $p_0(x) \in \inte(\Sh)$, we know that $q(x) \in \inte(\Sh)$.
+
+    For an arbitrarily large integer $K$, there exists an integer $k \geq K$ such that $(v_{k_1+k+1},v_{k_1+k}, \sigma_{k_1+k}) = (\bar{u},\bar{v},\bar{\sigma})$.
+    Let $s_K = (\sigma_{k_1+k}, \ldots, \sigma_{k_1+1})$.
+    By Lemma~\ref{lemm:maxdegpath}, we have
+    \begin{equation}
+      \label{eq:cycling}
+      \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(A_{s_K} x)] \geq \frac{\gamma^{2dk}}{[\mdin]^{k}} \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)].
+    \end{equation}
+    By Lemma~\ref{lemm:sosbound}, there exists a constant $\beta$ that does not depend on $A_{s_K}$ such that%
+    \[ \beta \|A_{s_K}\|_2^{2d}q(x) - q(A_{s_K} x) \text{ is SOS}. \]
+    Therefore,
+    \[ \pE_{\bar{u}\bar{v}\bar{\sigma}}[\beta \|A_{s_K}\|_2^{2d}q(x)] \geq \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(A_{s_K} x)] \]
+    and by \eqref{eq:cycling},
+    \[ \beta \|A_{s_K}\|_2^{2d}\pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)] \geq \frac{\gamma^{2dk}}{[\mdin]^k} \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)]. \]
+    Since $\pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)] > 0$,
+    \[ \frac{\gamma^{2dk}}{[\mdin]^k} \leq \beta \|A_{s_K}\|_2^{2d} \]
+    or equivalently
+    \[ \frac{\gamma}{[\beta^{\frac{1}{k}} \mdin]^{\frac{1}{2d}}} \leq \|A_{s_K}\|_2^{\frac{1}{k}}. \]
+    Taking the limit of $K$ to $\infty$ we obtain the result.
+  \end{proof}
+\end{mytheo}
+
+\begin{myexem}
+  \label{exem:simple3}
+  Suppose we apply Algorithm~\ref{algo:prod} to Example~\ref{exem:simple2}
+  and the algorithm chooses $p_0(x) = \sum_\alpha c_\alpha x^\alpha$.
+  The start of the sequence produced depends on the order between
+  the coefficients $c_{(2d,0,0)},\allowbreak c_{(0,2d,0)},\allowbreak c_{(0,0,2d)}$.
+  If $c_{(2d,0,0)}$ is the largest then
+  the $\G$-admissible left-infinite sequence found is
+  \[ \ldots,1,2,3,1,2,3,1,2,3. \]
+
+  The product $A_{\sigma_1} A_{\sigma_2} A_{\sigma_3} \cdots = A_3A_2A_1A_3A_2A_1 \cdots $
+  is periodic and has an asymptotic growth rate $\rho(A_{\sigma_1}A_{\sigma_2}A_{\sigma_3})^{1/3}\allowbreak = 1$.
+  Hence $1 \leq \cjsr$.
+  We saw in Example~\ref{exem:simple2} that $\jsrsos = 1$ for any $d$.
+  Therefore $\cjsr = 1$.
+\end{myexem}
+
+
+\subsection{Refinement of the algorithm}
+As a consequence of Theorem~\ref{theo:third} and Definition~\ref{def:cjsr},
+\[ \jsrsos \leq [\mdin]^{\frac{1}{2d}} \cjsr. \]
+However it is easy to see that $\mdin \geq \rho(A(\G))$ so
+Theorem~\ref{theo:second} is a stronger statement.  This is somewhat
+surprising, since Algorithm~\ref{algo:prod} uses more information than
+the power iteration of \Sect\eqref{sec:quality} (i.e., the dual
+solution of the SOS program), so we should be able to improve on it.
+
+
+Indeed, we give now a generalization of Algorithm~\ref{algo:prod}.
+The generalized algorithm has an integer parameter $l$.  When $l = 1$,
+it reduces to Algorithm~\ref{algo:prod} which has a guarantee of
+accuracy with $\mdin$ given by Theorem~\ref{theo:third}.  Increasing
+$l$ increases the computation time of the generalized algorithm to
+produce a sequence of the same length but it also improves the
+guarantee.  With $l \to \infty$, it has the same guarantee except that
+$\rho(A(G))$ replaces $\mdin$; see Theorem~\ref{theo:fourth}.
+This section therefore provides an alternative proof of
+Theorem~\ref{theo:second}.
+
+Consider the example illustrated by Figure~\ref{fig:paths}.
+Algorithm~\ref{algo:prod} considers all the \arcs{} ending at $v_1$ and chooses one of them.
+This is what is illustrated by Figure~\ref{fig:path1}.
+Then it denotes the start of the chosen \arc{} as $v_2$ and considers all the \arcs{} ending at $v_2$.
+Instead of doing so, the algorithm could postpone the choice of $v_2$ and look at all the pairs $(v_3,v_2,\sigma_2),(v_2,v_1,\sigma_1)$ or equivalently, all the paths of length 2 whose last node is $v_1$ and choose one of them based on the dual variables of the edges $(v_3,v_2,\sigma_2)$ ignoring the dual variables of the edges $(v_2,v_1,\sigma_1)$.
+The intuition behind this is that even if for large enough $d$ the accuracy is arbitrarily good,
+for small $d$, we should not follow the dual variables ``blindly''.
+Building the sequence with a ``larger horizon'' is a way to be less affected by the possible imprecision of the dual variables.
+
+
+\begin{figure}[!ht]
+  \begin{subfigure}{0.48\textwidth}
+  \centering
+    \begin{tikzpicture}
+      \SetGraphUnit{1.2}
+      \GraphInit[vstyle=Dijkstra]
+      \SetVertexNoLabel
+      \SetUpEdge[style={->}]
+      \Vertex[NoLabel=false,L=$v_1$]{0}
+      \NOWE(0){4};
+      \NOEA(0){5};
+      \SO[NoLabel=false,L=$v_0$](0){11};
+      \tikzset{VertexStyle/.append style = {dashed}}
+      \SOWE(0){10};
+      \SOEA(0){12};
+      \Edge[label=?](4)(0);
+      \Edge[label=?](5)(0);
+      \Edge(0)(11);
+      \tikzset{EdgeStyle/.append style = {dashed}}
+      \Edge(0)(10);
+      \Edge(0)(12);
+    \end{tikzpicture}
+    \caption{One iteration of Algorithm~\ref{algo:prod}.}
+    \label{fig:path1}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+  \centering
+    \begin{tikzpicture}
+      \SetGraphUnit{1.2}
+      \GraphInit[vstyle=Dijkstra]
+      \SetVertexNoLabel
+      \SetUpEdge[style={->}]
+      \Vertex[NoLabel=false,L=$v_1$]{0}
+      \NOWE(0){4};
+      \NOEA(0){5};
+      \NOWE(4){6};
+      \NO  (4){7};
+      \NOEA(4){8};
+      \NOEA(5){9};
+      \SO[NoLabel=false,L=$v_0$](0){11};
+      \tikzset{VertexStyle/.append style = {dashed}}
+      \SOWE(4){1};
+      \EA(0){2};
+      \EA(2){3};
+      \SOWE(0){10};
+      \SOEA(0){12};
+      \Edge[label=?](6)(4);
+      \Edge[label=?](7)(4);
+      \Edge[label=?](8)(4);
+      \Edge[label=?](8)(5);
+      \Edge[label=?](9)(5);
+      \Edge[label=?](4)(0);
+      \Edge[label=?](5)(0);
+      \Edge(0)(11);
+      \tikzset{EdgeStyle/.append style = {dashed}}
+      \Edge(4)(1);
+      \Edge(5)(2);
+      \Edge(5)(3);
+      \Edge(0)(10);
+      \Edge(0)(12);
+    \end{tikzpicture}
+    \caption{One iteration of Algorithm~\ref{algo:prodl} with $l = 2$.}
+    \label{fig:path2}
+  \end{subfigure}
+  \caption{Comparison between Algorithm~\ref{algo:prod} and Algorithm~\ref{algo:prodl}}
+  \label{fig:paths}
+\end{figure}
+
+This idea can be generalized for any length $l$.
+To shorten the notation we denote the $i$th node of a path $s$ as $s(i)$
+and the $i$th label as $s[i]$.
+\begin{algorithm}[!ht]
+  \caption{Generates sequences of large asymptotic growth using paths of length $l$.}
+  \label{algo:prodl}
+  \begin{algorithmic}
+    \STATE{Pick an arbitrary polynomial $p_0(x) \in \inte(\Sh)$}
+    \STATE{Pick an \arc{} $(v_1,v_0,\sigma_0) \in \Arcs$ such that $\pE_{v_1v_0\sigma_0}[p_0(x)] > 0$}
+    \STATE{Set $p_1(x) \leftarrow p_0(x)$}
+    \FOR{$k = 1,2,\ldots$}
+    \STATE $(v_{k+l},\sigma_{k+l-1},\ldots,\sigma_k,v_k) \leftarrow$
+    \STATE $\hfill \argmax_{s \in \Arcs_l,s(l+1)=v_k} \pE_{s(1)s(2)s[1]}[p_k(A_s x)]$
+    \STATE $p_{k+1} \leftarrow p_k(A_{\sigma_k} \cdots A_{\sigma_{k+l-1}} x)$
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}
+
+Lemma~\ref{lemm:maxdegpath} is generalized into the following Lemma.
+
+\begin{mylemm}
+  \label{lemm:maxdegpathl}
+  Consider \defAGe{}.
+  For any positive integer $d$ and $l$,
+  using Program~\ref{prog:dual} with any $\gamma < \jsrsos$,
+  Algorithm~\ref{algo:prodl} with paths of length $l$ produces a $\G^\Tr $-admissible sequence
+  $(v_1,v_0,\sigma_0), (v_2,v_1,\sigma_1), \ldots$ %
+  that satisfies the following inequality for all $k \geq 1$ that is a multiple of $l$:
+  \begin{equation*}
+    \theta_k
+    \geq \frac{\gamma^{2dl}}{\din_l(v_{k-l+1})}
+    \theta_{k-l}.
+  \end{equation*}
+  where for a node $v \in \Nodes$, $\din_l(v)$ is the number of paths of length $l$ ending at $v$.
+  \begin{proof}
+    For any integer $k \geq 1$ multiple of $l$, since $p_0(x)$ is SOS, $p_{k-l+1}(x),\ldots,p_{k}(x)$ are all SOS.
+    Therefore, by \eqref{eq:dualconsexp},
+
+    \begin{multline*}
+      \sum_{\substack{s \in \Arcs_l,\\s(l+1) = v_{k-l+1}}} \pE_{s(1)s(2)s[1]}[p_{k-l+1}(A_{s} x)]\displaybreak[3]\\
+      \geq \gamma^{2d} \sum_{\substack{s \in \Arcs_{l-1},\\s(l) = v_{k-l+1}}} \pE_{s(1)s(2)s[1]}[p_{k-l+1}(A_{s} x)]\displaybreak[3]\\
+      \vdots\qquad\qquad\qquad\qquad\qquad\qquad\displaybreak[3]\\
+      \geq \gamma^{2dl} \theta_{k-l}\hspace{5.21cm}
+    \end{multline*}
+    Since the first expression has $\din_l(v_{k-l+1})$ positive terms and
+    Algorithm~\ref{algo:prodl} picks the term with highest value, the result follows.
+  \end{proof}
+\end{mylemm}
+
+
+Theorem~\ref{theo:third} is generalized in the following Theorem.
+
+\begin{mytheo}
+  \label{theo:fourth}
+  Consider \defAGie.
+  For any positive integers $d$ and $l$
+  and any $\epsilon > 0$,
+  using Program~\ref{prog:dual} with any $\gamma < \jsrsos$,
+  Algorithm~\ref{algo:prodl} with paths of length $l$ produces a $\G^\Tr $-admissible sequence
+  $(v_1,v_0,\sigma_0),\allowbreak(v_2,v_1,\sigma_1), \ldots$
+  such that
+  \begin{equation}
+    \lim_{k \to \infty} \|A_{\sigma_1} \cdots A_{\sigma_k}\|_2^{\frac{1}{k}} \geq \frac{\gamma}{\|[A(\G)^\Tr ]^l\|_\infty^{\frac{1}{2dl}}}.
+  \end{equation}
+  \begin{proof}
+    Consider the sequence produced by Algorithm~\ref{algo:prodl}.
+    Since the set of \arcs{} $\Arcs$ is finite,
+    there must be an \arc{} $(\bar{u},\bar{v},\bar{\sigma}) \in \Arcs$ that appears infinitely many times in the sequence
+    at multiples of $l$.
+    Let $k_1$ be the smallest multiple of $l$ such that $(v_{k_1+1},v_{k_1},\sigma_{k_1}) = (\bar{u},\bar{v},\bar{\sigma})$ and
+    let $q(x) = p_{k_1+1}(x)$.
+    Since the matrices of $\A$ are invertible and $p_0(x) \in \inte(\Sh)$, we know that $q(x) \in \inte(\Sh)$.
+
+    For an arbitrarily large integer $K$, there exists an multiple of $l$ $k \geq K$ such that $(v_{k_1+k+1},v_{k_1+k}, \sigma_{k_1+k}) = (\bar{u},\bar{v},\bar{\sigma})$.
+    Let $s_K = (\sigma_{k_1+k}, \ldots, \sigma_{k_1+1})$.
+    By the definition of the matrix norm $\|\cdot\|_\infty$, $\max_{v \in \Nodes} \din_l(v) = \|[A(\G)^\Tr ]^l\|_\infty$.
+    Theorefore, by Lemma~\ref{lemm:maxdegpathl}, we have
+    \begin{equation}
+      \label{eq:cyclingl}
+      \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(A_{s_K} x)] \geq \frac{\gamma^{2dk}}{\|[A(\G)^\Tr ]^{l}\|_\infty^{k/l}} \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)].
+    \end{equation}
+    By Lemma~\ref{lemm:sosbound}, there exists a constant $\beta$ that does not depend on $A_{s_K}$ such that%
+    \[ \beta \|A_{s_K}\|_2^{2d}q(x) - q(A_{s_K} x) \text{ is SOS}. \]
+    Therefore by \eqref{eq:cyclingl},
+    \[ \beta \|A_{s_K}\|_2^{2d}\pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)] \geq \frac{\gamma^{2dk}}{\|[A(\G)^\Tr ]^{l}\|_\infty^{k/l}} \pE_{\bar{u}\bar{v}\bar{\sigma}}[q(x)]. \]
+    Hence,
+    \[ \frac{\gamma}{[\beta^{\frac{1}{k}} \|[A(\G)^\Tr ]^{l}\|_\infty^{1/l}]^{\frac{1}{2d}}} \leq \|A_{s_K}\|_2^{\frac{1}{k}}. \]
+    Taking the limit of $K$ to $\infty$ we obtain the result.
+  \end{proof}
+\end{mytheo}
+
+Since $\lim_{l \to \infty} \|[A(\G)^\Tr ]^l\|_\infty^{\frac{1}{l}} = \rho(A(\G)^\Tr ) = \rho(A(\G))$, Theorem~\ref{theo:second} is a consequence of Theorem~\ref{theo:fourth}.
+
+
+\subsection{Producing lower bounds}
+\label{sec:lb}
+By definition of the CJSR, the asymptotic growth rate of the norm of the product of any $\G$-admissible (or $\G^\Tr $-admissible) sequence of matrices gives a lower bound for the CJSR.
+In particular the sequence produced by Algorithm~\ref{algo:prodl} provides a lower bound for the CJSR.
+
+If there are two integers $\bar{k},k$ such that the sequence after $\bar{k}$ is periodic of period $k$,
+the asymptotic growth rate of the norm is equal to the $k$th root of the spectral radius of the product of the matrices of one period.
+This is due to the Gelfand's formula $\rho(A) = \lim_{k \to \infty} \|A^k\|^{1/k}$.
+From the same identity,
+we see that the spectral radius of the product of the matrices of one $\G$-admissible cycle gives a lower bound for the CJSR.
+
+
+More formally, for any natural $k$, we have
+\[ \rho_k(\G, \A) \leq \cjsr \]
+where
+\[ \rho_k(\G, \A) = \max \big\{\, \rho(A_c)^{1/k} : c \in \G_k, c \text{ is a cycle}\,\big\}. \]
+This is the generalization to the constrained case of the first inequality of the three members inequalities; see \cite[\Sect1.2.2.6]{jungers2009joint}.
+
+To find lower bounds for the CJSR,
+one could generate all the cycles of length smaller than some maximum length
+and compute the spectral radius for all of them.
+This brute force approach is not scalable because the number of paths considered grows exponentially with the maximum length.
+The exponential growth of the brute force approach is the reason why one should choose small $l$ for Algorithm~\ref{algo:prodl}.
+
+Gripenberg~\cite{gripenberg1996computing} proposes a branch-and-bound algorithm that prunes the search using an a priori fixed absolute error.
+Two other branch-and-bound variant exists:
+the balanced complex polytope algorithm \cite{guglielmi2008algorithm}
+and the invariant conitope algorithm~\cite{jungers2014lifted}.
+
+These algorithms can also be used to produce a $\G$-admissible sequence of matrices of high asymptotic growth rate
+by reproducing the cycles of high spectral radius infinitely.
+The advantage of Algorithm~\ref{algo:prodl} is that it provides a guarantee of accuracy given in Theorem~\ref{theo:fourth}.
+Algorithm~\ref{algo:prodl} provides at the same time unstable trajectories and lower bounds of guaranteed accuracy.
+
+We can compute lower bounds using the upper bound provided by Program~\ref{prog:primal} and Corollary~\ref{cor:mix}
+but in practice the trajectories are periodic after some time $\bar{k}$ so we are able to compute
+much better lower bounds than the pessimistic bound provided by Corollary~\ref{cor:mix}.
+This is shown by the following example.
+
+\begin{myexem}
+  \label{exem:run4}
+  We first analyse the behaviour of Algorithm~\ref{algo:prod}
+  on our running example; see Example~\ref{exem:run1}, Example~\ref{exem:run2} and Example~\ref{exem:run3}.
+  We use the recent CSSystem toolbox \cite{cambier2015cssystem}.
+  For $2d = 2,4,6,8$, the sequence can only contain the edges $(1,3,1)$, $(3,1,2)$ and $(3,3,1)$
+  since the other edges have a dual variables of value 0.
+
+  To find a cycle with good spectral radius, we generate the sequence for a fixed length and then look through all the cycles of the sequence.
+  The $\G$-admissible cycle found depends on $p_0(x)$, but most of the time, it is
+  \[ (3,1,2),(1,3,1),(3,1,2),(1,3,1),(3,3,1)^4 \]
+  where the $k$ in exponent means that the edges is taken $k$ times.
+  The 8th root of the corresponding spectral radius is 0.97289.
+
+  Using Algorithm~\ref{algo:prodl} with $l = 3$, the produced sequence may include two consecutive edges that have a dual variables of value 0.
+  Even for $2d = 2$, the Algorithm~\ref{algo:prodl} with $l = 3$ finds the $\G$-admissible cycle
+  \[ (3,1,2),(1,3,1),(3,1,2),(1,2,3),(2,3,1),(3,3,1)^3 \]
+  for which the 8th root of the corresponding spectral radius is 0.97482.
+  We can show that it is equal to the CJSR, e.g. using \cite{guglielmi2008algorithm}.
+  That is, it is a \emph{spectrum maximizing product} (s.m.p.).
+
+  With $2d = 10$ and $2d = 12$, we have seen in Example~\ref{exem:run3} that $\pE_{123}$ and $\pE_{231}$ are not zero.
+  For $2d = 12$, the s.m.p. is found for any $l$, initial node and $p_0(x)$.
+  For $2d = 10$, despite the fact that $\pE_{123}$ and $\pE_{231}$ are not zero,
+  the s.m.p. seems to be never found for $l = 1$.
+
+  For $2d = 10$ and $l = 2$, it is found from the node 1 and 4\footnote{In practice, the dual variables of the edges $(3,4,4)$ and $(4,3,1)$ are close to zero but not zero. It is possible to start in node 4 even if the sequence will never go back in node 4.}
+  with high probability from a random $p_0(x)$ or from $p_0(x)$ equal to the primal solution at this node.
+  From node 3, it is not found using the primal solution of node 3 but it is sometimes found using a random $p_0(x)$.
+  This shows that choosing the primal solution as $p_0(x)$ may not be the best choice.
+  From node 2, it does not seem to be found for any $p_0(x)$.
+
+  Instead of increasing $l$ and $d$, path-complete techniques
+  \cite{ahmadi2014joint} can be used to improve the lower bounds
+  provided by Algorithm~\ref{algo:prodl} and the upper bounds provided
+  by Program~\ref{prog:primal}.  The idea is to replace the automaton
+  $\G$ and the matrices of $\A$ by another automaton $\G'$ and other
+  matrices $\A'$ but without changing the set of admissible products
+  of matrices.  Typically, the new set $\A'$ contains products of the
+  matrices of the initial set $\A$ and the automaton $\G'$ is designed
+  so as to maintain the same set of admissible products.
+
+  We tried two examples: The $T$-product lift
+  \cite{philippe2015stability} and $M$-path-dependent lift
+  \cite{lee2006uniform}.  Using the 2-product lift, the s.m.p. is
+  found using $2d = 6$ and $l = 1$ and using the 2-path-dependent
+  lift, the s.m.p. is found using $2d = 4$ and $l = 1$.
+  This is concordant with the empirical observation reported in
+  \cite{philippe2015stability}.
+\end{myexem}
+
+
+\section{Conclusions}
+
+We have introduced a new technique, based on the dual solution of the
+SOS approximation, to generate a sequence of matrices with asymptotic
+growth rate close to the CJSR. In Theorem~\ref{theo:fourth}, we gave
+an estimate of its performance. However, in practical examples, the
+sequence produced achieves a growth rate which is often better than
+this estimate.  This gives rise to the following question: Is it
+possible to improve the guarantee both for the upper bounds and the
+lower bounds?  To the best of our knowledge, there are currently two
+bounds, Theorem~\ref{theo:matt} only depending on the dimension of the
+matrices and Theorem~\ref{theo:second} only depending on the automaton.
+Is there a bound that combines both in a more sophisticated way than
+Corollary~\ref{cor:mix}?
+
+Our algorithm seems to always produce periodic sequences so in
+practice we can compute an asymptotic growth rate bound better than
+what is provided by Corollary~\ref{cor:mix}.  This motivates other
+questions with important algorithmic consequences: Does
+Algorithm~\ref{algo:prodl} always produce a sequence that is periodic
+after some $\bar{k}$?  Can we give a bound for $\bar{k}$ and the size
+of the period depending on the dimension of the matrices and on the
+automaton?
+
+More generally, the techniques developed in this work, based on
+generating ``bad'' trajectories for a dynamical system via the dual
+solution of the natural convex problems used for analysis, naturally
+extend to many other problems in systems theory. We are currently
+exploring such possibilities.
+
+
+\bibliographystyle{abbrv}
+
+\bibliography{biblio}
+
+\end{document}

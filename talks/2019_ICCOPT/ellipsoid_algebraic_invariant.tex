@@ -1,0 +1,14 @@
+\begin{frame}{Ellipsoidal controlled invariant Set of Algebraic Systems}
+  \[ E x_{k+1} = A x_k, \quad x_k \in X \]
+  Convex set $S$ invariant iff
+  \begin{align*}
+    AS & \subseteq ES\\
+    (AS)^\circ & \supseteq (ES)^\circ\\
+    A^{-\Tr}S^\circ & \supseteq E^{-\Tr}S^\circ
+  \end{align*}
+  \begin{block}{Ellipsoidal computation}
+    \[ C^\circ = \{\, x \mid x^\Tr Q x \le 1 \,\} \quad \Rightarrow \quad A^{-\Tr}C^\circ = \{\, x \mid x^\Tr A Q A^\Tr x \le 1 \,\} \]
+    S-procedure:
+    \[ E Q E^\Tr - A Q A^\Tr \text{ is PSD}. \]
+  \end{block}
+\end{frame}

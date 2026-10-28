@@ -1,0 +1,285 @@
+\documentclass[12pt]{article}
+\setlength{\oddsidemargin}{27mm}
+\setlength{\evensidemargin}{27mm}
+\setlength{\hoffset}{-1in}
+
+\setlength{\topmargin}{27mm}
+\setlength{\voffset}{-1in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+\setlength{\textheight}{235mm}
+\setlength{\textwidth}{155mm}
+
+\pagestyle{empty}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\labelitemi}{$\diamond$}
+
+\usepackage{pgfplots}
+
+\usepackage{custom}
+\usepackage{mythm}
+\usepackage{nsi}
+
+\begin{document}
+\baselineskip 12pt
+
+\begin{center}
+\textbf{\Large Parallel optimization on the Entropic Cone} \\
+\vspace{5mm}
+\begin{tabular}{cc}  Beno\^it Legat  & Rapha\"el Jungers \\[1.2\baselineskip]
+\multicolumn{2}{c}{Universit\'e catholique de Louvain} \\
+\multicolumn{2}{c}{ICTEAM} \\
+\multicolumn{2}{c}{4 Av. G. Lema\^itre} \\
+\multicolumn{2}{c}{1348 Louvain-la-Neuve, Belgium} \\ [1.2\baselineskip]
+ \verb+benoit.legat@student.uclouvain.be+ & \verb+raphael.jungers@uclouvain.be+
+\end{tabular} \end{center}
+
+\begin{abstract}
+
+\noindent
+  We introduce a parallelizable algorithm for approximate optimization on the entropic cone.
+  We also present the toolbox \texttt{EntropicCone.jl}.
+  Its aim is to improve the computational repoducibility of the recent progress
+  on the approximation of the entropic cone
+  and to make them easily accessible for its many applications.
+  These applications include
+  the capacity region of multi-source network coding,
+  converse theorems for multi-terminal problems of information theory,
+  bounds on the information ratios in secret sharing schemes and
+  conditional independence among subvectors of a random vector. %
+\end{abstract}
+
+\section{The problem setting}
+
+
+
+
+
+Given $n$ random variables, we can compute the entropy of any of the $2^n$ subsets of these $n$ variables.
+The set $\Es \eqdef \R^{2^n-1}$ of vectors indexed by the nonempty subsets of $[n] \eqdef \{1, \ldots, n\}$ is called the \emph{entropy space}.%
+The entropy vector of a set of $n$ random variables is the entropy vector $h$
+such that $h_\Iis$ is the entropy of the set $\{\, X_i \mid i \in \Iis\,\}$.
+
+We denote the set of vectors of $\R^{2^n-1}$ that are entropic as:
+\[ \Ec \eqdef \{\, h \in \R^{2^n-1} \mid \exists X_1, \ldots, X_n, \forall \emptyset \neq S \subseteq [n], h_S = H_b(\{\, X_i \mid i \in S\,\}) \,\}. \]
+
+
+It is known that the set $\Ec$ is not a cone for $n \geq 3$ but its closure $\cEc$ is a convex cone \cite{zhang1997non}.
+The difference between $\Ec$ and $\cEc$ is only on the boundary of $\cEc$.
+More precisely, it has been shown that the relative interior of $\cEc$ is contained in $\Ec$ \cite{matus2007two}.
+
+For $n \leq 3$, $\cEc$ is equal to the \emph{polymatroid cone} $\Pm$.
+This is the set of entropy vectors $h$ %
+that are
+\begin{itemize}
+  \item \emph{nonnegative}: $h_{\Iis} \geq 0$ for any $\Iis \subseteq [n]$,
+  \item \emph{nondecreasing}: $h_{\Iis} \leq h_{\Jis}$ for any $\Iis \subseteq \Jis \subseteq [n]$ and
+  \item \emph{submodular}: $h_{\Jis} + h_{\Kis} \geq h_{\Jis \cup \Kis} + h_{\Jis \cap \Kis}$ for any $\Jis, \Kis \subseteq [n]$.
+\end{itemize}
+These three sets of conditions are linear inequalites on the entropy vector $h$.
+Since $\Pm$ is defined by a finite subset of linear inequalities,
+it is a polyhedral cone.
+
+For $n \geq 4$, $\cEc$ is a strict subset $\Pm$.
+Moreover, $\cEc$ is not polyhedral \cite{matus2007infinitely} and not even semialgebraic\footnote{A set is \emph{semialgebraic} if it is the projection of an algebraic set. A set is \emph{algebraic} if it can be defined by finitely many polynomial inequalities.} \cite{mejia2015almost}.
+
+The entropic cone has a varietie of applications including
+the capacity region of multi-source network coding \cite{bassoli2013network},
+converse theorems for multi-terminal problems of information theory \cite{yeung2012first},
+bounds on the information ratios in secret sharing schemes \cite{beimel2011secret} and
+conditional independence among subvectors of a random vector \cite{studeny2006probabilistic}.
+This motivates the research on filling the gap between $\Pm$ and $\cEc$.
+
+In \secref{review}, we review the methods used to find tighter approximations of $\Ec$ than $\Pm$.
+The current methods are linear and generate polyhedral outer approximations.
+However, as one can anticipate, the number of facets of a polyhedral approximation that would be ``everywhere close'' to $\Ec$ would have a sizeable amount of facets
+since it is high-dimensional and not semialgebraic.
+In practical applications, one is often looking at the simpler problem of solving an optimization problem involving the entropic cone
+so we are only looking for an outer approximation that is ``close'' to $\Ec$ ``near'' the optimum.
+In \secref{sddp}, we show a parallelizable algorithm for this problem.
+
+
+\section{Generating Non-Shannon Inequalities}
+\label{sec:review}
+The inequalities that are valid for $\Pm$ are called \emph{Shannon inequalities}
+and those that are valid for $\Ec$ but not for $\Pm$ are called \emph{non-Shannon inequalities}.
+
+The current approach in generating an outer bound for $\Ec$ is
+to generate non-Shannon inequalities and to intersect $\Pm$ with the halfspaces they define.
+
+There are currently four known methods for generating non-Shannon inequalities.
+The first one, which is the most commonly used,
+was introduced by Zhang and Yeung in order to generate the first non-Shannon inequality \cite{zhang1998characterization}; its description and analysis can be found in \cite{matus2007adhesivity}.
+The three other methods are respectively described in
+\cite{makarychev2002new},
+\cite{matus2007two} and
+\cite{csirmaz2014book}.
+
+The first two methods are equivalent \cite{kaced2013equivalence}
+and it is still unknown whether the third and four methods can generate inequalities that cannot be generated by the first two ones.
+It is also unknown whether these four methods can generate all non-Shannon inequalities.
+In this paper, we will only use the first method which is described in \secref{adh}.
+
+\subsection{Entropic Cone and adhesivity}
+\label{sec:adh}
+We define the \emph{inner-adhesivity} and \emph{self-adhesivity} operators respectively as
+\begin{align*}
+  \ia{\Jis}{\Kis}{\Iis}(h) & = \{\, g \in \Es[n'] \mid \forall \Iis \subseteq \Lis \subseteq \Jis \cup \Kis, g_{\Lis} = h_{\Lis \cap \Jis} + h_{\Lis \cap \Kis} - h_{\Iis} \,\}, & \Iis & = \Jis \cap \Kis,\\
+  \sa{\Jis}{\Iis}(h) & = \{\, g \in \Es[n'] \mid \forall \Iis \subseteq \Lis \subseteq \Jis' \cup \Kis, g_{\Lis} = h_{\Lis \cap \Jis'} + h_{\Lis \cap \Kis} - h_{\Iis} \,\}, & \Iis & \subseteq \Jis,
+\end{align*}
+where for inner-adhesivity, $n' = |\Jis\cup\Kis|$ and for self-adhesivity $n' = n + |\Jis \setminus \Iis|$, $\Jis' = [n]$ and $\Kis = ([n'] \setminus \Jis') \cup \Iis$.
+
+\begin{mydef}
+  We say that a family of sets $\Sset_n \subseteq \Es$ is \emph{inner-adhesive} if for any $n$, $x \in \Sset_n$ and $\Jis, \Kis \subseteq [n]$,
+  there exists $y \in \Sset_{|\Jis\cup\Kis|}$ such that $y \in \ia{\Jis}{\Kis}{\Jis\cap\Kis}(x)$ and
+  we say that it is \emph{self-adhesive} if for any $n$, $x \in \Sset_n$ and $\Iis \subseteq \Jis \subseteq [n]$,
+  there exists $y \in \Sset_{n + |\Jis \setminus \Iis|}$ such that $y \in \sa{\Jis}{\Iis}(x)$.
+\end{mydef}
+
+The following theorem gives the relation between adhesivity and the entropic cone.
+\begin{mytheo}
+  \label{theo:adh}
+  The entropic cone $\Ec$ is inner-adhesive and self-adhesive.
+  \begin{proof}
+    Consider $h \in \Ec$ and $n$ jointly distributed random variables $X_i$ of joint probability mass function $p$ such that $h$ is their entropy vector.
+    Let $p_{\Iis}$ denote the probability mass function of the marginal distribution of $\Iis$.
+    For inner-adhesivity, the entropy vector $g \in \Ec[|\Sset\cup\Tset|]$ of the probability function
+    \[ \frac{p_{\Jis}(x_{\Jis})p_{\Kis}(x_{\Kis})}{p_{\Iis}(x_{\Iis})} = p_{\Jis|\Iis}(x_{\Jis}|x_{\Iis})p_{\Kis|\Iis}(x_{\Kis}|x_{\Iis})p_{\Iis}(x_{\Iis}) \]
+    belongs to $\ia{\Jis}{\Kis}{\Iis}(h)$ and
+    for self-adhesivity, the entropy vector $g \in \Ec[n + |\Jis \setminus \Iis|]$ of the probability function
+    \[ \frac{p_{\Jis'}(x_{\Jis'})p_{\Jis}(x_{\Kis})}{p_{\Iis}(x_{\Iis})} = p_{\Jis'|\Iis}(x_{\Jis'}|x_{\Iis})p_{\Jis|\Iis}(x_{\Kis}|x_{\Iis})p_{\Iis}(x_{\Iis}), \]
+    where $\Jis' = [n]$, belongs to $\sa{\Jis}{\Iis}(h)$.
+  \end{proof}
+\end{mytheo}
+
+Let $\iai{\Jis}{\Kis}{\Iis}(\Sset)$ (resp. $\sai{\Jis}{\Iis}(\Sset)$) be the set of vectors $x$ such that there exists $y \in \Sset$ such that $y \in \ia{\Jis}{\Kis}{\Iis}(x)$ (resp. $y \in \sa{\Jis}{\Iis}(\Sset)(x)$).
+By \theoref{adh},
+given an integer $n_0$ and a sequence $(\Jis_1, \Iis_1), \ldots, (\Jis_m, \Iis_m)$ such that $\Iis_i \subseteq \Jis_i \subseteq [n_i]$ and $n_i = n_{i-1} + |\Jis_i \setminus \Iis_i|$ for $i = 1, \ldots, m$,
+the set\footnote{Of course this also works if we include inner-adhesive operations in the sequence,
+we have only included self-adhesivity in the sequence to keep simple notation.}
+\[ (\sai{\Jis_1}{\Iis_1} \circ \cdots \circ \sai{\Jis_m}{\Iis_m})(\Pm[n_m]) \]
+provides an outer approximations of $\Ec[n_0]$.
+Therefore an outer approximation of $\Ec[n_0]$ can be obtained by projecting the polyhedral cone of dimension $\sum_{i=0}^m 2^{n_i}-1$ given by
+\begin{equation}
+  \label{eq:bigpoly}
+  \{\, (h_0, h_1, \ldots, h_m) \in \Pm[n_0] \times \Pm[n_1] \times \cdots \times \Pm[n_m] | h_i \in \sa{\Jis}{\Iis}(h_{i-1}), i = 1, \ldots, m \,\}.
+\end{equation}
+on the first $2^{n_0}-1$ variables.
+
+This method was used to generate hundreds of non-Shannon inequalities in~\cite{dougherty2011non}.
+Using Benson's algorithm~\cite{benson1998outer} to compute the projection of \eqref{eq:bigpoly}, even more non-Shannon inequalities were uncovered in \cite{csirmaz2016using, lohne2015vector}.
+
+As mentioned earlier, $\cEc$ is strictly included in $\Pm$ for $n \geq 4$.
+As the dimension of $\Ec$ is exponential in $n$,
+the methods are usually benchmarked using $\Ec[4]$.
+An important numerical quantity, related with the geometric properties of $\Ec[4]$ is the \emph{Ingleton score} defined as
+\[ \ingsc \eqdef \inf_{0 \neq h \in \Ec[4]} \ingij{i}{j}(h) \]
+where $\ingij{i}{j}(h) = \la \ingsq{i}{j}, h \ra / h_{[n]}$ \cite[Definition~3]{dougherty2011non} and $\ingsq{i}{j}$ is the Ingleton dual entropy vector \cite{ingleton1971conditions}.
+The current best lower bound on $\ingsc$ is equal to $-0.15789$ \cite{dougherty2011non}.
+Upper bounds on $\ingsc$ can be obtained from exhibiting four jointly distributed variables for which the entropy vector has low Ingleton score.
+The current best upper bound on $\ingsc$ is equal to $-0.09243$ \cite{matus2013entropy}.
+
+\section{Parallelizable optimization on the Entropic Cone}
+\label{sec:sddp}
+In this section, we show how to decompose polyhedra such as described by \eqref{eq:bigpoly} to solve optimization problems on it
+in an efficient and parallelizable manner using ideas from \emph{Stochastic Programming}~\cite{birge2011introduction}.
+In stochastic programming, large scale linear programs are decomposed into smaller linear programs linked together by a markov chain.
+The linear program at each state $u$ of the markov chain is:
+\begin{align*}
+  Q(x, u) = \mini\,\, & c^T y + \mathcal{Q}_u(y)\\
+  \text{s.t.} \,& W_u y = h_u - T_ux,\\
+              & x \geq 0
+\end{align*}
+where $\mathcal{Q}_u(y)$ is the sum of $Q(x, v)$ for each state $v$ accessible from $u$
+weighted by the probability to go from state $u$ to state $v$.
+When the program is infeasible for some $x$, $Q(x, u) = \infty$.
+At the initial state of the markov chain, there is no term $-T_ux$ and
+the solution at this stage is the solution of the original large scale linear program.
+Note that if $v$ is accessible from different states $u$, $u'$, the number of variables at $u$ and $u'$ must match for $Q(\cdot, v)$ to be well-defined.
+
+For the adhesive operations,
+we propose to define a state for each dimension $n$ and adhesive operation.
+That is, for every $n, \Jis, \Kis$,
+we have a state for the operation
+$\ia{\Jis}{\Kis}{\Jis \cap \Kis}$
+and for every $n, \Jis, \Iis$ with $\Iis \subseteq \Jis$,
+we have a state for the operation $\sa{\Jis}{\Iis}$.
+The linear program at the initial state is
+\begin{align*}
+  \mini\,\, & c^T h + \mathcal{Q}_0(h)\\
+  \text{s.t.} \,& h \in \Pm[n_0],
+\end{align*}
+the linear program for each state representing an inner-adhesivity is
+\begin{align*}
+  Q(h, (n, \ia{\Jis}{\Kis}{\Jis \cap \Kis})) = \mini\,\, & \mathcal{Q}_{(n, \ia{\Jis}{\Kis}{\Jis \cap \Kis})}(g)\\
+  \text{s.t.} \,& g \in \ia{\Jis}{\Kis}{\Jis \cap \Kis}(h)\\\
+                & g \in \Pm[|\Jis\cup\Kis|]
+\end{align*}
+and the linear program for each state representing an self-adhesivity is
+\begin{align*}
+  Q(h, (n, \sa{\Jis}{\Iis})) = \mini\,\, & \mathcal{Q}_{(n, \sa{\Jis}{\Iis})}(g)\\
+  \text{s.t.} \,& g \in \sa{\Jis}{\Iis}(h)\\\
+                & g \in \Pm[n + |\Jis \setminus \Iis|].
+\end{align*}
+A state $(n, \mathsf{a})$ is accessible from a state $u$ if the dimension\footnote{the number of variables of the linear program} of the linear program at $u$ is $2^n-1$.
+Since there is no objective in states other than the initial state, the probability assigned for each transition does not matter.
+The only relevant information in $Q(h, (n, \mathsf{a}))$ is whether it is infinite or zero.
+
+In stochastic programming, the domain of $Q(\cdot, (n, \mathsf{a}))$ is approximated by a polyhedron
+by starting with the approximation $\R^n$ and adding \emph{feasibility cuts}.
+The feasibility cuts are computed as follows:
+the linear program is solved for some $h$,
+if it is infeasible, an unbounded ray of the dual linear program is computed and used to generate a feasibility cut.
+
+These observations lead to \algoref{Ec} for approximate optimization on the entropic cone that is inspired from the \emph{Stochastic Dual Dynamic Programming} algorithm used in stochastic programming.
+Note that the initial node can have a nonlinear objective function and additionnal nonlinear constraints.
+This algorithm is easily parallelizable as the linear programs of the different states only need to communicate cuts and optimal solutions.
+
+\begin{algorithm}[!ht]
+  \caption{Approximate minimization of $c(h)$ subject to $x \in \Ec \cap \mathbb{F}$ for parameters $\nmax, K, m, \rho$.}
+  \label{algo:Ec}
+  \begin{algorithmic}
+    \STATE{Given a maximal value $\nmax$ for $n$, generate all states such that the dimension of the linear program is at most $2^{\nmax}-1$}
+    \FOR{$k = 1,2,\ldots,K$}
+    \STATE Pick a set $P$ of $\rho$ random paths of length $m$ starting at the initial state.
+    \STATE Solve the optimization program
+    \begin{align*}
+      \mini\,\, & c(h)\\
+      \text{s.t.} \,& h \in \Pm[n_0] \cap \mathbb{F} \cap \dom(\mathcal{Q}_0),
+    \end{align*}
+    where the domain of $\mathcal{Q}_0(h)$ is approximated by the feasibility cuts.
+    \IF{the program is infeasible}
+    \RETURN Infeasible
+    \ENDIF
+    \FOR{$i = 1,2,\ldots,m$}
+    \FORALL{$p \in P$}
+    \STATE Solve $Q(h, (n_{p,i}, \mathsf{a}_{p,i}))$ where $h$ is the value of the optimal solution of the previous state in the path.
+    \IF{the program is infeasible}
+    \STATE Add a feasibility cut for $\dom(Q(\cdot, (n_{p,i}, \mathsf{a}_{p,i})))$
+    \STATE Remove $p$ from $P$
+    \ENDIF
+    \ENDFOR
+    \ENDFOR
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}
+
+We developed a new toolbox \verb+EntropicCone.jl+ in Julia~\cite{bezanson2012julia} for working with the entropic cone.
+This algorithm is one of the features implemented in the toolbox.
+We tested \algoref{Ec} to find lower bounds for the Ingleton score and obtained the best known lower bound $-0.15789$ in under a minute.
+
+\section{Conclusion}
+Searching for non-Shannon inequalities to provide tighter outer approximations
+of the entropic cone may seem computationally demanding due to the use of a projection algorithm in high-dimensional space.
+However, if we restrict ourself to the optimization of a (possibly nonlinear) objective
+on the entropic cone (possibly under additionnal constraints),
+the algorithms used in stochastic programming can be used to provide a parallelizable
+algorithm that can provide bounds on the objective.%
+This method is able to obtain current best lower bound on the Ingleton score in under a minute.
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}

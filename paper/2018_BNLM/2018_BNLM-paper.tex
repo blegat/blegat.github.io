@@ -1,0 +1,115 @@
+\documentclass{blux}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{courier}
+
+\usepackage{custom}
+
+\newcommand{\dGAS}{$\delta$-GAS}
+\newcommand{\Kinf}{\mathcal{K}_\infty}
+
+\newcommand{\tr}{\to}
+\newcommand{\trs}[1][\sigma]{\tr_{#1}}
+
+\newcommand{\nqu}{n_{q,u}}
+\newcommand{\nqx}{n_{q,x}}
+
+\newcommand{\Ps}{\mathcal{P}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\oV}{\opt{V}}
+\newcommand{\sys}{S}
+\newcommand{\As}{\mathcal{A}}
+\newcommand{\as}{\alpha}
+\newcommand{\Cs}{\mathcal{B}}
+\newcommand{\cs}{\beta}
+
+\title{Computing controlled invariant sets using semidefinite programming}
+\author{Beno\^it Legat, Rapha\"el M. Jungers\\
+        Universit\'e catholique de Louvain\\
+        Avenue Georges Lemaitre, 4\\
+        B-1348 Louvain-la-Neuve\\
+        Belgium\\
+    Email: {\tt benoit.legat@uclouvain.be},\\
+           {\tt raphael.jungers@uclouvain.be}
+        \and
+    Paulo Tabuada\\
+        Department of Electrical and Computer Engineering\\
+        UCLA\\
+    Email: {\tt tabuada@ee.ucla.edu}
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+The problem of computing a controlled invariant set is a paradigmatic challenge in the broad field of systems and control.
+Indeed, it is for instance crucial in safety-critical applications,
+such as the control of a platoon of vehicles or air traffic management; see for instance \cite{tomlin1998conflict},
+where firm guarantees are needed on our ability to maintain the state in a safe region
+(e.g., with a certain minimal distance between vehicles).
+In other situations, the dynamical system might be too complicated to analyze exactly in every point of the state space,
+but yet it can be possible to confine the state within a guaranteed set.
+
+
+A set is \emph{controlled invariant} (sometimes also referred to as \emph{viable})
+if, any trajectory whose initial point is in the set can be kept inside it by means of a proper control action.
+Given a system with constraint specifications on the states and/or input, the controlled invariant set can be used
+to determine initial states such that trajectories with these initial conditions are guaranteed to meet the specifications.
+Moreover, in some situations, a state feedback control law can be derived from the knowledge of the controlled invariant set; see \cite{blanchini1999survey} for a survey.
+
+The computation of invariant sets is usually achieved using either polyhedral computations or semidefinite programming.
+If the system contains a control input, the computational complexity of the problem becomes even more challenging.
+Indeed, this requires the computation of projections of polytopes (see e.g., the procedure p.~201 in \cite{blanchini2015set}) or the parametrization of a family of polytopes \cite{rakovic2010parameterized} when using polyhedral computations
+and semidefinite programming techniques are not directly applicable.
+The problem of polyhedral projection is well known to severely suffer from the curse of dimensionality. %
+
+
+
+We give a method based on semidefinite programming to compute ellipsoidal invariant sets in \cite{legat2018computing}.
+A key ingredient in our technique is that we work in the dual space of the geometric problem.
+Given a discrete-time control system
+\[ x_{k+1} = A x_k + B u_k, \quad x_k \in \mathcal{X} \]
+we show that an ellipsoid
+\[ \mathcal{E}_{P^{-1}} = \{\, x \in \R^n \mid x^\Tr P^{-1} x \leq 1 \,\} \]
+is controlled invariant if and only if $\mathcal{E}_{P^{-1}} \subseteq \mathcal{X}$ and
+\[ E A P A^\Tr E^\Tr \preceq E P E^\Tr \]
+where $E$ is a projection on $\Image(B)^{\perp}$.
+
+For a system with constraints on the input:
+\[ x_{k+1} = A x_k + B u_k, \quad x_k \in \mathcal{X}, \quad u_k \in \mathcal{U} \]
+we show that $\mathcal{E}_{P^{-1}}$ is controlled invariant if and only if
+there exists a set
+\[ \mathcal{E}_{Q^{-1}} = \{\, y \in \R^n \mid y^\Tr Q^{-1} y \leq 1 \,\} \]
+such that $\mathcal{E}_{P^{-1}} \subseteq \mathcal{X}$, $\mathcal{E}_{Q^{-1}} \subseteq \mathcal{X} \times \mathcal{U}$ and
+\[
+    \begin{pmatrix}
+        A & B
+    \end{pmatrix}
+    Q
+    \begin{pmatrix}
+        A & B
+    \end{pmatrix}^\Tr
+    \preceq P \preceq
+    \begin{pmatrix}
+        I & 0
+    \end{pmatrix}
+    Q
+    \begin{pmatrix}
+        I & 0
+    \end{pmatrix}^\Tr.
+\]
+
+
+All these constraints are LMI-representable, and this allows us to introduce a new efficient procedure for the computation of controlled invariant sets.
+Our general method is presented in \cite{legat2018computing} and can be applied to affine hybrid control system, we only present here the particular case of linear control systems.
+
+
+
+
+
+
+\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+\end{document}

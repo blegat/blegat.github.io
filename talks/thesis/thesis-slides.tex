@@ -1,0 +1,403 @@
+\documentclass[9pt,notes=hide]{beamer}
+
+\usepackage{../../latex/custom}
+\usepackage{../../latex/jsr}
+\usepackage{../../latex/nsi}
+
+\usetheme[progressbar=frametitle,block=fill]{metropolis}
+\usepackage{appendixnumberbeamer}
+\setbeamertemplate{frametitle continuation}{\hfill(\insertcontinuationcount)} %
+
+\newcommand{\setsection}[1]{
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
+    #1
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
+    \usebeamertemplate*{frame numbering}
+  \end{beamercolorbox}%
+}
+}
+
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, patterns}
+\usetikzlibrary{matrix,decorations.pathreplacing,chains,fit,shapes,calc} %
+\usetikzlibrary{calc,decorations.pathmorphing,decorations.markings}
+
+\usepackage{pgfplots}
+    \pgfplotsset{compat=1.11}
+\usepackage{pgfplotsthemetol} %
+\usepackage{subcaption} %
+\usepackage{array}
+
+\newcommand{\abs}[1]{\left| #1 \right|} %
+\newcommand{\Init}{\mathrm{Init}} %
+\newcommand{\comment}[1]{{\color{red}\textbf{{#1}}}}
+
+\usepackage[super]{nth}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+\newcommand{\piB}{\pi_{\Image(B)^\perp}}
+\DeclareMathOperator{\gauge}{g}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+
+\title{Set Programming: Theory and Computation}
+\subtitle{Private Defense}
+\date{April 28, 2020}
+\author{Beno\^{i}t \textsc{Legat}}
+\institute{Jury: Rapha\"{e}l \textsc{Jungers}, Pablo \textsc{Parrilo}, Yurii \textsc{Nesterov}, Anthony \textsc{Papavasiliou}, Paulo \textsc{Tabuada}, Roland \textsc{Keunings}}
+
+\begin{document}
+
+\maketitle
+
+
+
+
+\begin{frame}{Table of contents}
+  \tableofcontents
+\end{frame}
+
+\setsection{\S4}
+
+\begin{frame}{Set Program}
+\begin{equation*}
+  \begin{array}{rl}
+    \min\limits_{\mathcal{S}_1 \subseteq \R^{n_1}, \ldots, \mathcal{S}_N \subseteq \R^{n_N}} & f(\mathcal{S}_1, \ldots, \mathcal{S}_N)\\
+    \text{subject to:} & g_i(\mathcal{S}_1, \ldots, \mathcal{S}_N) \subseteq h_i(\mathcal{S}_1, \ldots, \mathcal{S}_N), \quad i=1,2,\ldots,M.
+  \end{array}
+\end{equation*}
+
+\begin{block}{Linear inclusion}
+\begin{align*}
+  A\mathcal{S}_i \subseteq \mathcal{S}_j,\\
+  \mathcal{S}_i \subseteq A^{-1}\mathcal{S}_j.
+\end{align*}
+\end{block}
+\begin{block}{Algebraic inclusion}
+\begin{align*}
+  \mathcal{S}_i & \subseteq \pi_{[n_i], n_i + m}
+  \begin{bmatrix}
+    A & B
+  \end{bmatrix}^{-1} \mathcal{S}_j,\\
+  C\mathcal{S}_i & \subseteq E\mathcal{S}_j.
+\end{align*}
+\end{block}
+\end{frame}
+
+\section{Guarantees}
+
+\setsection{\S4.4}
+
+\begin{frame}{L\"{o}wner-John ellipsoid of intersection of ellipsoids}
+  John ellipsoid:
+  \begin{equation*}
+    \begin{array}{rl}
+      \max_{\mathcal{E}_P \subseteq \R^n} & \vol(\mathcal{E}_P)\\
+      \text{subject to:} & \mathcal{E}_P \subseteq \mathcal{C}.
+    \end{array}
+  \end{equation*}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \textbf{Theorem}:
+      \alert{Unique} $\opt{\mathcal{E}_P}$ and ($\mathcal{C}$ symmetric):
+      \[ \mathcal{E}_P^\star \subseteq \mathcal{C} \subseteq \sqrt{n} \mathcal{E}_P^\star. \]
+
+      \textbf{Conjecture} (\alert{Proved} for aligned axes or $m = 2$):
+      $\mathcal{C}$ intersection of $m$ ellipsoids (joint eccentricity $\kappa$, $l = \min(n, m)$):
+      \[
+        \mathcal{E}_P^\star \subseteq \mathcal{C}
+        \subseteq
+        \sqrt{\frac{l\kappa^2}{l-1+\kappa^2}} \mathcal{E}_P^\star.
+      \]
+      If $\kappa \to \infty$, then
+      \[
+        \mathcal{E}_P^\star \subseteq \mathcal{C}
+        \subseteq
+        \sqrt{\min(n, m)} \mathcal{E}_P^\star.
+      \]
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1]
+          \draw (0, 0) circle (1);
+          \draw (-1, -1) rectangle (1, 1);
+          \draw[dashed] (0, 0) circle (1.4142135623730951);
+          \draw[fill] (0, 0) circle (.02);
+      \end{tikzpicture}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+          \draw (0, 0) ellipse (1 and 2);
+          \draw (0, 0) ellipse (2 and 1);
+          \draw[<->] (0, 0) to (2, 0);
+          \node at (1.6, 0.15) {$\kappa$};
+          \draw (0, 0) circle (1);
+          \draw[dashed] (0, 0) circle (1.2649110640673518);
+          \draw[fill] (0, 0) circle (.02);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\setsection{\S4.2, \S5.1, \S5.2}
+
+\begin{frame}{Linear inclusions and switched systems}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Matrices $A_1, \ldots, A_m \in \R^{n \times n}$.
+      \begin{block}{Switched system}
+        \begin{equation*}
+          x_k = A_{\sigma_k} x_{k-1}, \quad \sigma_k \in [m]
+        \end{equation*}
+      \end{block}
+
+      \vspace{-1em}
+
+      \begin{equation*}
+        \begin{array}{rl}
+          \jsr = & \min_{\mathcal{S} \subseteq \R^{n}}\gamma\\
+          \text{subject to:} & \frac{A_\sigma}{\gamma} \mathcal{S} \subseteq \mathcal{S}, \quad i \in [m].
+        \end{array}
+      \end{equation*}
+
+      \vspace{1em}
+
+      $\ujsrsos$: for polyset $\mathcal{S}$ of degree $2d$.
+
+      \vspace{0.4em}
+
+      \begin{block}{Guarantee}
+        \vspace{-1em}
+        \begin{align*}
+          \jsr & \le \ujsrsos \le \alpha_{2d} \jsr\\
+          \alpha_2 & = \sqrt{\min(n, m)}\\
+          \alpha_{2d} & = \min\left({n+d-1 \choose d}, m\right)^{\frac{1}{2d}}.
+        \end{align*}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+
+      Labelled graph $G(V, E)$.
+      \begin{block}{Constrained switched system}
+        \begin{equation*}
+          x_k = A_{\sigma_k} x_{k-1},
+          (u_{k-1}, u_k, \sigma_k) \in E
+        \end{equation*}
+      \end{block}
+
+      \vspace{-2em}
+
+      \begin{equation*}
+        \begin{array}{rl}
+          \cjsr = & \min_{\mathcal{S}_u \subseteq \R^{n}, u \in V} \gamma\\
+          \text{subject to:} & \frac{A_\sigma}{\gamma} \mathcal{S}_u \subseteq \mathcal{S}_v, (u, v, \sigma) \in E.
+        \end{array}
+      \end{equation*}
+
+      $\jsrsos$: for polysets $\mathcal{S}_u$ of degree $2d$.
+
+      \begin{block}{Guarantee}
+        \vspace{-1em}
+        \[ \cjsr \le \jsrsos \le \alpha_{2d} \cjsr \]
+        \vspace{-2em}
+        \begin{align*}
+          \alpha_2 & = \sqrt{\min(n, 2^{h(E)})}\\
+          \alpha_{2d} & = \min\left({n+d-1 \choose d}, 2^{h(E)}\right)^{\frac{1}{2d}}.
+        \end{align*}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\setsection{\S5.3}
+
+\begin{frame}{Conic duality}
+  Infeasibility certificate $\mu_\sigma$ for polysets $\to$ invalid for generic set program.
+  Rounding procedure generates \alert{backward} switching sequence:
+
+  If \alert{atomic}, take $x_0$:
+  \[ \sigma_{k+1} = \argmax_\sigma \mu_\sigma(\{x_k/\norm{x_k}_2\}), \quad x_{k+1} = A_{\sigma_{k+1}} x_k \]
+
+  \begin{block}{Guarantee}
+    \[ \lim_{k \to \infty} \norm{A_{\sigma_1} \cdots A_{\sigma_k}}^{\frac{1}{k}} = \cjsr = \jsrsos. \]
+  \end{block}
+
+  Else, take $p_0(x)$ SOS:
+  \[ \sigma_{k+1} = \argmax_\sigma \expe{\mu_\sigma}{p_k(x)}, \quad p_{k+1}(x) = p_k(A_{\sigma_{k+1}} x) \]
+
+  \begin{block}{Guarantee}
+    \[ 2^{-\frac{h(E)}{2d}}\jsrsos \leq \lim_{k \to \infty} \norm{A_{\sigma_1} \cdots A_{\sigma_k}}^{\frac{1}{k}} \leq \cjsr \leq \jsrsos. \]
+  \end{block}
+\end{frame}
+
+\section{Geometric duality}
+
+\setsection{\S4.3}
+
+\begin{frame}{Geometric duality}
+  \begin{block}{Discrete-time}
+  \begin{align*}
+    C\mathcal{S}_i %
+    \subseteq E\mathcal{S}_j.
+  \end{align*}
+
+  \vspace{-1em}
+
+  Inequality with support function or polar:
+
+  \vspace{-1em}
+
+  \begin{align*}
+    \forall z \in \R^r, \quad \supfun{C^\Tr z}{\mathcal{S}_i} & \le \supfun{E^\Tr z}{\mathcal{S}_j}\\
+    \forall z \in \R^r, \quad \gauge(\polar{\mathcal{S}_i}, C^\Tr z) & \le \gauge(\polar{\mathcal{S}_j}, E^\Tr z).
+  \end{align*}
+  \end{block}
+
+  \begin{block}{Continuous time}
+  \[ \forall x \in \partial \mathcal{S}_i, C x \in E T_{\mathcal{S}_i}(x). \]
+
+  Inequality with support function or polar:
+  \begin{align*}
+    \forall z \in \mathbb{R}^r, \la z, C \grad \supfun{E^\Tr z}{\mathcal{S}_i} \ra & \le 0\\
+    \forall z \in \mathbb{R}^r, \la z, C \grad \gauge(\polar{\mathcal{S}_i}, E^\Tr z) \ra & \le 0.
+  \end{align*}
+  \end{block}
+\end{frame}
+
+\setsection{Example~40, Example~42}
+
+\begin{frame}{Examples}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+
+      \alert{Primal} space
+
+      \includegraphics[width=0.8\textwidth]{SimpleControlledInvariantEllipsoid.png}
+      \includegraphics[width=0.8\textwidth]{SimpleControlledInvariantPolySet.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+
+      \alert{Dual} space
+
+      \includegraphics[width=0.8\textwidth]{SimpleControlledInvariantPolarEllipsoid.png}
+      \includegraphics[width=0.8\textwidth]{SimpleControlledInvariantPolarPolySet.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\setsection{\S6}
+
+\begin{frame}{Controlled invariant set}
+  \begin{block}{Discrete-time}
+    \[ x_{k+1} = Ax_k + Bu_k. \]
+
+    Controlled invariance of $\mathcal{S}$:
+    \[ \forall x \in \mathcal{S}, \exists u, A x + B u \in \mathcal{S}. \]
+
+    \vspace{-1em}
+
+    Equivalent to
+    \[ \piB{} \mathcal{S} \subseteq \piB{} A \mathcal{S}. \]
+  \end{block}
+
+  \begin{block}{Continuous time}
+    \[ \dot{x}(t) = Ax(t) + Bu(t). \]
+
+    Controlled invariance of $\mathcal{S}$:
+    \[ \forall x \in \partial \mathcal{S}, \exists u, A x + B u \in T_\mathcal{S}(x). \]
+
+    \vspace{-1em}
+
+    Equivalent to
+    \[ \forall x \in \partial \mathcal{S}, \piB{} A x \in \piB{} T_\mathcal{S}(x). \]
+  \end{block}
+\end{frame}
+
+\section{Applications}
+
+\setsection{\S6.3}
+
+\begin{frame}{Model Predictive Control}
+  \begin{center}
+    \begin{tikzpicture}
+      \input{../../latex/Tikz/cruise_control.tex}
+      \draw[thick] (-1, 0) to (-1, 1);
+      \draw[thick,color=red] (-1, 1.3) circle (0.3);
+      \node at (-1, 1.3) {\scriptsize \bf 15.6};
+    \end{tikzpicture}
+
+    \includegraphics[width=0.45\textwidth]{CruiseControlSets_d_u.png}
+    ~
+    \includegraphics[width=0.45\textwidth]{CruiseControlSets_v0_u.png}
+  \end{center}
+\end{frame}
+
+\setsection{\S6.4}
+
+\begin{frame}{Stochastic Programming}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+  No relatively complete recourse:
+  \begin{itemize}
+    \item feasibility cuts or
+    \item penalization.
+  \end{itemize}
+  $\to$ Slow down Stochastic Dual Dynamic Programming.
+
+  Feasibility part of stochastic program $\to$ hybrid control algebraic system.
+
+  Controlled invariant set ensures relatively complete recourse.
+    \end{column}
+    \begin{column}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{reservoir.jpg}~%
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\setsection{\S7}
+
+\begin{frame}{Information Theory}
+  Invariant under inner- and self-adhesivity.
+  \begin{align*}
+    \ia{\Jis}{\Kis}{\Iis}(h) & = \{\, g \in \Es[n'] \mid \forall \Iis \subseteq \Lis \subseteq \Jis \cap \Kis, g_{\Lis} = h_{\Lis \cap \Jis} + h_{\Lis \cap \Kis} - h_{\Iis} \,\}, & \Iis & = \Jis \cap \Kis,\\
+    \sa{\Jis}{\Iis}(h) & = \{\, g \in \Es[n'] \mid \forall \Iis \subseteq \Lis \subseteq \Jis' \cap \Kis, g_{\Lis} = h_{\Lis \cap \Jis'} + h_{\Lis \cap \Kis} - h_{\Iis} \,\}, & \Iis & \subseteq \Jis,
+  \end{align*}
+
+  Generate feasibility cuts with Dual Dynamic Programming.
+
+  \includegraphics[width=0.33\textwidth]{tetra0pm.png}~%
+  \includegraphics[width=0.33\textwidth]{tetra0zy.png}~%
+  \includegraphics[trim=6cm 2cm 6cm 7cm,clip,width=0.33\textheight]{tetra0bound15789.png}
+
+\end{frame}
+
+
+\setsection{}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}
+    \item Set programs allow to model many important problems.
+    \item \alert{Guarantees} for templates can be developed for subclasses.
+    \item Infeasibility certificate for a template may be \alert{rounded}.
+    \item Geometric \alert{similarities} of different templates.
+    \item \alert{Geometric duality} enable reformulation in functional inequality.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{FinConjCounterEx.png}
+  \end{center}
+\end{frame}
+
+\end{document}

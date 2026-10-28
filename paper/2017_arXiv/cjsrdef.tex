@@ -1,0 +1,23 @@
+The definition of the JSR is generalized as follows for constrained systems.
+\begin{definition}[\cite{dai2012gel}]
+  \label{def:cjsr}
+  The \emph{constrained joint spectral radius} (CJSR) of
+  \defAG{}, denoted as $\cjsr$,
+  is
+  \begin{equation}
+    \label{eq:jsrtheo}
+    \limsup_{k \to \infty} \cjsrrk = \cjsr = \lim_{k \to \infty} \cjsrk
+  \end{equation}
+  where
+  \begin{equation}
+    \label{eq:cjsrrk}
+    \cjsrrk
+    = \max \big\{\, \jsrc : c \in \G_k, c \text{ is a cycle}\,\big\}, \quad \jsrc = [\rho(A_c)]^{1/k},
+  \end{equation}
+  and
+  \begin{equation}
+    \label{eq:cjsrk}
+    \cjsrk =
+    \max \big\{\, \|A_s\|^{1/k}\\: s \in \G_k \,\big\}.
+  \end{equation}
+\end{definition}

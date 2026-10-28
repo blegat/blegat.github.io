@@ -1,0 +1,34 @@
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.1cm,post length=0.1cm,segment length=6}]
+\tikzstyle{damper}=[thick,decoration={markings,
+  mark connection node=dmp,
+  mark=at position 0.5 with
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=10pt,minimum height=2pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-4pt)$) -- ($(dmp.north)+(0,4pt)$);
+  }
+}, decorate]
+\draw[thick] (0, 0) -- (2, 0) -- (2, 1) -- (0.5, 1) -- (0, 0.5) -- (0, 0);
+\draw [spring] (2, 0.8) -- (3, 0.8);
+\draw [damper] (2, 0.2) -- (3, 0.2);
+\draw[thick] (3, 0) rectangle (5, 1);
+\draw [spring] (5, 0.8) -- (6, 0.8);
+\draw [damper] (5, 0.2) -- (6, 0.2);
+\draw[thick] (6, 0) rectangle (8, 1);
+\draw[thick] (0.5, 0.1) circle (0.3);
+\fill[color=lightgray] (0.5, 0.1) circle (0.3);
+\draw[thick] (1.5, 0.1) circle (0.3);
+\fill[color=lightgray] (1.5, 0.1) circle (0.3);
+\draw[thick] (3.5, 0.1) circle (0.3);
+\fill[color=lightgray] (3.5, 0.1) circle (0.3);
+\draw[thick] (4.5, 0.1) circle (0.3);
+\fill[color=lightgray] (4.5, 0.1) circle (0.3);
+\draw[thick] (6.5, 0.1) circle (0.3);
+\fill[color=lightgray] (6.5, 0.1) circle (0.3);
+\draw[thick] (7.5, 0.1) circle (0.3);
+\fill[color=lightgray] (7.5, 0.1) circle (0.3);
+\node at (1, 0.5) {$v_0$};
+\node at (4, 0.5) {$v_1$};
+\node at (7, 0.5) {$v_2$};
+\node at (2.5, 1.1) {$d_1$};
+\node at (5.5, 1.1) {$d_2$};

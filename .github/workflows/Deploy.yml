@@ -4,8 +4,44 @@ on:
     branches:
       - main
       - master
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
+  documents:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install LaTeX and bibliography tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+          latexmk texlive-latex-extra texlive-fonts-extra texlive-science \
+          texlive-bibtex-extra biber ghostscript python3-pygments
+    - name: Compile public papers, slides, and posters
+      run: |
+        python3 scripts/build_documents.py
+        python3 scripts/check_document_links.py
+    - name: Save LaTeX logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: document-logs
+        path: |
+          _build/**/*.log
+          _build/**/*.blg
+    - name: Save compiled PDFs
+      uses: actions/upload-artifact@v4
+      with:
+        name: documents
+        path: _documents/
+        if-no-files-found: error
   build-and-deploy:
+    needs: documents
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -42,7 +78,13 @@ jobs:
             optimize()'
     - name: Remove slides from built site
       run: rm -rf __site/slides
+    - name: Download compiled PDFs
+      uses: actions/download-artifact@v4
+      with:
+        name: documents
+        path: __site
     - name: Build and Deploy
+      if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

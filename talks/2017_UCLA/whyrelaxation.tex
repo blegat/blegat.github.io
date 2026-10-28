@@ -1,0 +1,15 @@
+\begin{frame}{Why is it a relaxation ?}
+  \Wider{
+      The Semidefinite Programming constraints on the trunctated moments of $\mu_\sigma$ are necessary for the existence of a measure with those moments,
+  and \alert{any} value of the moments of higher degree (not necessarily 0).
+
+  In the Common Quadratic Lyapunov Function case, i.e. $2d = 2$, those conditions are necessary and sufficient.
+  \begin{itemize}
+      \item For every truncated moments, we can find a $\mu_\sigma$ that has these moments.
+      \item And there exists a slack variable $\mu_{\mathrm{slack}}$ such that
+          \[ \sum_{\sigma=1}^m \Exp_{\mu_\sigma}[p(A_\sigma x)] - \gamlb^{2d} \sum_{\sigma = 1}^m \Exp_{\mu_\sigma}[p(x)] = \Exp_{\mu_{\mathrm{slack}}}, \forall p(x) \in \Sosh, \]
+          so
+          \[ \sum_{\sigma=1}^m \mathcal{A}_\sigma \mu_\sigma - \gamlb^{2d} \sum_{\sigma = 1}^m \mu_\sigma \only<1>{=}\only<2>{\text{ has the same trunctated moments than }} \mu_{\mathrm{slack}} \]
+  \end{itemize}
+  }
+\end{frame}

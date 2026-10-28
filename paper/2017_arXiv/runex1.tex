@@ -1,0 +1,62 @@
+
+\begin{myexem}[Running example]%
+  \label{exem:run1}
+  We borrow the example of \cite[\Sect4]{philippe2016stability}.
+  The set of matrices $\A$ is composed of the following four matrices
+  \begin{align*}
+    A_1 & = A+B
+    \begin{pmatrix}
+      k_1 & k_2
+    \end{pmatrix},&
+    A_2 & = A+B
+    \begin{pmatrix}
+      0 & k_2
+    \end{pmatrix},\\
+    A_3 & = A+B
+    \begin{pmatrix}
+      k_1 & 0
+    \end{pmatrix},&
+    A_4 & = A.
+  \end{align*}
+  where $k_1 = -0.49$, $k_2 = 0.27$,
+  \[
+    A =
+    \begin{pmatrix}
+      0.94 & 0.56\\
+      0.14 & 0.46
+    \end{pmatrix} \text{ and }
+    B =
+    \begin{pmatrix}
+      0\\
+      1
+    \end{pmatrix}.
+  \]
+
+  The corresponding automaton is represented by Figure~\ref{fig:run}.
+
+  \begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[x=40,y=18]
+       \Vertex{1}
+       \NO[unit=4](1){2}
+       \SOEA[unit=2](2){3}
+       \EA[unit=2](3){4}
+       \tikzset{EdgeStyle/.style = {->}}
+       \tikzset{LoopStyle/.style = {->}}
+       \tikzset{EdgeStyle/.append style = {bend right=18}}
+       \Edge[label=1](1)(3)
+       \Edge[label=3](1)(2)
+       \Edge[label=2](2)(1)
+       \Edge[label=1](2)(3)
+       \Edge[label=2](3)(1)
+       \Edge[label=3](3)(2)
+       \Edge[label=4](3)(4)
+       \draw[thick,->] (3) to [out=115,in=65,looseness=10] node [midway, fill=white] {1} (3);
+       \Edge[label=1](4)(3)
+     \end{tikzpicture}
+     \caption{Automaton for the running example.
+     The numbers on the \arcs{} are their respective labels.
+     }
+     \label{fig:run}
+  \end{figure}
+\end{myexem}

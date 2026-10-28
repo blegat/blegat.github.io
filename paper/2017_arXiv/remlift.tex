@@ -1,0 +1,15 @@
+\begin{myrem}
+  \lemref{incp} shows that the $p$-radius provides an upper and lower bound on the CJSR.
+  It is known that the $2d$-radius can be computed
+  either by computing a spectral radius~\cite{blondel2005computationally}
+  or by solving a linear program~\cite{parrilo2008approximation}
+  (see \cite{ogura2016efficient} for computation algorithms when $p$ is not an even integer).
+  One needs to do either of these two operations on
+  either the sum of the $d$th Kronecker power of the veronese 2-lift of the matrices
+  or the sum of the veronese $2d$-lift of the matrices.
+  However, the size of the matrices obtained by taking the $d$th Kronecker power grows rapidly
+  and the veronese lifting needs to compute permanents which is computationally very demanding.
+  Usually, for the same $d$, \progref{primal} gives approximations of the CJSR with a much higher accuracy at the cost of solving an SDP on smaller matrices.
+  While solving an SDP is more demanding than computing a spectral radius or solving a linear program, since the matrices are smaller than with the Kronecker powering
+  and we do not need to compute permanents, this method is actually more scalable.
+\end{myrem}

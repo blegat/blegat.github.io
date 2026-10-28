@@ -1,0 +1,39 @@
+Deciding whether a multivariate polynomial of degree $2d \geq 4$ is nonnegative is known to be NP-hard.
+However a sufficient condition for a polynomial to be nonnegative is easy to check.
+We say that a polynomial is a \emph{sum of squares} (SOS) if there exist
+polynomials $q_1, \ldots, q_M$ such that
+\[ p(x) = \sum_{k=1}^Mq_k^2(x). \]
+If a polynomial is SOS, then it is obviously nonnegative.
+
+It is well known that if $p(x)$ is an homogeneous polynomial of degree
+$2d$ then each $q_k(x)$ must be an homogeneous polynomial of degree $d$;
+this can be shown easily using the Newton polytope of $p(x)$ and
+\cite[Theorem~1]{reznick1978extremal}.  Let $x^{[d]}$ represent a
+basis of the homogeneous polynomials of degree $d$.  We can check
+whether a polynomial is SOS using semidefinite programming thanks to
+the following theorem.
+\begin{theorem}[\cite{choi1995sums,nesterov2000squared,parrilo2000structured,parrilo2003semidefinite,shor1987class}]
+  \label{theo:sos}
+  A homogeneous multivariate polynomial $p(x)$ of degree $2d$ is a sum
+  of squares if and only if
+  \[ p(x) = (x^{[d]})^\Tr Q x^{[d]} \]
+  where $Q$ is a symmetric positive semidefinite matrix.
+\end{theorem}
+
+From the exact arithmetic viewpoint, the basis $x^{[d]}$ chosen in \theoref{sos} does
+not affect whether $p(x)$ is SOS or not.  A specific choice of basis
+may however improve the numerical behaviour of the corresponding
+semidefinite program.
+
+We denote the set of homogeneous polynomials of degree $2d$ as
+$\Rh[x]$, the cone of homogeneous SOS polynomials of degree $2d$ as
+$\Sosh$ and the dual of $\Sosh$ as $\Soshd$.
+
+A common interpretation of the dual space $\Rhd$ of linear functionals on homogeneous polynomials of degree $2d$ is the space of moments of momonials of degree $2d$.
+If $p(x) = a^\Tr x^{[d]}$ and $m$ is the vector of moments of $x^{[d]}$ of a measure $\mu$ then
+\[ \la m, a \ra = \int p(x) \dif \mu = \la \mu, p \ra. \]
+As a sum of squares polynomial is nonnegative,
+this integral is nonnegative for any measure $\mu$.
+Therefore, given a moment vector $m$, a necessary condition for a measure to exist with these moments is that $\la m, a \ra \geq 0$ for any vector of coefficients $a$ of a sum of squares polynomial.
+That is, $\Soshd$ is a superset of the set of moments of measures.
+The members of $\Soshd$ are often called \emph{pseudo-measures} and denoted $\pmu$; see~\cite{barak2012hypercontractivity}.

@@ -1,0 +1,278 @@
+We extend the definition of the $p$-radius to the constrained case.
+\begin{definition}[Constrained $p$-radius]
+  The \emph{constrained $p$-radius} of
+  \defAGe{}, denoted as $\cpr$,
+  is
+  \begin{equation*}
+    \cpr =
+    \lim_{k \to \infty} \left[|\Arcs_k|^{-1} \sum_{v \in V} \cprkv{k}{v}\right]^{\frac{1}{pk}}
+  \end{equation*}
+  where
+  \begin{align*}
+    \cprkv{k}{v} & =
+    \sum_{s \in \Arcsout_k(v)} \|A_s\|^p.
+  \end{align*}
+  Thus, the CJSR can be defined as the constrained $p$-radius for $p = \infty$.
+\end{definition}
+
+
+\begin{myrem}
+  \label{rem:path}
+  Since $\G$ is assumed to be strongly connected,
+  we could give the following equivalent definition
+  \begin{equation}
+    \label{eq:cprk2}
+    \cpr = \lim_{k \to \infty}
+    \left[\max_{v \in \Nodes} [\dout_k(v)]^{-1} \cprkv{k}{v}\right]^{\frac{1}{pk}}
+  \end{equation}
+  or the same definition with ``$\din_k(v)$'' instead of ``$\dout_k(v)$'' and ``$s \in \Arcsin_k(v)$'' instead of ``$s \in \Arcsout_k(v)$'' in the definition of $\cprkv{k}{v}$.
+
+\end{myrem}
+
+By the equivalence of norms, the definition of the $p$-radius does not depend on the norm used.
+
+We can show that the $p$-radius is well defined using the following classical result, known as \emph{Fekete's Lemma} \cite{fekete1923verteilung}.
+\begin{lemma}
+  \label{lem:fekete}
+  Let $\{a_n\} : n \geq 1$ be a sequence of real numbers such that
+  \[ a_{m + n} \leq a_m + a_n. \]
+  Then the limit
+  \[ \lim_{n \to \infty} \frac{a_n}{n} \]
+  exists and is equal to $\inf\left\{\frac{a_n}{n}\right\}$.
+\end{lemma}
+\begin{lemma}
+  \label{lem:feketemax}
+  Consider \defAGe{} and
+  the sequence $(a_k)_k = \max_{v \in V} \cprkv{k}{v}$ with a submultiplicative norm.
+  The sequence $\sqrt[k]{a_k}$ converges when $k \to \infty$.
+  Moreover,
+  \[ \lim_{k \to \infty} \sqrt[k]{a_k} = \inf \{\sqrt[k]{a_k}\}. \]
+
+  \begin{proof}
+    By submultiplicativity, for any $v \in V$, $k$ and any $k_1,k_2 \geq 0$ such that $k_1 + k_2 = k$,
+    \begin{align*}
+      \cprkv{k}{v}
+      & = \sum_{u \in V} \sum_{s_1 \in \Arcs_{k_1}(v,u),s_2\in \Arcsout_{k_2}(u)} \|A_{s_2}A_{s_1}\|^p\\
+      & \leq \sum_{u \in V} \sum_{s_1 \in \Arcs_{k_1}(v,u),s_2\in \Arcsout_{k_2}(u)} \|A_{s_2}\|^p\|A_{s_1}\|^p\\
+      & = \sum_{u \in V} \cprkv{k_2}{u} \sum_{s_1 \in \Arcsin_{k_1}(u),s_1(1)=v} \|A_{s_1}\|^p\\
+      & \leq a_{k_2} \sum_{u \in V} \sum_{s_1 \in \Arcsin_{k_1}(u),s_1(1)=v} \|A_{s_1}\|^p\\
+      & \leq \cprkv{k_1}{v} a_{k_2}
+    \end{align*}
+    hence, in particular, $a_k \leq a_{k_1} a_{k_2}$ and $\log a_k \leq \log a_{k_1} + \log a_{k_2}$.
+    We can conclude by \lemref{fekete}.
+  \end{proof}
+\end{lemma}
+
+\begin{corollary}
+  \label{coro:summax}
+  The following holds
+  \[ \lim_{k \to \infty} \left[\max_{v \in V} \cprkv{k}{v}\right]^{\frac{1}{k}} = \lim_{k \to \infty} \left[\sum_{v \in V} \cprkv{k}{v}\right]^{\frac{1}{k}} \]
+  and, in particular, the limit on the right-hand side converges.
+
+  \begin{proof}
+    For a finite set of nonnegative numbers, their maximum is always between their average and their sum:
+    \[ \frac{1}{|V|} \sum_{v \in V} \cprkv{k}{v} \leq \max_{v \in V} \cprkv{k}{v} \leq \sum_{v \in V} \cprkv{k}{v} \]
+    or equivalently
+    \[ \max_{v \in V} \cprkv{k}{v} \leq \sum_{v \in V} \cprkv{k}{v} \leq |V| \max_{v \in V} \cprkv{k}{v}. \]
+    By \lemref{feketemax}, $\max_{v \in V} \cprkv{k}{v}$ converges for $k \to \infty$ hence $\sum_{v \in V} \cprkv{k}{v}$ converges too.
+    Taking the $k$th root and the limit $k \to \infty$ gives the identity.
+  \end{proof}
+\end{corollary}
+
+\begin{lemma}
+  \label{lem:rhoAG}
+  Consider \defAG{}.
+  The following relation holds
+  \[
+    \cpr = \rho(A(\G))^{-\frac{1}{p}} \lim_{k \to \infty}
+    \left[
+      \sum_{s \in \Arcs_k} \|A_s\|^p
+    \right]^{\frac{1}{pk}}.
+  \]
+  \begin{proof}
+    By \cororef{summax},
+    \[
+      \lim_{k \to \infty}
+      \left[
+        \sum_{s \in \Arcs_k} \|A_s\|^p
+      \right]^{\frac{1}{pk}}
+    \]
+    converges.
+    It remains to show that $\lim_{k \to \infty} |\Arcs_k|^{-\frac{1}{pk}}$ converges to $\rho(A(\G))^{-\frac{1}{p}}$.
+
+    Consider the matrix norm $\|\cdot\|_\infty$ on $\R^{n \times n}$ induced by the infinity norm on $\R^n$.
+    It is well known that
+    \[ \|A\|_{\infty} = \max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}| \]
+    where $a_{ij}$ is $(i,j)$ entry of $A$.
+    It is also well known that the $(u,v)$ entry of $A(\G)^k$ gives                        %
+    the number of paths of length $k$ starting at node $u$ and ending at node $v$ in $\G$. %
+    Hence $\|A(\G)^k\|_\infty = \mdout_k(\G)$.
+    By Gelfand's formula,
+    \begin{equation}
+      \label{eq:rhoAG}
+      \rho(A(\G)) = \lim_{k \to \infty} \|A(\G)^k\|_\infty^{1/k}.
+    \end{equation}
+    Since $|E_k|/|V| \leq \mdout_k(\G) \leq |E_k|$,
+    and $|V|^{1/k} \to 1$ as $k \to \infty$, we are done.
+  \end{proof}
+\end{lemma}
+
+
+
+\begin{proof}[Proof of \lemref{incp}]
+  The Lemma is a consequence of the inequality between ordinary means
+  and the inequality between the $p$-norms ($p \geq 1$)
+  \[ \|x\|_p = \Big(\sum_{i=1}^n |x_i|^p\Big)^{\frac{1}{p}}. \]
+\end{proof}
+
+\begin{lemma}[\cite{hardy1952inequalities}]
+  For any nonnegative integers $a_1, \ldots, a_n$ and positive
+  real numbers $p \leq q$,
+  \[
+    \left(\frac{1}{n}\sum_{i=1}^n a_i^p\right)^{\frac{1}{p}}
+    \leq
+    \left(\frac{1}{n}\sum_{i=1}^n a_i^q\right)^{\frac{1}{q}}
+    \leq \max\{\, a_i \mid i = 1, \ldots, n\,\}.
+  \]
+\end{lemma}
+
+\begin{lemma}
+  For any real numbers $1 \leq p \leq q$,
+  \[
+    \|x\|_\infty \leq \|x\|_q \leq \|x\|_p.
+  \]
+\end{lemma}
+
+
+Let $x^{[d]}$ denote the \emph{scaled monomial} basis.
+The elements of this basis are
+\[ \frac{d!}{\alpha_1!\alpha_2!\cdots\alpha_n!} x_1^{\alpha_1} \cdots x_n^{\alpha_n}. \]
+for each \ktups{n} of nonnegative integers $\alpha$ such that
+$\alpha_1 + \cdots + \alpha_n = d$.
+For this basis, $\|x^{[d]}\|_2 = \|x\|_2^d$ where $\|\cdot\|_2$ is the Euclidean norm.
+
+
+For any matrix $A \in \R^{n \times n}$, the map $x \mapsto x^{[d]}$ induces an
+associated map $A^{[d]} \in \R^{N_d \times N_d}$ which is the unique
+matrix that satisfies $(Ax)^{[d]} = A^{[d]}x^{[d]}$.
+We also denote $\A^{[d]} \eqdef \{A_1^{[d]}, \ldots, A_m^{[d]}\}$.
+
+Since $\|Ax\|^{[d]} = \|A\|^{[d]}\|x\|^{[d]}$, we have the following
+Lemma that is known in the unconstrained case or for the contrained
+case with $p=\infty$.
+\begin{lemma}
+  \label{lem:pp}
+  Consider \defAG{}, then
+  \[ \cpr[p] = \rho_1(\G,\A^{[p]})^{\frac{1}{p}} \]
+  and
+  \[ \cjsr = \rho(\G,\A^{[p]})^{\frac{1}{p}}. \]
+\end{lemma}
+
+We say that a cone $\Kset$ is \emph{proper} if it is closed, solid, convex and pointed.
+We say that a matrix $A$ \emph{leaves a set $S$ invariant} if $AS \subseteq S$ and
+we say that a set of matrices $\A$ \emph{leaves a proper cone invariant} if there
+exists a proper cone $\Kset$ such that each matrix of $\A$ leaves $\Kset$ invariant.
+
+\begin{lemma}[{\cite{blondel2005computationally,protasov1997generalized}}]
+  \label{lem:unconstrainedinv}
+  If a set of $m$ matrices leaves a proper cone $\Kset$ invariant, then
+  \begin{align*}
+    \rho_1(\A)
+    & = \frac{1}{m}\lim_{k\to\infty} \left\|\sum_{s \in [m]^k}A_s\right\|^{\frac{1}{k}}\\
+    & = \frac{1}{m}\rho\left(\sum_{A \in \A}A\right).
+  \end{align*}
+\end{lemma}
+
+
+We deduce the following corollary of \lemref{pp} and
+\lemref{unconstrainedinv}.
+\begin{corollary}
+  If $\A^{[p]}$ leaves a proper cone $\Kset$ invariant, then
+  \begin{align*}
+    \rho_p(\A)
+    & = \frac{1}{m^{\frac{1}{p}}}\lim_{k\to\infty} \left\|\sum_{s \in [m]^k}A_s^{[p]}\right\|^{\frac{1}{pk}}\\
+    & = \frac{1}{m^{\frac{1}{p}}}\rho\left(\sum_{A \in \A}A^{[p]}\right)^{\frac{1}{p}}.
+  \end{align*}
+\end{corollary}
+
+
+We generalize it to the constrained case using the lifting procedure
+introduced independantly by Kozyakin~\cite{kozyakin2014berger} and Wang~\cite{wang2014stability}.
+
+\begin{lemma}
+  \label{lem:koz}
+  Consider \defAGe{}.
+  The following identity holds for any $p \in [1, +\infty]$
+  \[
+    \sum_{s \in \Arcs_k} \|A_s\|^p =
+    \sum_{s \in \Arcs^k} [\|A_s'\|']^p
+  \]
+  where
+  \[ \A' = \{\, A'_{uv\sigma} = (e_ve_u^\Tr) \kron A_\sigma \mid (u,v,\sigma) \in E \,\}. \]
+  \begin{proof}
+    Consider a vector norm $\|\cdot\|$ of $\R^n$ and
+    the vector norm $\|\cdot\|'$ of $\R^{n|V|}$ such that
+    \[ \|e_1 \kron x_1 + \cdots + e_{|V|} \kron x_{|V|}\| = \|x_1\| + \cdots + \|x_{|V|}\|. \]
+    Consider the induced matrix norms $\|\cdot\|$ and $\|\cdot\|'$.
+    It is easy to see that for any nodes $u,v \in V$ and any matrix $B \in \R^{n \times n}$,
+    $\|(e_ve_u^\Tr) \kron B\|' = \|B\|$.
+    In particular, given a path $s \in \Arcs_k$,
+    \begin{align*}
+      \|A_s'\|' & = \left\|\prod_{i=1}^k(e_{s(i+1)}e_i^\Tr) \kron A_{s[i]}\right\|'\\
+      & = \|(e_{s(k+1)}e_{s(1)}^\Tr) \kron A_s\|' = \|A_s\|
+    \end{align*}
+    and given $s \notin \Arcs_k$, $\|A_s'\| = 0$.
+  \end{proof}
+\end{lemma}
+
+It is easy to see that if $\A$ leaves the proper cone $\Kset$ invariant then
+the set of matrices $\A'$ of \lemref{koz} leaves the proper cone $\Kset^{|\Nodes|}$ invariant.
+
+\begin{lemma}
+  \label{lem:constrainedinv}
+  Consider \defAGe{}.
+  If $\A$ leaves a proper cone invariant, then
+  \begin{align*}
+    \cpr[1]
+    & = \frac{1}{[\rho(A(G))]^{\frac{1}{p}}}\lim_{k\to\infty} \left\|\sum_{s \in \Arcs_k}(e_{s(k+1)}e_{s(1)}^\Tr) \kron A_s\right\|^{\frac{1}{k}}\\
+    & = \frac{1}{[\rho(A(G))]^{\frac{1}{p}}}\rho\left(\sum_{(u,v,\sigma) \in E}(e_ve_u^\Tr) \kron A_\sigma\right).
+  \end{align*}
+  \begin{proof}
+    Combine \lemref{rhoAG}, \lemref{koz} and \lemref{unconstrainedinv}.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}
+  \label{theo:norminout}
+  Consider \defAG{}.
+  If $\A^{[p]}$ leaves a proper cone invariant,
+  the following identities hold
+  \begin{align*}
+    \cpr
+    & = \frac{1}{[\rho(A(G))]^{\frac{1}{p}}}\lim_{k\to\infty} \left\|\sum_{s \in \Arcs_k}(e_{s(k+1)}e_{s(1)}^\Tr) \kron A_s^{[p]}\right\|^{\frac{1}{pk}}\\
+    & = \frac{1}{[\rho(A(G))]^{\frac{1}{p}}}\rho\left(\sum_{(u,v,\sigma) \in E}(e_ve_u^\Tr) \kron A_\sigma^{[p]}\right)^{\frac{1}{p}}.
+  \end{align*}
+\end{theorem}
+
+
+Theorem~\ref{theo:norminout} shows that when there is an invariant proper cone,
+$\cpr$ is as easy to obtain as computing a spectral radius.
+
+It turns out that if $p$ is even then there exists an invariant proper cone.
+\begin{lemma}
+  Consider \defAG{}.
+  For any positive integer $d$,
+  $\A^{[2d]}$ leaves an invariant proper cone.
+  Moreover this cones is the cone of SOS polynomials in the
+  scaled monomial basis.
+  \begin{proof}
+    Consider an homogeneous SOS polynomial $p(x)$ of degree $2d$ and
+    its coordinates $p$ in the scaled monomial basis. That is,
+    $p(x) = \la p,x^{[2d]}\ra$. For any matrix $A$, we have
+    \[ \la A^{[2d]}p, x^{[2d]} \ra = \la p, (A^{[2d]})^\Tr x^{[2d]} \ra =
+    \la p, (A^\Tr x)^{[2d]} \ra = p(A^\Tr x). \]
+    Therefore if $p$ is the coordinate vector of an SOS polynomial
+    then $A^{[2d]}p$ is also the coordinate vector of an SOS
+    polynomial.
+  \end{proof}
+\end{lemma}

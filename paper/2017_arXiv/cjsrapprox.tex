@@ -1,0 +1,64 @@
+\subsection{CJSR Approximation via SOS}
+\label{sec:sos}
+
+The $2d$th root of homogeneous polynomials of degree $2d$ can be used as Lyapunov function.
+\begin{proposition}
+  \label{prop:pos}
+  Consider \defAGe{}.
+  Suppose that there exist $|\Nodes|$ strictly positive homogeneous polynomials $p_v(x)$ of degree $2d$
+  such that
+  \[ p_{v}(A_\sigma x) \leq \gamub^{2d}p_{u}(x) \]
+  holds for all \arc{} $(u,v,\sigma) \in \Arcs$.
+  Then $\cjsr \leq \gamub$.
+  \begin{proof}
+    Define $f_v(x) = [p_v(x)]^{\frac{1}{2d}}$ and use \theoref{stabcert}.
+  \end{proof}
+\end{proposition}
+
+We relax the positivity condition of \propref{pos} by the more tractable sum of squares (SOS) condition and
+define $\jsrsos$ as the solution of the following SOS restriction of \progref{primalinf}.
+\begin{myprog}[Primal]
+  \label{prog:primal}
+  \begin{align}
+    \notag
+    \inf_{p_v(x) \in \Rh[x],\gamub \in \R} \gamub\\
+    \notag
+    \gamub^{2d} p_u(x) - p_v(A_\sigma x) & \text{ is SOS}, \quad \forall (u, v, \sigma) \in \Arcs,\\
+    \label{eq:soscons1}
+    p_v(x) & \text{ is SOS}, \quad \forall v \in \Nodes,\\
+    \label{eq:soscons3}
+    p_v(x) & \text{ is strictly positive}, \quad \forall v \in \Nodes,\\
+    \notag
+    \sum_{v \in V} \int_{\mathbb{S}^{n-1}} p_v(x) \dif x & = 1.
+  \end{align}
+\end{myprog}
+
+\begin{myrem}
+  In practice we can replace \eqref{eq:soscons1} and \eqref{eq:soscons3} by ``$p_v(x) - \epsilon\|x\|_2^{2d}$ is SOS''
+  for any $\epsilon > 0$.
+  This constrains $p_v(x)$ to be in the interior of the SOS cone,
+  which is sufficient for $p_v(x)$ to be strictly positive.
+  The bounds given in \Sect\ref{sec:quality} are valid
+  if $p_v(x)$ is in the interior of the SOS cone.
+\end{myrem}
+
+By \propref{pos},
+a feasible solution of Program~\ref{prog:primal} gives an upper bound for $\cjsr$,
+and thus, for any positive degree $2d$,
+\begin{equation}
+  \label{eq:upperbound}
+  \cjsr \leq \jsrsos.
+\end{equation}
+
+
+\begin{myexem}
+  \label{exem:simple1}
+  Consider the unconstrained system \cite[Example~2.1]{ahmadi2012joint} with $m=3$:
+  \[ \A = \{ A_1 = e_1e_2^\Tr , A_2 = e_2e_3^\Tr , A_3 = e_3e_1^\Tr  \} \]
+  where $e_i$ denotes the $i$th canonical basis vector.
+
+  One can verify that for any $d$, a solution to Program~\ref{prog:primal} is given by
+  \[ (p(x), \gamma) = (x_1^{2d} + x_2^{2d} + x_3^{2d}, 1). \]
+\end{myexem}
+
+\input{runex2}

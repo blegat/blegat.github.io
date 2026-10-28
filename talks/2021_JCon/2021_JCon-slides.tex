@@ -1,0 +1,260 @@
+\documentclass{beamer}
+\usetheme[block=fill]{metropolis}
+\usepackage{graphicx}
+\graphicspath{{../../latex/images/}}
+\usepackage{boolexpr}
+\usepackage{kpfonts}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows,
+    shapes,
+}
+\tikzset{
+    ->,
+    my_node/.style={
+        minimum height=1.5cm,
+        minimum width=3cm,
+        draw,
+    },
+    mpb_node/.style={
+        minimum height=3cm,
+        minimum width=12cm,
+        draw,
+    },
+}
+
+\usepackage[normalem]{ulem}
+
+\usepackage[labelformat=empty]{caption}
+\usepackage[official]{eurosym}
+
+\usepackage{minted}
+
+\usepackage{siunitx}
+
+\usepackage[math]{iwona}
+\usepackage{scalerel}
+\def\lVert{\mid\!\mid}
+\def\rVert{\mid\!\mid}
+
+\usepackage[normalem]{ulem}
+\usepackage{mathtools}
+
+\usepackage{../../latex/custom}
+\usepackage{amsfonts}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+
+\usepackage{framed}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\aeur}{\alpha_\text{\euro}}
+\newcommand{\adol}{\alpha_\$}
+\newcommand{\apou}{\alpha_\text{\pounds}}
+
+\title{MutableArithmetics}
+\subtitle{An API for mutable operations}
+\institute{%
+  \hfill\includegraphics[width=0.3\textwidth]{JuliaCon.png}%
+}
+\date{July, 2021}
+\author{Beno\^it~Legat}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+\begin{document}
+  \maketitle
+
+\begin{frame}[fragile]
+  \frametitle{Mutable sum: \texttt{BigInt}}
+  Default implementation (simplified):
+\begin{minted}{Julia}
+function sum(x)
+    acc = zero(eltype(x))
+    for el in x
+        acc = acc + el
+    end
+    return acc
+end
+\end{minted}
+\begin{minted}{Julia}
+x = big.([2, 0, 2, 1])
+\end{minted}
+  What is \texttt{sum(x)} doing ?
+
+\begin{uncoverenv}<2>
+  \sout{\texttt{acc = acc + el}} $\to$
+  \texttt{Base.GMP.MPZ.add!(acc, el)}
+\end{uncoverenv}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Mutable sum: symbolic}
+  Let \texttt{x} be a vector of $n$ variables/symbols (e.g. Symbolics.jl, MultivariatePolynomials.jl, JuMP.jl or MathOptInterface.jl)
+\begin{minted}{Julia}
+struct Term{T}
+    coef::T
+    sym::Sym
+end
+struct Sum{T}
+    terms::Vector{Term{T}}
+end
+Base.:+(s::Sum, t::Term) = Sum(push!(copy(s.terms), t))
+\end{minted}
+  Time complexity of \texttt{sum(x)} ? \only<2>{$\bigoh(n^2) = \bigoh(1 + 2 + \cdots + n)$}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Mutable sum: first solution}
+\begin{minted}{Julia}
+function sum(x)
+    acc = zero(eltype(x))
+    for el in x
+        acc = MA.add!(acc, el)
+    end
+    return acc
+end
+MA.add!(a, b) = a + b # default fallback
+MA.add!(a::BigInt, b::BigInt) = Base.GMP.MPZ.add!(a, b)
+function MA.add!(s::Sum, t::Term)
+    push!(s.terms, t)
+    return s
+end
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Problem with first solution}
+\begin{minted}{Julia}
+struct Rational{T}
+    num::T
+    den::T
+end
+function MA.mul!(a::Rational, b::Rational)
+    if # T is mutable
+        MA.mul!(a.num, b.num)
+        MA.mul!(a.den, b.den)
+        # ... simplify with gcd ...
+        return a
+    else
+        return a * b
+    end
+end
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Explicit mutability}
+\begin{minted}{Julia}
+MA.mul!(a, b) = MA.operate!(*, a, b)
+function MA.operate!(op, a::A, b::B) where {A, B}
+    if MA.mutability(A, op, A, B) isa MA.IsMutable
+        return MA.mutable_operate!(op, a, b)
+    else
+        return op(a, b)
+    end
+end
+function MA.operate_to!(out::O, op, a::A, b::B) where ...
+    if MA.mutability(O, op, A, B) isa MA.IsMutable
+        return MA.mutable_operate_to!(out, op, a, b)
+    else
+        return op(a, b)
+    end
+end
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Mutable API}
+\texttt{MA.operate!}/\texttt{MA.operate\_to!} \alert{may} mutate or not first argument.
+Returned value is \alert{always} the result.
+
+\texttt{MA.mutable\_operate!}/\texttt{MA.mutable\_operate\_to!} mutates or \alert{errors} (default).
+First argument is \alert{always} the result.
+
+  \begin{block}{Axiom of mutable arithmetics}
+\begin{minted}{Julia}
+function mutability(T::Type, op, args...)
+    if mutability(T) isa IsMutable &&
+        promote_operation(op, args...) == T
+        return IsMutable()
+    else
+        return NotMutable()
+    end
+end
+\end{minted}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Implementing the API}
+  \texttt{mutability(T)} defaults to \texttt{NotMutable()}.
+  Hence, by default,
+  \texttt{MA.operate!(op, args...)} redirects to \texttt{op(args...)}.
+
+  \begin{block}{Flipping the switch}
+  After implementing \texttt{mutability(::Type{T}) = IsMutable()},
+  unimplemented \texttt{mutable\_operate!}/\texttt{mutable\_operate\_to!}
+  gives helpful errors.
+
+  \alert{No silent} fallback to inefficient \texttt{op(args...)}!
+
+  \texttt{promote\_operation} falls back to \texttt{typeof(op(zero.(args)...))}.
+
+  \end{block}
+  More \alert{features} for the user with an API \alert{easier} to implement.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Rewriting macro}
+  \begin{minted}{Julia}
+MA.@rewrite(x + y * z - a * b * c) # rewritten into:
+v1 = MA.copy_if_mutable(x)
+v2 = MA.operate!(MA.add_mul, v1, y, z)
+v3 = MA.operate!(MA.sub_mul, v2, a, b, c)
+  \end{minted}
+  Used in JuMP macros, critical for modeling performance.
+  \begin{minted}{Julia}
+MA.add_mul(x, args...) = x + *(args...)
+MA.sub_mul(x, args...) = x - *(args...)
+function MA.copy_if_mutable(x)
+    if MA.mutability(x) isa MA.IsMutable
+        return MA.mutable_copy(x)
+    end
+    return x
+end
+  \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Conclusion}
+  \begin{block}{Current implementations}
+  \texttt{BigInt}, \texttt{BigFloat}, \texttt{Rational},
+  \texttt{Polynomial}, \texttt{MultivariatePolynomials},
+  \texttt{MathOptInterface}, \texttt{JuMP}.
+  \end{block}
+  \begin{minted}{Julia}
+p(d) = Polynomial(big.(1:d))
+A = [p(d) for i in 1:m, j in 1:n]
+b = [p(d) for i in 1:n]
+A * b # 133 ms (2.03 M allocs: 38.012 MiB)
+MA.@rewrite(A * b) # rewritten into:
+MA.operate(*, A, b) # 8.54 ms (3.64 k allocs: 69.812 KiB)
+MA.operate!(MA.add_mul, c, A, b) # (3 allocs: 48 bytes)
+  \end{minted}
+  \begin{block}{\texttt{AbstractMutable}}
+    Dispatch \texttt{sum}, \texttt{dot} and array product to \texttt{MA.operate}.
+  \end{block}
+\end{frame}
+
+\end{document}

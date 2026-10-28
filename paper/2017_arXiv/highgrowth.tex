@@ -1,0 +1,58 @@
+\section{Finding high-growth sequences}
+\label{sec:dualalgo}
+In \secref{sos}, we introduced the SOS restriction of \progref{primalinf} with \progref{primal}.
+In this section, we introduce \progref{dual}, the moment relaxation of \progref{dualinf}.
+It turns out that \progref{primal} and \progref{dual} are dual to each other.
+Indeed, the proof of \lemref{duality} can be translated verbatim in order to prove that \progref{dual} is the dual of \progref{primal}.
+
+
+\subsection{Dual SOS program}
+\label{sec:dual}
+
+
+
+
+\input{dual}
+
+
+
+
+It is important to note that a solution of \progref{dual} is not necessarily a solution of \progref{dualinf}.
+First $\pmu_{uv\sigma}$ may not be a measure even if it belongs to $\Soshd$ as discussed in \secref{sosprog}.
+Second, the left-hand side of \eqref{eq:dual1} may also not be a measure.
+For this second concern, it helps to be more explicit.
+Suppose for instance that we are in the quadratic case, i.e. $d = 1$.
+In that case, if $\pmu \in \Soshd[2]$, there always exists a measure $\mu$ that has the moments of the pseudo-measure $\pmu$.
+We can take for instance a Gaussian distribution with these second order moments.
+Hence we can find Gaussian distributions $\mu_{uv\sigma}$ that have the second order moments $\pmu_{uv\sigma}$
+and Gaussian distributions $\nu_v$ that have the second order moments given by the left-hand side of \eqref{eq:dual1}.
+However, we may have
+\[ \sum_{(u,v,\sigma) \in \Arcs} \pushf{A_\sigma}{\mu_{uv\sigma}} - \gamlb^{2d} \sum_{(v,w,\sigma) \in \Arcs} \mu_{vw\sigma} \neq \nu_v \]
+as we only know that the left-hand side and right-hand side of the above equation have the same second order moments;
+see \exemref{run3}.
+
+However, in some cases, we can recover a feasible solution of \progref{dualinf} from a feasible solution of \progref{dual}.
+In these cases, by \cororef{instabcert}, this provides a lower bound on the CJSR.
+Moreover, there exist efficient techniques allowing to detect situations where the solution is moments of an atomic measure; see \cite{henrion2005detecting, laurent2009sums}.
+Then, using the transformation of \propref{Bsc}, we can transform
+these atomic measures into a feasible solution of a constrained scalar switched systems.
+For such system, we could use the algorithm described in \lemref{instabcerts} but as pointed out in \cite{ahmadi2012joint},
+computing the CJSR of a scalar system can easily be done by solving a maximum cycle mean problem for which efficient algorithm exists \cite{karp1978characterization}.
+
+If we recover a feasible solution of \progref{dualinf} from a feasible solution of \progref{dual} with $\gamlb = \jsrsos$,
+we can directly conclude that $\jsrsos = \cjsr$.
+This is somewhat similar to the minimization of a multivariate polynomial using SOS where we can detect that we have reached the optimum
+when the measure is atomic and recover the minimizers of the polynomial from the atoms of the measure. %
+
+However, we may also check for atomic feasible solutions of \progref{dualinf} with $\gamlb < \jsrsos$ to provide lower bounds.
+Moreover, in practice, $\jsrsos$ is computed by binary search on $\gamlb$ so we often have several such solutions.
+
+\input{simple2}
+
+\input{run3}
+
+\input{dualjsrsosseq}
+
+\input{lb}
+
+\input{rmze}

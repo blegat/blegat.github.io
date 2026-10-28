@@ -1,0 +1,69 @@
+\begin{figure}[!ht]
+  \begin{subfigure}{0.48\textwidth}
+  \centering
+    \begin{tikzpicture}
+      \SetGraphUnit{1.2}
+      \GraphInit[vstyle=Dijkstra]
+      \SetVertexNoLabel
+      \SetUpEdge[style={->}]
+      \Vertex[NoLabel=false,L=$v_k$]{0}
+      \NOWE(0){4};
+      \NOEA(0){5};
+      \SO[NoLabel=false,L=$v_{k-1}$](0){11};
+      \tikzset{VertexStyle/.append style = {dashed}}
+      \SOWE(0){10};
+      \SOEA(0){12};
+      \Edge[label=?](4)(0);
+      \Edge[label=?](5)(0);
+      \Edge(0)(11);
+      \tikzset{EdgeStyle/.append style = {dashed}}
+      \Edge(0)(10);
+      \Edge(0)(12);
+    \end{tikzpicture}
+    \caption{One iteration of Algorithm~\ref{algo:prodl} with $l = 1$.}
+    \label{fig:path1}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+  \centering
+    \begin{tikzpicture}
+      \SetGraphUnit{1.2}
+      \GraphInit[vstyle=Dijkstra]
+      \SetVertexNoLabel
+      \SetUpEdge[style={->}]
+      \Vertex[NoLabel=false,L=$v_k$]{0}
+      \NOWE(0){4};
+      \NOEA(0){5};
+      \NOWE(4){6};
+      \NO  (4){7};
+      \NOEA(4){8};
+      \NOEA(5){9};
+      \SO[NoLabel=false,L=$v_{k-1}$](0){11};
+      \tikzset{VertexStyle/.append style = {dashed}}
+      \SOWE(4){1};
+      \EA(0){2};
+      \EA(2){3};
+      \SOWE(0){10};
+      \SOEA(0){12};
+      \Edge[label=?](6)(4);
+      \Edge[label=?](7)(4);
+      \Edge[label=?](8)(4);
+      \Edge[label=?](8)(5);
+      \Edge[label=?](9)(5);
+      \Edge[label=?](4)(0);
+      \Edge[label=?](5)(0);
+      \Edge(0)(11);
+      \tikzset{EdgeStyle/.append style = {dashed}}
+      \Edge(4)(1);
+      \Edge(5)(2);
+      \Edge(5)(3);
+      \Edge(0)(10);
+      \Edge(0)(12);
+    \end{tikzpicture}
+    \caption{One iteration of Algorithm~\ref{algo:prodl} with $l = 2$.}
+    \label{fig:path2}
+  \end{subfigure}
+  \caption{Comparison between Algorithm~\ref{algo:prodl} with $l = 1$ and $l = 2$.
+  The solid edge denotes the the edge $(v_k, v_{k-1}, \sigma_k)$
+  and the edges with question marks denote the incoming path considered by the iteration of the algorithm.}
+  \label{fig:paths}
+\end{figure}

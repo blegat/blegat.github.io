@@ -1,0 +1,89 @@
+
+\begin{frame}{Representation of polyhedral sets}
+  \begin{block}{\hrep}
+    Representation of polyhedron $S$ as intersection of halfspaces:
+    \[ S = \bigcap_{i=1}^m \{\, x \mid a_i^\Tr x \le \beta_i \,\}. \]
+    \vspace{-2.5em}
+    \begin{itemize}
+      \item Computing $A^{-1} S$ is \alert{easy}: $a_i \to A^\Tr a_i$.
+      \item Projection is \alert{hard}. Algorithms: Fourier-Motzkin, ...
+    \end{itemize}
+  \end{block}
+  \begin{block}{\vrep}
+    Representation of polyhedron $S$ as hull of points/rays:
+    \[ S = \convexhull(x_1, \ldots, x_{m_x}) + \conichull(r_1, \ldots, r_{m_r}). \]
+    \vspace{-3em}
+    \begin{itemize}
+      \item Computing $A S$ is \alert{easy}: $x \to A x$, $r \to A r$.
+      \item Projection is \alert{easy}: project each point/ray.
+    \end{itemize}
+  \end{block}
+  \vspace{-1em}
+  Representation conversion is \alert{hard}. Algorithms: double description,
+  quick hull, ...
+\end{frame}
+
+\input{inputconstr}
+
+\begin{frame}{Computation of invariant set}
+  \vspace{-.5em}
+  Linear discrete system : \( x_{k+1} = A x_k \), $x_k \in X$.
+  \vspace{-.8em}
+  \begin{block}{Pre-image}
+    \[ A^{-1}S \triangleq \{\, x \mid Ax \in S \,\} \]
+  \end{block}
+  \vspace{-.8em}
+  \begin{block}{Invariant set}
+    Set $S \subseteq X$ \emph{invariant} iff
+    \begin{align*}
+      \forall x \in S, Ax & \in S &\Leftrightarrow&& AS & \subseteq S &\Leftrightarrow&& S & \subseteq A^{-1}S
+    \end{align*}
+  \end{block}
+  \only<2>{
+  \vspace{-.8em}
+    \begin{block}{\alert{Polyhedral} computation}
+      \begin{align*}
+        P_0 & = X\\
+        P_{k+1} & = P_k \cap A^{-1} P_k
+      \end{align*}
+      \vspace{-3em}
+      \begin{center}
+        \begin{tabular}{ll}
+          $A^{-1}$ & easy with \alerthrep\\
+          $\cap$   & easy with \alerthrep
+        \end{tabular}
+      \end{center}
+    \end{block}
+  }
+  \only<3>{
+    \begin{block}{\alert{Ellipsoidal} computation}
+      \[ C = \{\, x \mid x^\Tr Q x \le 1 \,\} \quad \Rightarrow \quad A^{-1}C = \{\, x \mid x^\Tr A^\Tr Q A x \le 1 \,\} \]
+      S-procedure:
+      \[ Q - A^\Tr Q A \text{ is PSD}. \]
+    \end{block}
+  }
+\end{frame}
+
+\begin{frame}{Polyhedral computation of controlled invariant set}
+  \vspace{-1em}
+  \begin{align*}
+    P_0 & = X\\
+    P_{k+1}
+    & = P_k \cap \proj_x \{\, (x, u) \mid Ax + Bu \in P_k \,\}\\
+    & = P_k \cap \proj_x [A, B]^{-1} P_k
+  \end{align*}
+  \vspace{-1em}
+  \begin{block}{Not scalable...}
+    \begin{center}
+      \begin{tabular}{ll}
+        $[A, B]^{-1}$ & easy with \alerthrep\\
+        $\proj_x$     & easy with \alertvrep\\
+        $\cap$        & easy with \alerthrep
+      \end{tabular}
+    \end{center}
+  \end{block}
+\end{frame}
+
+\include{algebraic}
+
+\include{ellipsoid_algebraic_invariant}

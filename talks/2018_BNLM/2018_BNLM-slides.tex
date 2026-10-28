@@ -1,0 +1,158 @@
+\documentclass{beamer}
+
+\usetheme{metropolis}
+\definecolor{mediumred}{RGB}{180, 10, 5}
+\setbeamercolor{frametitle}{bg=mediumred, fg=white}
+
+\usepackage{tkz-graph}
+\usepackage{tikz}
+\usetikzlibrary{arrows,matrix,decorations.pathreplacing,positioning,chains,fit,shapes,calc} %
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+
+\usepackage{siunitx}
+
+\usepackage{custom}
+
+\title{Computing controlled invariant sets using semidefinite programming}
+\date{}
+\author{Beno\^it Legat (UCL), Rapha\"el M. Jungers (UCL) and Paulo Tabuada (UCLA)}
+\institute{%
+           Universit\'e catholique de Louvain (UCL)\\
+           University of California, Los Angeles (UCLA)\\\\}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \frametitle{Contents}
+  \tableofcontents
+\end{frame}
+
+\section{Safe Model Predictive Control}
+
+\begin{frame}
+  \frametitle{Motivating application : Model Predictive Control}
+  A truck with $M$ trailers linked by mass-spring dampers.
+
+  \begin{block}{Initial state}
+    \vspace{-1em}
+    \begin{itemize}
+      \item Speed of truck and trailers $v_i = \SI{10}{\meter\per\second}$.
+      \item Spring elongation $d_i = \SI{0}{\meter}$.
+    \end{itemize}
+  \end{block}
+  \vspace{-1em}
+  \begin{block}{Objective}
+    Maximize distance covered in \SI{60}{\second}.
+  \end{block}
+  \vspace{-.5em}
+  \begin{block}{Control}
+    Acceleration of truck $|u| \leq \SI{4}{\meter\per\second\squared}$.
+  \end{block}
+  \vspace{-.5em}
+  \begin{block}{\alert{Safety} requirements}
+    \vspace{-1em}
+    \begin{itemize}
+      \item Speed of truck and each trailer $v_i \leq \SI{35}{\meter\per\second}$.
+      \item Spring elongation $|d_i| \leq \SI{0.5}{\meter}$.
+    \end{itemize}
+  \end{block}
+  \vspace{-1em}
+  \begin{center}
+    \begin{tikzpicture}
+      \input{../../latex/Tikz/cruise_control.tex}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Safety requires \alert{long} horizon}
+  Speed limit changes from \SI{35}{\meter\per\second} to \SI{15.6}{\meter\per\second} after \SI{30}{\second}.
+  \begin{center}
+    \begin{tikzpicture}
+      \input{../../latex/Tikz/cruise_control.tex}
+      \draw[thick] (-1, 0) to (-1, 1);
+      \draw[thick,color=red] (-1, 1.3) circle (0.3);
+      \node at (-1, 1.3) {\scriptsize \bf 15.6};
+    \end{tikzpicture}
+  \end{center}
+  One trailer, step-size of \SI{0.4}{\second}, horizon of \SI{9.2}{\second}/23 step-sizes:
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{CruiseControlUnsafeSpeed.pdf}~%
+    \includegraphics[width=0.5\textwidth]{CruiseControlUnsafeAcceleration.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Controlled invariant set}
+  \begin{block}{Linear discrete control system}
+    \[ x_{k+1} = A x_k + B u_k, \quad x_k \in X, u_k \in U \]
+  \end{block}
+  \begin{block}{Controlled invariant set}
+    Set $S \subseteq X$ \emph{controlled invariant} iff
+    \[ \forall x \in S, \exists u \in U \text{ such that } Ax + Bu \in S \]
+  \end{block}
+  \begin{block}{Safe MPC}
+    \begin{itemize}
+      \item Compute controlled invariant set $S \subseteq{}$safe set.
+      \item Add constraint: state${}\in S$.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\input{cicomputation.tex}
+
+\section{Generalization to Hybrid Systems}
+
+\begin{frame}{Back to our example}
+  Four speed limits with a delay $T$ to satisfy limit\\$\to$ \alert{Hybrid} System
+
+  \begin{center}
+    \begin{tikzpicture}
+      \input{../../latex/Tikz/cruise_control.tex}
+      \draw[thick] (-1, 0) to (-1, 1);
+      \draw[thick,color=red] (-1, 1.3) circle (0.3);
+      \node at (-1, 1.3) {\scriptsize \bf 15.6};
+      \draw[thick, <->] (-0.9, 0.4) to (-0.1, 0.4);
+      \node at (-0.5, 0.7) {$T$};
+    \end{tikzpicture}
+  \end{center}
+
+  Generalization to Hybrid Systems:
+
+  {\scriptsize
+  L., B.; Tabuada, P. \& Jungers, R. M.\\
+  Computing controlled invariant sets for hybrid systems with applications to model-predictive control.\\
+  \emph{Proceedings of the IFAC Conference on Analysis and Design of Hybrid Systems}, \textbf{2018}}
+\end{frame}
+
+\begin{frame}{Results}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=\textwidth]{CruiseControlSets.pdf}
+        \includegraphics[width=\textwidth]{CruiseControlBenchmark.png}
+      \end{center}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=\textwidth]{CruiseControlSpeed.pdf}
+        \includegraphics[width=\textwidth]{CruiseControlAcceleration.pdf}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}
+    \item Safe MPC either needs long horizon or precomputed controlled invariant sets;
+    \item Polyhedral computation of controlled invariant sets is computationally intensive;
+    \item Ellipsoidal computation of controlled invariant sets is semidefinite representable in the dual space.
+  \end{itemize}
+\end{frame}
+
+\end{document}

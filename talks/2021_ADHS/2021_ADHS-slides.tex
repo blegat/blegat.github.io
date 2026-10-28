@@ -1,0 +1,320 @@
+\documentclass{beamer}
+\usetheme[block=fill]{metropolis}
+\usepackage{boolexpr}
+\usepackage{kpfonts}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{../../latex/tkz-graph}
+\usetikzlibrary{
+    arrows,
+    shapes,
+}
+\tikzset{
+    ->,
+    my_node/.style={
+        minimum height=1.5cm,
+        minimum width=3cm,
+        draw,
+    },
+    mpb_node/.style={
+        minimum height=3cm,
+        minimum width=12cm,
+        draw,
+    },
+}
+\DeclareMathOperator{\gauge}{g}
+\usepackage{mathtools}
+\newcommand{\verteq}{\rotatebox{90}{$=$}}
+\newcommand{\xd}{x_{[d]}}
+\newcommand{\xdt}{x_{[d]}^\Tr}
+
+\usepackage{scalerel,amssymb}
+\def\mcirc{\mathbin{\scalerel*{\circ}{j}}}
+\def\msquare{\mathord{\scalerel*{\Box}{gX}}}
+
+\newcommand{\piB}{\pi_{\Image(B)^\perp}}
+
+
+\newcommand{\monoton}{monotone}
+\newcommand{\solto}{solution to}
+
+\usepackage[normalem]{ulem}
+
+\usepackage[labelformat=empty]{caption}
+\usepackage[official]{eurosym}
+
+\usepackage{siunitx}
+
+\usepackage[math]{iwona}
+\usepackage{scalerel}
+\def\lVert{\mid\!\mid}
+\def\rVert{\mid\!\mid}
+
+\usepackage[normalem]{ulem}
+\usepackage{mathtools}
+
+\usepackage{../../latex/custom}
+\usepackage{graphicx}
+\graphicspath{{../../latex/images}}
+\usepackage{amsfonts}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+
+\usepackage{framed}
+
+\newcommand{\subfa}[5]{
+  \includegraphics[trim=#1cm 0cm #2cm 0cm, clip, width=0.3\textwidth]{2021_BOOK/#5.png}
+}
+
+
+
+\newcommand{\polyset}[1]{
+      \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.2\textwidth]{2021_ADHS/primal_#1.png}%
+  ~~~~~~%
+      \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.2\textwidth]{2021_ADHS/polar_#1.png}
+}
+
+
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\aeur}{\alpha_\text{\euro}}
+\newcommand{\adol}{\alpha_\$}
+\newcommand{\apou}{\alpha_\text{\pounds}}
+
+\title{Geometric control of algebraic systems}
+\subtitle{ADHS 2021}
+\date{July, 2021}
+\author{Beno\^it~Legat, Rapha\"el Jungers}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+\begin{document}
+  \maketitle
+
+
+\begin{frame}{Algebraic approach: uncontrolled system}
+  Linear system with $A \in \R^{n \times n}$:
+  \[\dot{x} = Ax.\]
+  Ellipsoid
+  $$\mathcal{E}_P = \{\, x \in \R^n \mid x^\Tr P x \leq 1 \,\}.$$
+  Nagumo condition:
+  $$x^\Tr PAx \leq 0, \forall x \in \mathbb{R}^n.$$
+  LMI:
+  $$A^\Tr P + PA \preceq 0.$$
+\end{frame}
+
+\begin{frame}{Algebraic approach: control system}
+  Linear control system with $A \in \R^{n \times n}, B \R^{n \times n_u}$:
+  \[\dot{x} = Ax + Bu.\]
+  Nagumo condition:
+  $$\forall x \in \R^{n_x}, \exists u \in \R^{n_u}, x^\Tr P(Ax + Bu) \leq 0$$
+  Linear state feedback $u(x) = Kx$, $\dot{x} = (A + BK) x$, BMI:
+  \[ A^\Tr \alert{P} + \alert{P}A + \textcolor{blue}{K}^\Tr B^\Tr \alert{P} + \alert{P}B\textcolor{blue}{K} \preceq 0. \]
+  Change of variables $Q := \alert{P}^{-1}$ and $Y := \textcolor{blue}{K}Q$, LMI
+  $$QA^\Tr + AQ + Y^\Tr B^\Tr + BY \preceq 0.$$
+\end{frame}
+
+\begin{frame}{Algebraic approach: higher degree (Prajna et al. 2004)}
+  Polyset $\setbuild{x}{\xdt P \xd \le 1}$,
+  $u(x) = K_1(x)x + K_2(x)\xd$,
+  $$\dot{x} = Ax + BK_1(x)x + BK_2(x)\xd$$
+  $$\xdt P M(x) B K_2(x) \xd + \xdt PF(x) x$$
+$$
+  \begin{bmatrix}
+    \xd\\
+    x
+  \end{bmatrix}^\Tr
+  \begin{bmatrix}
+    \alert{P} M(x) B \textcolor{blue}{K_2}(x) & \alert{P}F(x)\\
+    0 & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+    \xd\\
+    x
+  \end{bmatrix}.
+  $$
+$$
+  \forall x \in \R^n, \quad
+  \begin{bmatrix}
+    2\alert{P} M(x) B \textcolor{blue}{K_2}(x) & \alert{P}F(x)\\
+    F^\Tr(x)\alert{P} & 0
+  \end{bmatrix} \preceq 0
+  $$
+$$
+  \forall x \in \R^n, \quad
+  \begin{bmatrix}
+    2M(x) B Y(x) & F(x)\\
+    F^\Tr(x) & 0
+  \end{bmatrix} \preceq 0
+$$
+\end{frame}
+
+\begin{frame}{Example}
+  Linear system $\dot{x} = -x$ and invariant set $\setbuild{x}{x^4 \le 1}$.
+  This holds
+  \[
+    \begin{bmatrix}
+      x^2\\
+      x
+    \end{bmatrix}^\Tr
+    \begin{bmatrix}
+      0 & -2x\\
+      0 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      x^2\\
+      x
+    \end{bmatrix}
+    =
+    -x^4
+  \]
+  But this matrix is indefinite for $x \neq 0$:
+  \[
+    \begin{bmatrix}
+      0 & -2x\\
+      -2x & 0
+    \end{bmatrix}
+  \]
+
+\end{frame}
+
+\begin{frame}{Controlled invariant set}
+  \begin{block}{Continuous time}
+    \[ \dot{x}(t) = Ax(t) + Bu(t). \]
+
+    \vspace{-1em}
+
+    \[ \forall x \in \partial \Sset, \exists u, A x + B u \in T_\Sset(x). \]
+
+    \vspace{-1em}
+
+    \[ \forall x \in \partial \Sset, \piB{} A x \in \piB{} T_\Sset(x). \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Continuous-time controlled invariance\footnote{L. and Jungers, \emph{Geometric control of algebraic systems}, ADHS 2021}}
+
+  \vspace{-1em}
+
+
+
+  \[ \forall x \in \partial \Sset, C x \in E T_{\Sset}(x). \]
+
+  \vspace{-1em}
+
+  Inequality with support function or polar:
+  \begin{align*}
+    \forall z \in \mathbb{R}^r, \la z, C \grad \supfun{E^\Tr z}{\Sset} \ra & \le 0\\
+    \forall z \in \mathbb{R}^r, \la z, C \grad \gauge(\polar{\Sset}, E^\Tr z) \ra & \le 0.
+  \end{align*}
+
+  \vspace{-1em}
+
+  \begin{block}{Proof}
+
+  \vspace{-1em}
+
+  \begin{align*}
+    \forall x \in \partial \Sset, \forall z \in \polar{(ET_\Sset(x))}, \langle z, Cx \rangle & \le 0\\
+    \forall x \in \partial \Sset, \forall z \in E^{-\Tr} N_\Sset(x), \langle z, Cx \rangle & \le 0 & \polar{T_\Sset(x)} & = N_\Sset(x)\\
+    \forall z \in \mathbb{R}^r, \forall x \in F_{\Sset}(E^\Tr z), \la z, Cx \ra & \le 0 & x \in F_\Csetvar(y) & \Leftrightarrow y \in N_\Csetvar(x)\\
+    \forall z \in \mathbb{R}^r, \la z, C \grad \supfun{E^\Tr z}{\Sset} \ra & \le 0.
+  \end{align*}
+
+  \vspace{-1em}
+
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Example}
+  Control system with $x \in [-1, 1]^2$, $u \in [-1, 1]$:
+\[
+  \dot{x} =
+  \begin{pmatrix}
+    0 & 1\\
+    0 & 0\\
+  \end{pmatrix}
+  x +
+  \begin{pmatrix}
+    0\\
+    1
+  \end{pmatrix}
+  u
+\]
+
+
+  Control system with $x \in [-1, 1]^3$, $u$ unconstrained:
+\[
+  \dot{x} =
+  \begin{pmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    0 & 0 & 0
+  \end{pmatrix}
+  x +
+  \begin{pmatrix}
+    0\\
+    0\\
+    1
+  \end{pmatrix}
+  u.
+\]
+
+  Algebraic system with $x \in [-1, 1]^3$:
+\[
+  \begin{pmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+  \end{pmatrix}
+  \dot{x} =
+  \begin{pmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+  \end{pmatrix}
+  x
+\]
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Templates}
+  \begin{block}{Gauge or Minkowski function}
+    \[\gauge(\Sset, x) \eqdef \min_\gamma \{\,\gamma : x \in \gamma \Sset, \gamma \ge 0\,\}\]
+  \end{block}
+  \begin{block}{Face fan or polytope}
+    Face fan of polytope $\Sset$ is $\mathcal{P}_i$ s.t.
+    \[ \gauge(\Sset, x) = \max_{i \in [m]} \sprod{a_i}{x} = \sprod{a_i}{x} \text{ if } x \in \mathcal{P}_i \]
+  \end{block}
+  \vspace{-2em}
+
+  \begin{align*}
+    \gauge(\Sset, x) & = \sprod{a_i}{x} \text{ if } x \in \mathcal{P}_i & \text{ polytope of fixed face fan}\\
+  \gauge(\Sset, x) & = \sqrt{x^\Tr Q x} & \text{ ellipsoid}\\
+  \gauge(\Sset, x) & = \sqrt{x^\Tr Q_i x} \text{ if } x \in \mathcal{P}_i & \text{ piecewise semi-ellipsoid}\\
+    \gauge(\Sset, x) & = \sqrt[2d]{p(x)} & \text{ poly(nomial sublevel )set}
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solutions}
+  \polyset{ell}
+  \polyset{6}
+  \polyset{piece1}
+  \polyset{10}
+  \polyset{piece2}
+  \polyset{20}
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,24 @@
+\begin{lemma}
+  \label{lem:thetatoA}
+  Let us consider a solution $(\, \pmu_e : e \in \Arcs \,)$ of \progref{dual}.
+  For any polynomial $p(x) \in \inte(\Sosh)$,
+  there exists a positive constant $\tau$
+  such that for any matrix $A \in \R^{n \times n}$ and \arc{} $e \in \Arcs$,
+  \[ \pE_e[p(A x)] \leq \tau \|A\|_2^{2d} \]
+  \begin{proof}
+    If all pseudo-expectations are zero, the result is trivially true.
+    Therefore we can suppose that at least one is nonzero.
+    By \lemref{sosbound}, there exists a constant $\beta > 0$ such that
+    \[ \beta \|A\|_2^{2d}p(x) - p(Ax) \text{ is SOS}. \]
+    Hence
+    \[
+      \pE_e[p(Ax)] \leq \beta \|A\|_2^{2d} \pE_e[p(x)].
+    \]
+    We obtain the result with the constant
+    \(
+    \tau = \beta \max_{e \in \Arcs} \pE_{e}[p(x)].
+    \)
+    Since at least one pseudo-expectation is nonzero and $p(x)$ is in
+    the interior of the SOS cone, $\tau > 0$.
+  \end{proof}
+\end{lemma}

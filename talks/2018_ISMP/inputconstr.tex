@@ -1,0 +1,16 @@
+\begin{frame}{Unconstrained input without loss of generality}
+  \begin{block}{\alert{Constrained} input}
+    \[ x_{k+1} = A x_k + B u_k, \quad x_k \in X, \alert{u_k \in U} \]
+  \end{block}
+  \textbf{\alert{Lift} to \alert{un}constrained input}: $x' = (x, u)$
+  \begin{align*}
+    x_{k+1} & =
+    \begin{pmatrix}
+      A & B
+    \end{pmatrix}
+    x'_k\\
+    u_{k+1} & =
+    u'_k
+  \end{align*}
+  where $x'_k \in X' = X \times U$.
+\end{frame}

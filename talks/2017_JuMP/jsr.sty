@@ -1,0 +1,66 @@
+\newcommand{\ld}[1]{{#1}^{[d]}}
+
+\newcommand{\gamub}{\overline{\gamma}}
+\newcommand{\gamubopt}{\opt{\gamub}}
+\newcommand{\gamlb}{\underline{\gamma}}
+\newcommand{\gamlbopt}{\opt{\gamlb}}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\bA}{NOOO}
+\newcommand{\G}{G}
+\newcommand{\jsrc}[1][c]{\rho(#1)}
+\newcommand{\jsra}{\rho}
+\newcommand{\jsr}{\jsra(\A)}
+\newcommand{\jsrsosa}[1][2d]{\jsra_{\text{SOS-}#1}}
+\newcommand{\jsrsosalb}[1][2d]{\underline{\jsra}_{\text{SOS-}#1}}
+\newcommand{\jsrsosaub}[1][2d]{\overline{\jsra}_{\text{SOS-}#1}}
+\newcommand{\ujsrsos}[1][2d]{\jsra_{\text{SOS-}#1}(\A)}
+\newcommand{\jsrsos}[1][2d]{\jsra_{\text{SOS-}#1}(\G,\A)}
+\newcommand{\cpr}[1][p]{\jsra_{#1}(\G,\A)}
+\newcommand{\cprk}[2][p]{\hat{\jsra}_{#1;#2}(\G,\A)}
+\newcommand{\cprkv}[3][p]{\hat{\jsra}_{#1;#2;#3}(\G,\A)}
+\newcommand{\cdr}{\cpr[2d]}
+\newcommand{\cjsr}{\jsra(\G,\A)}
+\newcommand{\cjsrrk}[1][k]{\jsra_{#1}(\G,\A)}
+\newcommand{\cjsrk}[1][k]{\hat{\jsra}_{#1}(\G,\A,\|\cdot\|)}
+\newcommand{\cjsrp}{\jsra(\G',\A')}
+\newcommand{\cjsrkp}[1][k]{\hat{\jsra}_{#1}(\G',\A')}
+
+\newcommand{\lyea}{\alpha}
+\newcommand{\lye}{\lyea(\A)}
+\newcommand{\lyesosa}[1][2d]{\lyea_{\text{SOS-}#1}}
+\newcommand{\lyesos}[1][2d]{\lyea_{\text{SOS-}#1}(\A)}
+
+\newcommand{\mapc}{\mathcal{D}}
+\newcommand{\mapp}{\mathcal{A}}
+\newcommand{\mapd}{\mathcal{D}}
+
+\newcommand{\witch}{witched}
+
+\newcommand{\iterc}{\tau}
+
+\newcommand{\defA    }{a finite set of matrices $\A \subset \R^{n \times n}$}
+\newcommand{\defAn   }{a finite set of matrices $\A$}
+\newcommand{\defAGs  }{a finite set of matrices $\A \subseteq \R^{1 \times 1}$ constrained by an automaton $\G$}
+\newcommand{\defAG   }{a finite set of matrices $\A$ constrained by an automaton $\G$}
+\newcommand{\defAGm  }{a finite set of $m$ matrices $\A$ constrained by an automaton $\G$}
+\newcommand{\defAGn  }{a finite set of matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G$}
+\newcommand{\defAGe  }{a finite set of matrices $\A$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGmn }{a finite set of $m$ matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G$}
+\newcommand{\defAGme }{a finite set of $m$ matrices $\A \subset \mathbb{R}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGne }{a finite set of matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+\newcommand{\defAGmne}{a finite set of $m$ matrices $\A \subset \mathbb{R}^{n \times n}$ constrained by an automaton $\G(\Nodes,\Arcs)$}
+
+\newcommand{\psum}{\stackrel{p}{\oplus}}
+
+\newcommand{\PrimalFig}[2]{
+  $2d = #1$
+  & \NodeFig{#2}{1}
+  & \NodeFig{#2}{2}
+  & \NodeFig{#2}{3}
+  & \NodeFig{#2}{4}\\
+}
+
+\newcommand{\NodeFig}[2]{
+   \includegraphics[width=0.18\textwidth]{../../latex/images/run#1node#2.pdf}
+}

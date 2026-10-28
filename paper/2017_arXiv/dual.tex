@@ -1,0 +1,13 @@
+\begin{myprog}[Dual of \progref{primal}]
+  \label{prog:dual}
+  \begin{align}
+    \notag
+    \sup_{\pmu_{uv\sigma} \in \Rhd, \gamlb \in \R} \gamlb\\
+    \label{eq:dual1}
+    \sum_{(u,v,\sigma) \in \Arcs} \pushf{A_\sigma}{\pmu_{uv\sigma}} - \gamlb^{2d} \sum_{(v,w,\sigma) \in \Arcs} \pmu_{vw\sigma} & \in \Soshd, \forall v \in \Nodes,\\
+    \label{eq:dual2}
+    \pmu_{uv\sigma} & \in \Soshd, \quad \forall (u,v,\sigma) \in \Arcs,\\
+    \label{eq:dual3}
+    \sum_{(u,v,\sigma) \in \Arcs} \pmu_{uv\sigma}(\Sn) & = 1.
+  \end{align}
+\end{myprog}

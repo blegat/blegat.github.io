@@ -1,0 +1,11 @@
+A s\witch{} linear system is characterized by a finite set of matrices $\A \eqdef \{A_1, A_2,\\\ldots, A_m\} \subset \mathbb{R}^{n \times n}$ and the iteration
+\begin{equation}
+  \label{eq:switchsys}
+  x_k = A_{\sigma_k} x_{k-1}, \quad \sigma_k \in [m]
+\end{equation}
+where $[m]$ denotes the set $\{1, \ldots, m\}$.
+The maximal asymptotic growth rate of this iteration is given by the \emph{joint spectral radius} (JSR).
+The JSR $\jsr$ of a finite set of matrices $\A$
+is defined as
+\[ \jsr = \lim_{k \to \infty} \max_{\sigma \in [m]^k} \|A_{\sigma_k} \cdots A_{\sigma_2} A_{\sigma_1}\|^{1/k}. \]
+This definition is independent of the norm used.

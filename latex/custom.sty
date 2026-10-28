@@ -1,0 +1,193 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{custom}[2015/11/09 My custom package]
+\RequirePackage[T1]{fontenc}
+\RequirePackage{todonotes}
+\RequirePackage{xifthen}
+\RequirePackage{todonotes}
+
+\RequirePackage{graphicx}
+\graphicspath{{../../latex/images/}}
+\RequirePackage{epstopdf}
+
+\RequirePackage{longtable}
+\RequirePackage{tabu}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{multirow}
+
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+
+\RequirePackage{tikz}
+
+\RequirePackage{url}
+
+\usetikzlibrary{arrows,matrix,decorations.pathreplacing,positioning,chains,fit,shapes,calc,3d}
+
+\newcommand{\bigoh}{\mathcal{O}}
+
+\DeclareMathOperator{\newdiff}{d} %
+\newcommand{\dif}{\newdiff\!}
+\newcommand{\fdif}[2]{\frac{\dif #1}{\dif #2}}
+\newcommand{\fpart}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+
+\newcommand{\Sect}{Section~}
+\newcommand{\eqdef}{\triangleq}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\sprod}[2]{\la #1, #2 \ra}
+\newcommand{\msprod}[3]{\la #1 #2, #3 \ra}
+\newcommand{\Exp}{\mathbb{E}}
+\newcommand{\tup}{tuple}
+\newcommand{\tups}{tuples}
+\newcommand{\ktup}[1]{$#1$-tuple}
+\newcommand{\ktups}[1]{$#1$-tuples}
+\newcommand{\grad}{\nabla}
+\DeclareMathOperator{\Hess}{Hess}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\newcommand{\enorm}[1]{\norm{#1}_2}
+\newcommand{\Sn}{\mathbb{S}^{n-1}}
+\newcommand{\dirac}[1]{\delta_{#1}}
+\newcommand{\pushf}[2]{{#1}\#{#2}}
+\newcommand{\dist}[2]{d(#1, #2)}
+\DeclareMathOperator*{\sign}{sign}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\mini}{minimize}
+\DeclareMathOperator*{\maxi}{maximize}
+\DeclareMathOperator*{\subto}{\text{subject to}}
+\DeclareMathOperator*{\subtoq}{\subto\quad}
+\newcommand{\opt}[1]{{#1}^\star}
+
+\newcommand{\stdsimplex}[1]{\Delta^{#1 - 1}}
+
+\newcommand{\Hrep}{\mathcal{H}_{\text{rep}}}
+\newcommand{\hhalfspace}[1]{\mathcal{H}_{#1}}
+\newcommand{\halfspace}[2]{\mathcal{H}_{#1, #2}}
+\newcommand{\hhyperplane}[1]{\overline{\mathcal{H}}_{#1}}
+\newcommand{\hyperplane}[2]{\overline{\mathcal{H}}_{#1, #2}}
+\newcommand{\Vrep}{\mathcal{V}_{\text{rep}}}
+\newcommand{\Zrep}{\mathcal{Z}_{\text{rep}}}
+
+\newcommand{\setbuild}[2]{\{\, #1 \mid #2 \,\}}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\relint}{ri}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\inte}{int}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\invsum}{\sharp}
+\DeclareMathOperator{\infconvol}{\Box}
+\DeclareMathOperator{\ray}{ray}
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\SymK}[1][n]{\mathcal{S}^{#1}}
+\newcommand{\Psd}[1][n]{\SymK[#1]_+}
+\newcommand{\Pd}{\SymK_{++}}
+\newcommand{\Rh}[1][2d]{\R_{\mathbf{#1}}}
+\newcommand{\Rhd}{\Rh^*}
+\newcommand{\Sosinf}{\Sigma}
+\newcommand{\Sos}[1][2d]{\Sigma_{#1}}
+\newcommand{\Sosh}[1][2d]{\Sigma_{\mathbf{#1}}}
+\newcommand{\Soshd}[1][2d]{\Sosh[#1]^*}
+\newcommand{\vero}{\mathcal{V}_{\mathbf{2d}}}
+\newcommand{\Fb}{\mathcal{B}}
+\newcommand{\Fbp}{\Fb_+}
+\newcommand{\Fbd}{\mathcal{M}}
+\newcommand{\Fbpd}{\Fbd_+}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Fp}{\F_+}
+\newcommand{\Fpp}{\F_{++}}
+\newcommand{\Ind}[1]{\mathbf{1}_{#1}}
+\newcommand{\supfun}[2]{\delta^*(#1|#2)}
+\newcommand{\indfun}[2]{\delta(#1|#2)}
+
+\newcommand{\pE}{\widetilde{\mathbb{E}}}
+\newcommand{\pmu}{\widetilde{\mu}}
+\newcommand{\issos}{\text{ is SOS}}
+\DeclareMathOperator{\preorder}{preorder}
+\DeclareMathOperator{\qmodule}{qmodule}
+\DeclareMathOperator{\LeadingTerm}{LT}
+
+\DeclareMathOperator{\BlockDiag}{BlockDiag}
+\newcommand{\Tr}{\top}
+\newcommand{\1}{\mathbf{1}}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\Kernel}{Ker}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\GenLin}{GL}
+\newcommand{\kron}{\otimes}
+\newcommand{\elli}[2]{\la #1 #2, #2 \ra}
+\newcommand{\pseudoinv}{\dagger}
+
+\newcommand{\Nodes}{V}
+\newcommand{\node}{node}
+\newcommand{\nodes}{nodes}
+\newcommand{\Nnodes}{Nodes}
+\newcommand{\Arcs}{E}
+\newcommand{\Arcsin}[1][\Arcs]{{#1}^-}
+\newcommand{\Arcsout}[1][\Arcs]{{#1}^+}
+\newcommand{\arc}{edge}
+\newcommand{\arcs}{edges}
+\newcommand{\din}{d^{-}}
+\newcommand{\dink}[1][k]{\din_{#1}}
+\newcommand{\mdin}{\Delta^{-}}
+\newcommand{\dout}{d^{+}}
+\newcommand{\doutk}[1][k]{\dout_{#1}}
+\newcommand{\mdout}{\Delta^{+}}
+\providecommand{\Adj}{A} %
+
+\newcommand{\chapref}[1]{Chapter~\ref{chap:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\algoref}[1]{Algorithm~\ref{algo:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{app:#1}}
+
+\newcommand{\alerthrep}{\alert{$\mathcal{H}$}-representation}
+\newcommand{\hrep}{$\mathcal{H}$-representation}
+\newcommand{\hreps}{$\mathcal{H}$-representations}
+\newcommand{\alertvrep}{\alert{$\mathcal{V}$}-representation}
+\newcommand{\vrep}{$\mathcal{V}$-representation}
+\newcommand{\vreps}{$\mathcal{V}$-representations}
+\newcommand{\rrep}{$\mathcal{R}$-representation}
+\newcommand{\zrep}{$\mathcal{Z}$-representation}
+\newcommand{\zreps}{$\mathcal{Z}$-representations}
+\DeclareMathOperator{\convexhull}{convexhull}
+\DeclareMathOperator{\conichull}{conichull}
+
+\newcommand{\Csetvar}{\mathcal{C}} %
+\newcommand{\Fset}{\mathcal{F}}
+\newcommand{\Gset}{\mathcal{G}}
+\newcommand{\Kset}{\mathcal{K}}
+\newcommand{\Pset}{\mathcal{P}}
+\newcommand{\Sset}{\mathcal{S}}
+\newcommand{\Tset}{\mathcal{T}}
+\newcommand{\Uset}{\mathcal{U}}
+\newcommand{\polar}[1]{#1^\circ}
+\newcommand{\dual}[1]{{#1}^*}
+
+\newcommand{\House}[1]{H_{#1}}
+
+\newcommand{\Ell}[1]{\mathcal{E}_{#1}}
+\newcommand{\Ellc}[2]{\mathcal{E}_{#1, #2}}
+\newcommand{\Ellq}[3]{\mathcal{E}_{#1, #2, #3}}
+
+\newcommand{\jlpkg}[1]{\texttt{#1.jl}}
+
+\endinput

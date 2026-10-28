@@ -1,0 +1,78 @@
+\documentclass[review]{siamart1116}
+
+\input{shared}
+
+\ifpdf
+\hypersetup{
+  pdftitle={\TheTitle},
+  pdfauthor={\TheAuthors}
+}
+\fi
+
+\usepackage{custom}
+\usepackage{jsr}
+\usepackage{tkz-graph}
+\input{siamthm}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \input{abstract.tex}
+\end{abstract}
+
+\begin{keywords}
+  Joint spectral radius, Sum of squares programming,
+  S\witch{} Systems, Path-complete Lyapunov functions
+\end{keywords}
+
+\begin{AMS}
+  93D05, 93D20, 93D30
+\end{AMS}
+
+\section{Introduction}
+\input{intro.tex}
+
+\paragraph{Notations}
+\input{notations.tex}
+
+\section{Instability certificate using measures}
+\label{sec:inf}
+\input{inf.tex}
+
+\section{Automaton-dependent bounds}
+In this section, we introduce a method to approximate the CJSR using SOS programming and provide a new guarantee relating its accuracy with the spectral radius of the adjacency matrix and the $p$-radius; the definition of the $p$-radius can be found in the \appref{pradius}.
+\label{sec:primal}
+
+
+\subsection{Sum of squares programming}
+\label{sec:sosprog}
+\input{sosprog.tex}
+
+\input{cjsrapprox.tex}
+
+\subsection{Approximation guarantees}
+\label{sec:quality}
+\input{guarantees.tex}
+
+\input{highgrowth.tex}
+
+\input{lowrank.tex}
+
+\section{Conclusions}
+\input{conclusion.tex}
+
+\bibliographystyle{siamplain}
+\bibliography{biblio}
+
+\appendix
+\section{Stability certificates and duality}
+\input{stabcert}
+\input{duality}
+
+\section{The $p$-radius}
+\label{app:pradius}
+\input{pradius.tex}
+
+\end{document}

@@ -1,0 +1,22 @@
+We have analysed the dual of the SOS Lyapunov program for switched systems
+and shown how to leverage it to study the system stability.
+We also generalized the whole approach to \emph{constrained switched systems},
+a class of systems that has attracted increasing attention recently.
+
+It turns out from our analysis that these two concepts are intrinsically related:
+Our \theoref{fourth}, which leverages the dual of the classical JSR algorithm,
+actually naturally applies to the constrained case;
+Even more, \propref{Bsc} transforms an unconstrained system into a scalar constrained one for the purpose of computing a lower bound.
+Finally, we show in \theoref{lowrank} that unconstrained systems with low rank matrices naturally lead to the definition of an auxiliary \emph{constrained} system.
+
+
+We have introduced two techniques to generate lower bounds from the solution of the SOS dual program.
+In practice, these techniques provide periodic trajectories of high asymptotic growth rate.
+Since the SOS program can be solved efficiently,
+does this give an efficient algorithm to generate lower bounds on the CJSR with \emph{guaranteed accuracy}?
+This is not clear, because our algorithm provides firm guarantees only when the computed measures are atomic, which is not always the case.
+
+More generally, the techniques developed in this work, based on
+generating ``bad'' trajectories for a dynamical system via dual solutions%
+, naturally extend to many other problems in systems theory. We are currently
+exploring such possibilities.

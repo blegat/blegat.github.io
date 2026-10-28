@@ -1,0 +1,85 @@
+\documentclass{blux2017}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{courier}
+
+\usepackage{custom}
+\usepackage{jsr}
+
+\title{Certifying unstability of Switched Systems using Sum of Squares Programming}
+\author{Beno\^it Legat, Rapha\"el M. Jungers\\
+        Universit\'e catholique de Louvain\\
+        Avenue Georges Lemaitre, 4\\
+        B-1348 Louvain-la-Neuve\\
+        Belgium\\
+    Email: {\tt benoit.legat@uclouvain.be},\\
+           {\tt raphael.jungers@uclouvain.be}
+        \and
+    Pablo A. Parrilo\\
+        Laboratory for Information \& Decision Systems\\
+        Massachusetts Institute of Technology\\
+        77 Massachusetts Avenue\\
+        Cambridge MA 02139\\
+        USA\\
+    Email: {\tt parrilo@mit.edu} }
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\input{absintro}
+
+
+\section{Joint Spectral Radius and Lyapunov functions}
+\label{sec:jsrlyap}
+
+\input{jsrdef}
+
+If there exists a homogeneous (strictly) \emph{positive} function $f$,
+often referred to as \emph{Lyapunov function}, such that
+\begin{equation}
+  \label{eq:primalconstr}
+  f(A_\sigma x) \leq \gamub f(x) \quad \text{ for } \sigma = 1, \ldots, m
+\end{equation}
+then $\jsr \leq \gamub$.
+
+If we restrict $f$ to be an homogeneous polynomial of degree $2d$ and restrict the postivity conditions on $f$ and on the constraint~\eqref{eq:primalconstr}
+to Sum of Squares condition then the search for such function $f$ can be formulated as
+a Sum of Squares Program and can be solved using Semidefinite Programming.
+
+Let $\ujsrsos$ be the minimal value of $\gamub$ such that the Sum of Squares Program is feasible.
+We have
+\begin{equation}
+  \label{eq:ujsrsosguarantee}
+  \min\Big\{{n+d-1 \choose d}, m\Big\}^{-\frac{1}{2d}} \ujsrsos%
+  \leq \jsr \leq \ujsrsos.
+\end{equation}
+
+\section{Contributions}
+We show that if there exists measures $\mu_\sigma$ for $\sigma = 1, \ldots, m$ such that%
+\footnote{$\pushf{A}{\mu}$ is the \emph{pushforward measure} defined to be the measure such that
+$\la f, \pushf{A}{\mu} \ra = \la f \circ A, \mu \ra$ for any function $f$.}
+\begin{equation}
+  \label{eq:dualconstr}
+  \sum_{\sigma=1}^m \pushf{A_\sigma}{\mu_\sigma} \geq \gamlb \sum_{\sigma=1}^m \mu_\sigma
+\end{equation}
+then $\jsr \geq \gamlb$.
+
+If we represent $\mu_\sigma$ by its moments of degree $2d$ and we use the moment relaxation on the existence of a measure with these moments and on the constraint~\eqref{eq:dualconstr} then
+the search for such measures $\mu_\sigma$ is the dual of the Sum of Squares Program of \secref{jsrlyap}.
+
+Given measures feasible with $\gamlb$, we provide an algorithm that extracts a trajectory $\sigma_1, \sigma_2, \ldots$ of asymptotic growth rate
+\begin{equation}
+  \label{eq:useqguarantee}
+  \lim_{k \to \infty} \|A_{\sigma_k} \cdots A_{\sigma_2} A_{\sigma_1}\|^{1/k} \geq m^{-\frac{1}{2d}} \gamlb.
+\end{equation}
+Moreover, if the measures are atomic then with another algorithm, we can extract a periodic trajectory with asymtotic growth rate $\gamlb$.
+
+We can generalize these result when the allowed switching sequences of the system~\eqref{eq:switchsys} are constrained by an automaton.
+The guarantees \eqref{eq:ujsrsosguarantee} and \eqref{eq:useqguarantee} holds with $m$ replaced by $\rho(A)$, the spectral radius of the adjacency matrix of the automaton~\cite{philippe2016stability, legat2016generating}.
+
+\bibliographystyle{abbrv}
+\bibliography{biblio}
+
+\end{document}

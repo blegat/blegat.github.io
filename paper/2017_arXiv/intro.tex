@@ -1,0 +1,32 @@
+\input{switchintro}
+
+\input{jsrdef}
+
+\input{switchapp}
+
+\input{constraintsintro}
+
+The \emph{arbitrary switching} case~\eqref{eq:switchsys}
+can be seen as the particular case when the automaton has only one node and $m$ self-loops with labels $1, \ldots, m$.
+On the other side, any constrained switched system can be replaced by an arbitrary switching system with the same CJSR; see \lemref{koz}.
+
+\input{newestimateintro}
+
+\input{lowrankintro}
+
+The paper is organized as follows.
+In \Sect\ref{sec:inf}, we give the program searching for Lyapunov functions,
+the program searching for measures satisfying the invariance condition,
+prove the duality between the two programs
+and show that they respectively provides upper and lower bounds on the CJSR.
+
+In \Sect\ref{sec:primal}, we give the SOS program searching for Lyapunov functions and
+we give our new estimate for its accuracy.
+The new bounds explicitly depend on the allowable transitions, through
+the graph $G(V,E)$.
+
+In \secref{dualalgo}, we give the moment relaxation of the program searching for moment measures satisfying the invariance condition.
+We both show how to generate the sequence of high asymptotic growth rate and detect cases where
+we can provide lower bounds on the CJSR as mentioned in this introduction.
+
+In \Sect\ref{sec:lowrank}, we give the low rank reduction mentioned above.

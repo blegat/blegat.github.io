@@ -1,0 +1,324 @@
+\documentclass[9pt,notes=hide]{beamer}
+
+\usepackage{../../latex/custom}
+\usepackage{../../latex/jsr}
+\usepackage{../../latex/nsi}
+
+\usepackage{animate}
+
+\usetheme[progressbar=frametitle,block=fill]{metropolis}
+\usepackage{appendixnumberbeamer}
+\setbeamertemplate{frametitle continuation}{\hfill(\insertcontinuationcount)} %
+
+\newcommand{\setsection}[1]{
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
+    #1
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
+    \usebeamertemplate*{frame numbering}
+  \end{beamercolorbox}%
+}
+}
+
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, patterns}
+\usetikzlibrary{matrix,decorations.pathreplacing,chains,fit,shapes,calc} %
+\usetikzlibrary{calc,decorations.pathmorphing,decorations.markings}
+
+\usepackage{pgfplots}
+    \pgfplotsset{compat=1.11}
+\usepackage{pgfplotsthemetol} %
+\usepackage{subcaption} %
+\usepackage{array}
+
+\newcommand{\abs}[1]{\left| #1 \right|} %
+\newcommand{\Init}{\mathrm{Init}} %
+\newcommand{\comment}[1]{{\color{red}\textbf{{#1}}}}
+
+\usepackage[super]{nth}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+\newcommand{\piB}{\pi_{\Image(B)^\perp}}
+\newcommand{\piBTr}{\pi_{\Image(B)^\perp}^\Tr}
+\DeclareMathOperator{\gauge}{g}
+\DeclareMathOperator{\suppfun}{h}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+
+\title{Piecewise semi-ellipsoidal control invariant sets}
+\subtitle{59th Conference on Decision and Control}
+\date{December 15, 2020}
+\author{Beno\^{i}t \textsc{Legat}$^\dagger$, Sa\v{s}a V. \textsc{Rakovi\'c}$^*$, Rapha\"el M. \textsc{Jungers}$^\dagger$}
+\institute{${}^\dagger$ UCLouvain, Belgium, ${}^*$ Beijing Institute of Technology, China}
+
+\begin{document}
+
+\begin{frame}%
+  \maketitle
+\end{frame}
+
+\begin{frame}{Ellipsoidal invariant sets through gauge function}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{\alert{Gauge} function}
+        $\mathcal{S} = \{\, x \mid \gauge(\mathcal{S}, x) \le 1 \,\}$.
+
+        Inclusion: $\mathcal{S} \subseteq \mathcal{T} \Leftrightarrow \forall x, \gauge(\mathcal{S}, x) \ge \gauge(\mathcal{T}, x)$.
+
+        Linear \alert{preimage}: $\gauge(A^{-1}\mathcal{S}, x) = \gauge(\mathcal{S}, Ax)$.
+
+        \alert{Ellipsoid}: $\gauge(\mathcal{S}, x) = \sqrt{x^\Tr Q x}$.
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Autonomous system}
+        Classical LMI for stability:
+        \begin{align*}
+          x_{k+1} & = Ax_k\\
+          A\mathcal{S} & \subseteq \mathcal{S}\\
+          \mathcal{S} & \subseteq A^{-1}\mathcal{S}\\
+          \gauge(\mathcal{S}, x) & \ge \gauge(A^{-1}\mathcal{S}, x)\\
+          \gauge(\mathcal{S}, x) & \ge \gauge(\mathcal{S}, Ax)\\
+          Q & \succeq A^\Tr Q A.
+        \end{align*}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}{Control invariant set: Algebraic approach}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \begin{block}{Discrete-time control system}
+        \[ x_{k+1} = Ax_k + Bu_k. \]
+      \end{block}
+
+        Controlled invariance of $\mathcal{S}$:
+        \[ \forall x \in \mathcal{S}, \exists u, A x + B u \in \mathcal{S}. \]
+
+        \begin{block}{Linear state feedback}
+          $u(x) = Kx$ $\to$ autonomous system:
+
+          \vspace{-2em}
+          \[
+            x_{k+1} = (A + BK) x_k.
+          \]
+          \vspace{-2em}
+
+          From previous slide:
+
+          \vspace{-2em}
+          \[
+            \alert{Q} \succeq (A + B\alert{K})^\Tr \alert{Q} (A + B\alert{K}).
+          \]
+          \vspace{-2em}
+
+          \alert{Cubic} matrix inequality!
+        \end{block}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Schur complement}
+
+        \[
+          \begin{bmatrix}
+            \alert{Q} & (A + B\alert{K})^\Tr \alert{Q}\\
+            \alert{Q}(A + B\alert{K}) & \alert{Q}
+          \end{bmatrix} \succeq 0.
+        \]
+
+        \alert{Bilinear} matrix inequality!
+      \end{block}
+      \begin{block}{Change of variables}
+        $Q^{-1}$ and $Y := KQ^{-1}$.
+
+        \[
+          \begin{bmatrix}
+            \alert{Q^{-1}} & \alert{Q^{-1}}A^\Tr + \alert{Y}^\Tr B^\Tr\\
+            A\alert{Q^{-1}} + B\alert{Y} & \alert{Q^{-1}}
+          \end{bmatrix} \succeq 0.
+        \]
+        \alert{Linear} matrix inequality!
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{center}
+    \emph{How to generalize this for other sets ?}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{Need for piecewise}
+  \animategraphics[loop,controls,width=\linewidth]{5}{tow/0000}{000}{038}
+\end{frame}
+
+\begin{frame}{Piecewise semi-ellipsoids and polarity}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      \begin{center}
+        \begin{tikzpicture}[scale=2]
+          \draw[thick]
+          (-1, 0.02) to (-1, 0) to (0, -1)
+          plot[domain=0:1, samples=40] ({\x}, {\x/2 - sqrt(4 - 3 * \x^2) / 2} )
+          (1, 0) to (1, 1) to (0, 1)
+          plot[domain=0:1, samples=40] ({-\x}, {sqrt(1 - \x^2)} );
+          \draw[thick, densely dotted, ->] (0, -1) to (0.1, -1.2);
+          \draw[thick, densely dotted, ->] (1, 0) to (1.2, -0.1);
+        \end{tikzpicture}
+      \end{center}
+      \begin{equation*}
+        \begin{cases}
+          x^2 & \text{ if } 0 \le y \le x,\\
+          y^2 & \text{ if } 0 \le x \le y,\\
+          x^2 + y^2 & \text{ if } x \le 0 \le y,\\
+          (x + y)^2 & \text{ if } x, y \le 0,\\
+          x^2 - xy + y^2 & \text{ if } y \le 0 \le x.
+        \end{cases}
+      \end{equation*}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \begin{tikzpicture}[scale=2]
+          \draw[thick] %
+          (-1, 0.02) to (-1, -1) to (0.5, -1)
+          plot[thick, domain=0.5:1, samples=40] ({\x}, {-\x/2 - sqrt(3 - 3 * \x^2) / 2} )
+          (1, -0.52) to (1, 0) to (0, 1)
+          plot[thick, domain=0:1, samples=40] ({-\x}, {sqrt(1 - \x^2)} );
+          \draw[thick, densely dotted, ->] (0, 0) to (0.5, -1);
+          \draw[thick, densely dotted, ->] (0, 0) to (1, -0.5);
+        \end{tikzpicture}
+      \end{center}
+      \begin{equation*}
+        \begin{cases}
+          (x + y)^2 & \text{ if } 0 \le x, y,\\
+          x^2 + y^2 & \text{ if } x \le 0 \le y,\\
+          x^2 & \text{ if } x \le y \le 0,\\
+          y^2 & \text{ if } y \le x, 2x \le -y,\\
+          \dfrac{4}{3}(x^2 + xy + y^2) & \text{ if } 2x \ge -y, x \le -2y,\\
+          x^2 & \text{ if } x \ge -2y, y \ge 0.
+        \end{cases}
+      \end{equation*}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Control invariance and algebraic invariance through support function}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{\alert{Support} function}
+        \begin{align*}
+          \suppfun(\mathcal{S}, y) & = \sup_{x \in \mathcal{S}} y^\Tr x\\
+          & = \gauge(\polar{\mathcal{S}}, x)
+        \end{align*}
+
+        Inclusion: $\mathcal{S} \subseteq \mathcal{T} \Leftrightarrow \forall y, \suppfun(\mathcal{S}, y) \le \suppfun(\mathcal{T}, y)$.
+
+        Linear \alert{image}: $\suppfun(A\mathcal{S}, y) = \suppfun(\mathcal{S}, A^\Tr y)$.
+
+        \alert{Ellipsoid}:
+        \begin{align*}
+          \gauge(\mathcal{S}, x) & = \sqrt{x^\Tr Q x}\\
+          \suppfun(\mathcal{S}, y) & = \sqrt{y^\Tr Q^{-1} y}
+        \end{align*}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{\alert{Control} system}
+        \[ x_{k+1} = Ax_k + Bu_k. \]
+      \end{block}
+
+      Controlled invariance of $\mathcal{S}$:
+      \[ \forall x \in \mathcal{S}, \exists u, A x + B u \in \mathcal{S}. \]
+
+      \vspace{-1em}
+
+      Equivalent to
+      \begin{align*}
+        \piB{} \mathcal{S} & \subseteq \piB{} A \mathcal{S}\\
+        \suppfun(\mathcal{S}, \piBTr{} y) & \le \suppfun(\mathcal{S}, A^\Tr \piBTr{} y)
+      \end{align*}
+
+      \begin{block}{\alert{Algebraic} system}
+        \[ \piB{} x_{k+1} = \piB{} Ax_k. \]
+      \end{block}
+    \end{column}
+  \end{columns}
+  \[
+    \piB{}Q^{-1}\piBTr{} \preceq  \piB{} A Q^{-1} A^\Tr \piBTr{}
+  \]
+\end{frame}
+
+\begin{frame}{LMI formulation}
+
+  \begin{block}{Piecewise semi-ellipsoid}
+    Fixed polyhedral conic partition $\mathcal{P}_i$:
+    \[
+      \suppfun(\mathcal{S}, x) =
+        \sqrt{x^\Tr Q_i x} \quad \text{ if } x \in \mathcal{P}_i
+    \]
+  \end{block}
+
+  \begin{align*}
+    \text{find}
+    & \quad Q_i \succeq 0, u_{i, j} \in \R^n \quad \text{ such that}\\
+      x^\Tr C Q_i C^\Tr x & \leq x^\Tr E Q_j E^\Tr x,
+      \forall x \in C^{-\Tr} \mathcal{P}_i \cap E^{-\Tr} \mathcal{P}_j,\\
+      & \quad \qquad \qquad \qquad \forall i, j \in \{1, \ldots, m\}\\
+      v^\Tr Q_i v & \le 1, \quad \forall v \in \Vrep(\polar{\mathcal{X}}) \cap \mathcal{P}_i, \forall i \\
+      Q_i - Q_j & = u_{i,j} n_{ij}^\Tr + n_{ij} u_{i,j}^\Tr,
+      \quad \forall i, j \in \mathcal{N}\\
+      Q_j n_{ij} - Q_i n_{ij} & \in \polar{(\mathcal{P}_i \cap \mathcal{P}_j)}, \quad \forall i, j \in \mathcal{N}.
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Example}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \alert{Primal} space
+      \begin{center}
+        \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.65\textwidth]{SimpleControlledInvariantEllipsoid.png}
+        \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.65\textwidth]{SimpleControlledInvariantPiecewiseSemiEllipsoid.png}
+      \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \alert{Dual} space
+      \begin{center}
+        \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.65\textwidth]{SimpleControlledInvariantPolarEllipsoid.png}
+        \includegraphics[trim=3.7cm 0cm 3.5cm 0cm, clip, width=0.65\textwidth]{SimpleControlledInvariantPolarPiecewiseSemiEllipsoid.png}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}
+    \item Ellipsoids are \alert{cheap} to compute but conservative.
+    \item Polyhedra representation are \alert{expressive} but can have huge size in some regions.
+    \item Piecewise semi-ellipsoids combine \alert{advantages} of both.
+  \end{itemize}
+  Future work:
+  \begin{itemize}
+    \item How to obtain conic partition ?
+      \begin{itemize}
+        \item A few backward propagation of a polytope.
+        \item Refine with dual solution.
+      \end{itemize}
+    \item Piecewise polysets (polynomial support function).
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+\end{document}

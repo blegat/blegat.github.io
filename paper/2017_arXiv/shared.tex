@@ -1,0 +1,37 @@
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+\numberwithin{theorem}{section}
+
+\newcommand{\TheTitle}{Certifying unstability of Switched Systems using Sum of Squares Programming}
+\newcommand{\TheAuthors}{B. Legat, R. M. Jungers, and P. A. Parrilo}
+
+\headers{\parbox{0.92\textwidth}{\TheTitle}}{\TheAuthors}
+
+\title{{\TheTitle}\thanks{Submitted to the editors September 28, 2017.
+A preliminary version of this work appeared in Proceedings of Hybrid Systems: Computation and Control, 2016 \cite{legat2016generating}.
+}}
+
+\author{
+  Beno\^{i}t Legat%
+  \thanks{ICTEAM, Universit\'e catholique de Louvain, 4 Av. G. Lema\^itre, 1348 Louvain-la-Neuve, Belgium
+    (\email{benoit.legat@uclouvain.be}).}
+  \and
+  Pablo A. Parrilo%
+  \thanks{Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, 77 Massachusetts Avenue, Cambridge MA 02139, USA
+    (\email{parrilo@mit.edu}).}
+  \and
+  Rapha\"{e}l M. Jungers%
+  \thanks{ICTEAM, Universit\'e catholique de Louvain, 4 Av. G. Lema\^itre, 1348 Louvain-la-Neuve, Belgium
+    (\email{raphael.jungers@uclouvain.be}).}
+}
+
+\usepackage{amsopn}

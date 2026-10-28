@@ -1,0 +1,12 @@
+\begin{myexem}
+  \label{exem:simple2}
+  Consider \exemref{simple1}.
+  For $i = 1, 2, 3$, let $\pmu_i$ be the solution of \progref{dual} corresponding to the matrix $A_i$.
+  For any $d$, we can see that the dual solution for $\gamma = 1$ is such that
+  the only monomial $x^\alpha$ such that $\la\pmu_1, x^\alpha \ra$ (resp. $\la \pmu_2, x^\alpha \ra$, $\la \pmu_3, x^\alpha \ra$) is non-zero is $x_1^{2d}$ (resp. $x_2^{2d}$, $x_3^{2d}$)
+  and $\la \pmu_1, x_1^{2d} \ra = \la \pmu_2, x_2^{2d} \ra = \la \pmu_3, x_3^{2d} \ra = 1/3$.
+  Note that it means that $\pmu_1 = \delta_{(1,0,0)}/3$, $\pmu_2 = \delta_{(0,1,0)}/3$ and $\pmu_3 = \delta_{(0,0,1)}/3$
+  where $\delta_x$ is the Dirac measure centered on $x$.
+  Since these measures are solution to \progref{dualinf} with $\gamlb = 1$,
+  by \cororef{instabcert}, this means that $\jsr \geq 1$.
+\end{myexem}

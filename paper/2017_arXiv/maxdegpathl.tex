@@ -1,0 +1,25 @@
+\begin{lemma}
+  \label{lem:maxdegpathl}
+  Consider \defAGe{}.
+  For any positive integers $d$ and $l$,
+    using \progref{dual} with any $\gamma < \jsrsosa\\(\G,\A)$,
+  \algoref{prodl} with paths of length $l$
+  produces a $\G^\Tr$-admissible sequence
+  $(v_1,v_0,\\\sigma_0),(v_2,v_1,\sigma_1), \ldots$ %
+  for which the sequence of $\theta_k$ defined in \eqref{eq:thetak}
+  satisfies the following inequality for all $k > 0$ multiple of $l$:
+  \begin{equation*}
+    \theta_{k}
+    \geq \frac{\gamma^{2dl}}{\dink[l](v_{k-l+1})}
+    \theta_{k-l}
+  \end{equation*}
+  \begin{proof}
+    By \lemref{dualconsl},
+    \begin{align*}
+      \sum_{s \in \Arcsin_l(v_{k-l+1})} \pE_{s[1]}[p_{k-l}(A_s x)]
+      & \geq \gamma^{2dl} \theta_{k-l}.
+    \end{align*}
+    Since the value of $s$ chosen by \algoref{prodl} maximises $\pE_{s[1]}[p_{k-l}(A_s x)]$,
+    the left-hand side of the above inequality is smaller or equal to $\dink[l](v_{k-l+1})\theta_k$.
+  \end{proof}
+\end{lemma}

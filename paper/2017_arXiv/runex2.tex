@@ -1,0 +1,29 @@
+\begin{myexem}
+  \label{exem:run2}
+  Let us reconsider our running example; see Example~\ref{exem:run1}.
+  The optimal solution of Program~\ref{prog:primal}
+  is represented by
+  Figure~\ref{fig:primal} for $2d = 2$, 4, 6, 8, 10 and 12.
+  \begin{figure}[!ht]
+    \centering
+    \tabulinesep=0.5mm
+    \begin{tabu}{{X[0.85,c,m]X[c,m]X[c,m]X[c,m]X[c,m]}}
+      & Node 1 & Node 2 & Node 3 & Node 4\\
+      \PrimalFig{2}{1}
+      \PrimalFig{4}{2}
+      \PrimalFig{6}{3}
+      \PrimalFig{8}{4}
+      \PrimalFig{10}{5}
+      \PrimalFig{12}{6}
+    \end{tabu}
+    \caption{
+    Representation of the solutions to Program~\ref{prog:primal}
+    with different values of $d$ for the running example.
+    The blue curve represents the boundary of the
+    1-sublevel set of the optimal
+    solution $p_v$ at each node $v \in \Nodes$.
+    The dashed curve is the boundary of the unit circle.
+    Observe that some sets are not convex.}
+    \label{fig:primal}
+  \end{figure}
+\end{myexem}

@@ -16,7 +16,7 @@
 ## PhD thesis
 
 ~~~
-<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="https://drive.google.com/file/d/14zLV2WsjTxdXywGp_7Ncn3dahMLACPgY/view?usp=sharing">slides</a> <a href="https://drive.google.com/file/d/1Y8kvUsHmvWSvgnEBS8T7GI6ofvuWng6U/view">pdf</a>
+<strong><a href="https://dial.uclouvain.be/pr/boreal/object/boreal:237650">Set Programming: Theory and Computation</a></strong>, 2020.<br><a href="/talks/thesis.pdf">slides</a> <a href="/paper/thesis.pdf">pdf</a>
 ~~~
 
 ## Chapters
@@ -61,7 +61,7 @@
     Benoît Legat, Paulo Tabuada, Raphaël M Jungers. <strong><a href="https://www.sciencedirect.com/science/article/pii/S1751570X20300054">Sum-of-Squares Methods for Controlled Invariant Sets with Applications to Model-Predictive Control</a></strong>. <em>Nonlinear Analysis: Hybrid Systems, 36, 100858, 2020.</em>,  <a href="https://doi.org/10.1016/j.nahs.2020.100858">10.1016/j.nahs.2020.100858</a><br/><a href="https://github.com/blegat/SwitchOnSafety.jl">code</a>
   </li>
   <li>
-    Benoît Legat, Pablo A. Parrilo, Raphaël M. Jungers. <strong><a href="https://epubs.siam.org/doi/10.1137/18M1173460">Certifying Unstability of Switched Systems Using Sum of Squares Programming</a></strong>. <em>SIAM Journal on Control and Optimization, 58(4), 2616--2638, 2020.</em>,  <a href="https://doi.org/10.1137/18M1173460">10.1137/18M1173460</a><br/><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc">pdf</a> <a href="https://doi.org/10.24433/CO.9148109.v2">code 10.24433/CO.9148109.v2</a>
+    Benoît Legat, Pablo A. Parrilo, Raphaël M. Jungers. <strong><a href="https://epubs.siam.org/doi/10.1137/18M1173460">Certifying Unstability of Switched Systems Using Sum of Squares Programming</a></strong>. <em>SIAM Journal on Control and Optimization, 58(4), 2616--2638, 2020.</em>,  <a href="https://doi.org/10.1137/18M1173460">10.1137/18M1173460</a><br/><a href="https://arxiv.org/abs/1710.01814">arXiv</a> <a href="/paper/2017_arXiv.pdf">pdf</a> <a href="https://doi.org/10.24433/CO.9148109.v2">code 10.24433/CO.9148109.v2</a>
   </li>
   <li>
     Benoît Legat, Pablo A. Parrilo, Raphaël M. Jungers. <strong><a href="https://ieeexplore.ieee.org/document/8657769">An Entropy-Based Bound for the Computational Complexity of a Switched System</a></strong>. <em>IEEE Transactions on Automatic Control, 64(11), 4623--4628, 2019.</em>,  <a href="https://doi.org/10.1109/tac.2019.2902625">10.1109/tac.2019.2902625</a><br/><a href="https://doi.org/10.24433/CO.0452244.v1">code 10.24433/CO.0452244.v1</a>
@@ -101,10 +101,10 @@
     Cláudio Gomes, Raphaël M Jungers, Benoît Legat, Hans Vangheluwe. <strong><a href="https://ieeexplore.ieee.org/abstract/document/8619223">Minimally Constrained Stable Switched Systems and Application to Co-Simulation</a></strong>. <em> In Proceedings of the 57th IEEE Conference on Decision and Control, 5676--5681, 2018. IEEE.</em>,  <a href="https://doi.org/10.1109/CDC.2018.8619223">10.1109/CDC.2018.8619223</a><br/><a href="https://arxiv.org/abs/1809.02648">arXiv</a>
   </li>
   <li>
-    B. Legat, R. M. Jungers. <strong><a href="http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf">Parallel Optimization on the Entropic Cone</a></strong>. <em> In Proceedings of the 37rd Symposium on Information Theory in the Benelux, SITB '16, 206--211, 2016.</em>, <br/><a href="https://drive.google.com/open?id=0B1axlYz3_XXKNTRjZTVuSmtWTXM">pdf</a> <a href="https://github.com/blegat/EntropicCone.jl">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKa3BXZTlsdUJJZzA">slides</a>
+    B. Legat, R. M. Jungers. <strong><a href="http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf">Parallel Optimization on the Entropic Cone</a></strong>. <em> In Proceedings of the 37rd Symposium on Information Theory in the Benelux, SITB '16, 206--211, 2016.</em>, <br/><a href="/paper/2016_SITB.pdf">pdf</a> <a href="https://github.com/blegat/EntropicCone.jl">code</a> <a href="/talks/2016_SITB.pdf">slides</a>
   </li>
   <li>
-    Benoît Legat, Raphaël M. Jungers, Pablo A. Parrilo. <strong><a href="http://dl.acm.org/citation.cfm?id=2883821">Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</a></strong>. <em> In Proceedings of the 19th International Conference on Hybrid Systems: Computation and Control, HSCC '16, 51--60, Vienna, Austria, 2016. ACM.</em>,  <a href="https://doi.org/10.1145/2883817.2883821">10.1145/2883817.2883821</a><br/><a href="https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE">slides</a>
+    Benoît Legat, Raphaël M. Jungers, Pablo A. Parrilo. <strong><a href="http://dl.acm.org/citation.cfm?id=2883821">Generating Unstable Trajectories for Switched Systems via Dual Sum-Of-Squares Techniques</a></strong>. <em> In Proceedings of the 19th International Conference on Hybrid Systems: Computation and Control, HSCC '16, 51--60, Vienna, Austria, 2016. ACM.</em>,  <a href="https://doi.org/10.1145/2883817.2883821">10.1145/2883817.2883821</a><br/><a href="/paper/2016_HSCC.pdf">pdf</a> <a href="https://github.com/blegat/RPHSCC2016">code</a> <a href="/talks/2016_HSCC.pdf">slides</a>
   </li>
 </ul>
 ~~~

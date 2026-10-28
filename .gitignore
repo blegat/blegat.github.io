@@ -1,3 +1,8 @@
 Manifest.toml
 generated
 __site
+
+_build/
+_documents/
+**/_minted*/
+**/*-eps-converted-to.pdf

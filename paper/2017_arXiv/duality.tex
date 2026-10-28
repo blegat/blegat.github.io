@@ -1,0 +1,58 @@
+\begin{lemma}[No duality gap]
+  \label{lem:duality}
+  For a fixed $\gamma$,
+  \begin{description}
+    \item[Weak duality] If \progref{primalinf} (resp. \progref{dualinf}) is feasible for $\gamub = \gamma$ (resp. $\gamlb = \gamma$) then \progref{dualinf} (resp. \progref{primalinf}) is infeasible for all $\gamlb < \gamma$ (resp. $\gamub > \gamma$).
+    \item[Strong duality] If \progref{primalinf} (resp. dual) is infeasible for $\gamub = \gamma$ (resp. $\gamlb = \gamma$) then \progref{dualinf} (resp. \progref{primalinf}) is feasible for $\gamlb = \gamma$ (resp. $\gamub = \gamma$).
+  \end{description}
+
+  In other words, there exists a value $\gamma^*$ such that
+  for every $\gamma > \gamma^*$, there exists a feasible solution to \progref{primalinf} \progref{primalinf} and
+  for every $\gamma < \gamma^*$, there exists a feasible solution to \progref{dualinf} \progref{dualinf}.
+  Moreover, either \progref{primalinf} program, \progref{dualinf} program or both have a feasible solution with $\gamma = \gamma^*$.
+  \begin{proof}
+    Consider the hyperplane
+    \[ C \eqdef \Big\{\, (f_v : v \in \Nodes) \in \F^{|\Nodes|} \, \Big| \sum_{v \in V} \int_{\Sn} f_v(x) \dif x = 1 \,\Big\} \]
+    and the map
+    \[ \mapc_\gamma \colon \F^{|\Nodes|} \to \F^{|\Arcs|} : (f_v : v \in \Nodes) \mapsto (\gamma f_u(x) - f_v(A_\sigma x) : (u,v,\sigma) \in \Arcs). \]
+
+    Given a fixed $\gamma$,
+    \progref{primalinf} has no solution for $\gamub = \gamma$
+    if and only if $\mapc_{\gamma}(\Fpp^{|\Nodes|} \cap C) \cap \Fp^{|E|} = \emptyset$.
+    Since $\Fpp^{|\Nodes|} \cap C$ is compact, so is $\mapc_{\gamma}(\Fpp^{|\Nodes|} \cap C))$.
+    We know that a compact set and a closed set have no intersection if and only if there exist a strict separating hyperplane separating the two sets.
+    That is, a measure $\mu \in \Fbd$ such that $\la \mu, f \ra \geq 0$ for all $f \in \Fp^{|E|}$ and $\la \mu, f \ra < 0$ for all $f \in \mapc_{\gamma}(\Fpp^{|\Nodes|} \cap C)$.
+    The first condition is simply $\mu \in \Fbpd$.
+    For the second condition, we remark that
+    \[ \mapc_{\gamma}(\Fpp^{|\Nodes|} \cap C) = \mapc_{\gamma}(\inte(\Fp^{|\Nodes|}) \cap C) = \relint\mapc_{\gamma}(\Fp^{|\Nodes|} \cap C). \]
+    We have $\la \mu, f \ra < 0$ for all $f \in \relint\mapc_{\gamma}(\Fp^{|\Nodes|} \cap C)$ if and only if
+    $\la \mu, f \ra \leq 0$ for all $f \in \mapc_{\gamma}(\Fp^{|\Nodes|} \cap C)$ and
+    \begin{equation}
+      \label{eq:affinhyp}
+      \exists f \in \mapc_{\gamma}(\Fp^{|\Nodes|} \cap C) : \la \mu, f \ra \neq 0.
+    \end{equation}
+
+    Therefore, if \progref{primalinf} has no solution for $\gamub = \gamma$ then there exists
+    a \emph{nonzero} measure $\mu \in (\Fbpd)^{|E|}$ such that for all $f \in C$ and $(u,v,\sigma) \in E$,
+    \begin{equation}
+      \label{eq:dualconsfirst}
+      \sum_{v \in V} \sum_{(v,u,\sigma) \in E} \bar{\gamma} \Exp_{vu\sigma}[f_v(x)] \leq \sum_{v \in V} \sum_{(u,v,\sigma) \in E} \Exp_{uv\sigma}[f_v(A_\sigma x))]
+    \end{equation}
+    and \eqref{eq:affinhyp} holds.
+
+    Note that if the inequality \eqref{eq:dualconsfirst} is respected for some $f \in C$, it is also respected for $\lambda f$ for all $\lambda > 0$.
+    So we can impose that the inequality should be respected for all $f \in \Fp^{|V|} \setminus \{0\}$.
+
+    The constraint~\eqref{eq:dualconsfirst} must be true for all $f \in \Fp^{|V|} \setminus \{0\}$ so in particular in the case where there is a node $v \in V$ such that $f_u(x) = 0$ for all $u \neq v$.
+    Therefore we must have
+    \[ \gamma \sum_{(v,u,\sigma) \in E} \Exp_{vu\sigma}[f_v(x)] \leq \sum_{(u,v,\sigma) \in E} \Exp_{uv\sigma}[f_v(A_\sigma x))], \quad \forall f_v \in \Fp \]
+    for all $v \in V$.
+    This is \eqref{eq:dualinf1} so the strong duality is proven.
+
+    To show the weak duality, we show that if there exists a dual solution $\mu$ for $\gamlb=\gamma$ then \eqref{eq:dualinf1} and \eqref{eq:affinhyp} are satisfied for all $\gamlb < \gamma$.
+    We know that \eqref{eq:dualinf1} is satisfied for $\gamma$ so the constraint \eqref{eq:dualinf1} is also satisfied for any $\gamlb < \gamma$.
+    Using \eqref{eq:dualconsfirst} and \eqref{eq:dualinf3} with $f_v(x) = \|x\|$ for all $v \in \Nodes$,
+    we have $\la \mu, f \ra < 0$ for all $\gamlb < \gamma$.
+
+  \end{proof}
+\end{lemma}

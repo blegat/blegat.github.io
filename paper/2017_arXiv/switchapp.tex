@@ -1,0 +1,32 @@
+The JSR was introduced by Rota and Strang~\cite{rota1960note}
+and has many other applications such as wavelets, the capacity of some particular codes, zero-order stability of ordinary differential equations, congestion control in computer networks, curve design and networked and delayed control systems; see \cite{jungers2009joint} for a survey on the JSR and its applications.
+Many algorithms exist for estimating the JSR but not much is known on how to generate an infinite
+sequence of matrices with an asymptotic growth rate close to the JSR.
+However generating such sequence can be of particular interest, depending on the application,
+such as exhibiting unstable trajectories for s\witch{} linear systems to prevent them from occuring~\cite{gomes2018minimally}.%
+The currently known algorithms generate a sequence of matrices with high spectral radius
+using methods detailed in \secref{lb}
+and repeat this sequence infinitely \cite{gripenberg1996computing,guglielmi2008algorithm,guglielmi2013exact,jungers2014lifted}.
+
+Approximating the JSR usually consists in certifying upper bounds $\gamub$ to the JSR by exhibiting a Lyapunov function or an invariant set for the matrices $A_i/\gamub$.
+The search for such Lyapunov functions can naturally be written as a convex optimization program; see \progref{primalinf}.
+Certifying lower bounds $\gamlb$ is currently either achieved using the guarantees we have on the accuracy of the upper bound on the JSR
+or by exhibiting trajectories of asymptotic growth rate $\gamlb$.
+In this paper, we introduce a new way to certify lower bounds by exhibiting nonnegative measures satisfying some invariance condition parametrized by the matrices $A_i/\gamlb$; see \eqref{eq:dualinf1}.
+This invariance condition is linear on the measure hence the search of measures on the convex cone of nonnegative measures is a \emph{convex} program; see \progref{dualinf}.
+It turns out that this program is the dual of \progref{primalinf}.
+
+We revisit the sum-of-squares program proposed by Parrilo and Jadbabaie~\cite{parrilo2008approximation} and show that its dual formulation is the moment relaxation of the search of the measures satisfying the invariance condition.
+
+Thanks to this duality, solving this pair of programs with a given candidate value $\gamma$
+for the JSR either returns Lyapunov functions certifying that
+$\jsr \leq \gamma$ or returns moments that form a solution of the moment relaxation; see \secref{moments}.
+These moments are not necessarily the moments of measures satisfying the invariance conditions.
+However, we give a rounding procedure to extract a (infinite) switching sequence from these moments
+and provide a guarantee on the asymptotic growth rate of this sequence.
+As a by-product of the rounding procedures, the spectral radius of a finite part of
+this infinite sequence can be used to give lower bounds on the JSR.
+In addition, we give a way to sometimes detect when the moments belongs to measures that satisfy the invariance conditions.
+This happens when the measures are the convex combination of the occupation measures of several periodic trajectories.
+Since the trajectories are periodic, the measures are atomic and we can recover them from moments of sufficiently high degree.
+We show on numerical examples that these techniques work well in practice.

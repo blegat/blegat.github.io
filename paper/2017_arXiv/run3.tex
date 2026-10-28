@@ -1,0 +1,27 @@
+\begin{myexem}
+  \label{exem:run3}
+  We continue the running example; see Example~\ref{exem:run1} and Example~\ref{exem:run2}.
+
+  For all $d$, $\pmu_{212} = \pmu_{323} = \pmu_{344} = \pmu_{431} = 0$
+  hence the node 4 is ``unused'' by the dual.
+  For $2d = 2, 4$, $\pmu_{123} = \pmu_{231} = 0$ so
+  the node $2$ is ``unused'' for low degree.
+
+  At first, one could think that the dual variables can be used to reduce the systems,
+  e.g. remove nodes or edges.
+  However, it would be a mistake to remove the node 2 since the periodic trajectory with highest growth rate uses this node.
+
+
+
+  It is also interesting to notice that the matrices corresponding to the dual variables have low rank.
+  For example, for $2d = 2$, $\pmu_{131}$
+  (resp. $\pmu_{312}$, $\pmu_{331}$) is the Dirac measure $5.873 \cdot \delta_{(0.917,0.399)}$
+  (resp. $3.966 \cdot \delta_{(0.875,0.485)}$, $6.704 \cdot \delta_{(0.757,-0.653)}$).
+  However, this is not a feasible solution of \progref{dualinf}.
+  Indeed,
+  while \eqref{eq:dualinf1} is satisfied for \node{} 1 since
+  $\pushf{A_2}{\delta_{(0.875,0.485)}}$ gives $\delta_{(0.917,0.399)}$,
+  \eqref{eq:dualinf1} is not satisfied for \node{} 3 as
+  $\pushf{A_1}{\delta_{(0.917,0.399)}}$ gives $\delta_{(0.999, -0.0271)}$ and
+  $\pushf{A_1}{\delta_{(0.757,-0.653)}}$ gives $\delta_{(0.422, -0.906)}$.
+\end{myexem}

@@ -1,0 +1,52 @@
+\subsection{Improving the automaton-dependent bounds}
+Summarizing our results above,
+after solving Program~\ref{prog:primal}, we obtain an upper bound on
+the CJSR and a lower bound thanks to Corollary~\ref{coro:mix}.
+Running Algorithm~\ref{algo:prodl} provides lower bounds that we can
+compute if the sequence produced is periodic and this lower bound will
+always be at least as high than the lower bound produced by
+Theorem~\ref{theo:second}.
+
+In this subsection we show that there is another way to improve the lower
+bound provided by Theorem~\ref{theo:second} using the dual solution.
+The improved lower bound will never be higher than the bound provided by
+Algorithm~\ref{algo:prodl} but it only requires checking which dual values are zero
+so it almost does not require any computation.
+This lower bound is provided by the \theoref{fifth} which is a
+generalization of \cite[Theorem~3.10]{philippe2016stability}.
+
+
+\begin{definition}
+  Consider \defAGe{}.
+  Given a solution $\pmu$ of \progref{dual},
+  we denote
+  \[ \Arcs_{\pmu} = \{\, e \in \Arcs \mid \pmu_e \neq 0 \,\}. \]
+  We define the graph $\G_{\pmu}(\Nodes,\Arcs_{\pmu})$ using this set of \arcs{}.
+\end{definition}
+
+\begin{theorem}
+  \label{theo:fifth}
+  Consider \defAG{} and a positive integer $d$.
+  If $(\pmu, \gamlb)$ is a feasible solution of \progref{dual}
+  then
+  \[ \rho(\Adj(\G_{\pmu}))^{-\frac{1}{2d}} \gamlb \leq \cjsr \]
+  where $A(\G_{\pmu})$ is the adjacency matrix of $\G_{\pmu}$.
+  \begin{proof}
+    For any edge $e \in \Arcs$ such that $\pmu_e = 0$, removing this
+    edge does not violate any dual constraint \eqref{eq:dual1}.
+
+    Using Theorem~\ref{theo:fourth} once we have removed all these
+    edges and taking the limit $l \to \infty$ we obtain the result.
+  \end{proof}
+\end{theorem}
+
+\begin{myrem}
+  Note that it is not true that $\G_{\opt{\pmu}_{d_2}} \subseteq \G_{\opt{\pmu}_{d_1}}$ when
+  $d_2 \geq d_1$ and $\pmu_{d_1}$ (resp. $\pmu_{d_2}$) is an optimal solution of \progref{dual}
+  with polynomials of degree $2d_1$ (resp. $2d_2$).
+  Indeed, as we have seen with Example~\ref{exem:run4} the dual
+  variables of \arcs{} that were needed to have an s.m.p. are zero
+  for $2d < 10$ so preventing Algorithm~\ref{algo:prodl} to choose
+  these \arcs{} even for $l > 1$ prevents it to find the s.m.p. for
+  $2d < 10$.
+\end{myrem}

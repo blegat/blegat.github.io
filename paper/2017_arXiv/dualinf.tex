@@ -1,0 +1,13 @@
+\begin{myprog}[Dual of \progref{primalinf}]
+  \label{prog:dualinf}
+  \begin{align}
+    \notag
+    \sup_{\mu_{uv\sigma} \in \Fbd, \gamlb \in \R} \gamlb\\
+    \label{eq:dualinf1}
+    \sum_{(u,v,\sigma) \in \Arcs} \pushf{A_{\sigma}}{\mu_{uv\sigma}} & \geq \gamlb \sum_{(v,w,\sigma) \in \Arcs} \mu_{vw\sigma}, \quad \forall v \in \Nodes,\\
+    \notag
+    \mu_{uv\sigma} & \in \Fbpd, \quad \forall (u, v, \sigma) \in \Arcs,\\
+    \label{eq:dualinf3}
+    \sum_{(u,v,\sigma) \in \Arcs} \mu_{uv\sigma}(\Sn) & = 1.
+  \end{align}
+\end{myprog}

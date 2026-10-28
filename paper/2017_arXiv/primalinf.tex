@@ -1,0 +1,13 @@
+\begin{myprog}[Primal]
+  \label{prog:primalinf}
+  \begin{align}
+    \notag
+    \inf_{f_v \in \F, \gamub \in \R} \gamub\\
+    \label{eq:primalinf1}
+    f_v(A_\sigma x) & \leq \gamub f_u(x), \quad \forall (u, v, \sigma) \in \Arcs,\\
+    \notag
+    f_v(x) & \in \Fpp, \quad \forall v \in \Nodes,\\
+    \label{eq:primalinf3}
+    \sum_{v \in V} \int_{\Sn} f_v(x) \dif x & = 1.
+  \end{align}
+\end{myprog}

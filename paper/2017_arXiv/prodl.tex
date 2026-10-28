@@ -1,0 +1,14 @@
+\begin{algorithm}[!ht]
+  \caption{Generates a sequence of large asymptotic growth using paths of length $l$.}
+  \label{algo:prodl}
+  \begin{algorithmic}
+    \STATE{Given a feasible solution $(\, \pmu_e : e \in \Arcs \,)$ of \progref{dual}}
+    \STATE{Pick an arbitrary polynomial $p_0(x) \in \inte(\Sosh)$}
+    \STATE{Pick an \arc{} $(v_0,v_{-1},\sigma_0) \in \Arcs$ such that $\pE_{v_0v_{-1}\sigma_0}[p_0(x)] > 0$}
+    \FOR{$k = 0,l,2l,\ldots$}
+    \STATE Pick $s \in \argmax_{s \in \Arcsin_l(v_{k})} \pE_{s[1]}[p_k(A_s x)]$
+    \STATE Set $(v_{k+l},\sigma_{k+l},\ldots,\sigma_{k+1},v_k) \leftarrow s$
+    \STATE Set $p_{k+1} \leftarrow p_k(A_s x)$
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}

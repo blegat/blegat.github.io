@@ -1,0 +1,462 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+\usepackage{graphicx}
+\graphicspath{{../../latex/images/}}
+\usepackage{boolexpr}
+\usepackage{kpfonts}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tkz-graph}
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows,
+    shapes,
+}
+\tikzset{
+    ->,
+    my_node/.style={
+        minimum height=1.5cm,
+        minimum width=3cm,
+        draw,
+    },
+    mpb_node/.style={
+        minimum height=3cm,
+        minimum width=12cm,
+        draw,
+    },
+}
+
+
+\usepackage[labelformat=empty]{caption}
+\usepackage[official]{eurosym}
+
+\usepackage{minted}
+
+\usepackage{siunitx}
+
+\usepackage[math]{iwona}
+\usepackage{scalerel}
+\def\lVert{\mid\!\mid}
+\def\rVert{\mid\!\mid}
+
+\usepackage[normalem]{ulem}
+\usepackage{mathtools}
+
+\usepackage{../../latex/custom}
+\usepackage{amsfonts}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+
+\usepackage{framed}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\aeur}{\alpha_\text{\euro}}
+\newcommand{\adol}{\alpha_\$}
+\newcommand{\apou}{\alpha_\text{\pounds}}
+
+\title{MathOptInterface: A Data Structure for Mathematical Optimization Problems}
+\subtitle{INFORMS Annual Meeting 2020}
+\date{November, 2020}
+\author{Beno\^it~Legat \and Oscar~Dowson \and Joaquim~Dias~Garcia \and Miles~Lubin}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+\begin{document}
+  \maketitle
+
+\begin{frame}
+  \frametitle{JuMP -- as it was}
+\begin{figure}[!ht]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[align=center]
+        \node[my_node] (jump)       at (4, 6) {JuMP};
+        \node[mpb_node, dashed] (mpb) at (4, 3) {};
+        \node[my_node] (lq)         at (4, 3) {Linear-Quadratic\\standard form};
+        \node[my_node] (con)        at (0, 3) {Conic\\standard form};
+        \node[my_node] (nl)         at (8, 3) {Nonlinear\\standard form};
+        \node[my_node] (lq_solver)  at (4, 0) {Linear-Quadratic\\solver};
+        \node[my_node] (con_solver) at (0, 0) {Conic\\solver};
+        \node[my_node] (nl_solver)  at (8, 0) {Nonlinear\\solver};
+        \node[] (mpb_text)  at (-0.5, 4.65) {\texttt{MathProgBase}};
+
+        \path[very thick]
+        	(jump)	edge [] node [] {} (lq)
+        	        edge [] node [] {} (con)
+        	        edge [] node [] {} (nl)
+        	(lq)	edge [] node [] {} (lq_solver)
+        	        edge [] node [] {} (con)
+        	        edge [] node [] {} (nl)
+        	        edge [] node [] {} (jump)
+        	(con)	edge [] node [] {} (con_solver)
+        	        edge [] node [] {} (lq)
+        	        edge [] node [] {} (jump)
+        	(nl)	edge [] node [] {} (nl_solver)
+        	        edge [] node [] {} (jump)
+        	(lq_solver)	edge [] node [] {} (lq)
+        	(con_solver)	edge [] node [] {} (con)
+        	(nl_solver)	edge [] node [] {} (nl);
+    \end{tikzpicture}
+    }
+    \label{fig:jump_architecture}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{MathOptInterface formulation}
+We propose to formulate problems as:
+    \begin{equation*}
+    \begin{array}{rl}
+        \min\limits_{x\in\mathbb{R}^N} & f_0(x)\\
+        \text{subject to:} & f_i(x) \in S_i,
+    \end{array}
+    \end{equation*}
+    where $f_i \in \mathcal{F}$ and $S_i \in \mathcal{S}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples of $\mathcal{F}$}
+\begin{itemize}
+    \item \textsf{SingleVariable}: $x \rightarrow x_i$
+    \item \textsf{VectorOfVariables}: $x \rightarrow [x_i, x_j, \ldots, x_k]$
+    \item \textsf{ScalarAffineFunction}: $x \rightarrow a^\top x + b$
+    \item \textsf{VectorAffineFunction}: $x \rightarrow Ax + b$
+    \item \textsf{ScalarQuadraticFunction}, \textsf{VectorQuadraticFunction}, \textsf{ScalarNonlinearFunction}, ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples of scalar-valued $\mathcal{S}$}
+\begin{itemize}
+    \item \textsf{LessThan}: $(-\infty, u] \subseteq \mathbb{R}$
+    \item \textsf{GreaterThan}: $[l, \infty) \subseteq \mathbb{R}$
+    \item \textsf{Interval}: $[l, u] \subseteq \mathbb{R}$
+    \item \textsf{EqualTo}: $\{v\} \subseteq \mathbb{R}$
+    \item \textsf{Integer}: $\mathbb{Z} \subseteq \mathbb{R}$
+    \item \textsf{ZeroOne}: $\{0, 1\} \subseteq \mathbb{R}$
+    \item \textsf{Semicontinous}, \textsf{Semiinteger}, ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples of vector-valued $\mathcal{S}$}
+\begin{itemize}
+    \item \textsf{Nonnegatives}: $\{x\in\mathbb{R}^N:\;x\ge0\} \subseteq \mathbb{R}^N$
+    \item \textsf{Nonpositives}: $\{x\in\mathbb{R}^N:\;x\le0\} \subseteq \mathbb{R}^N$
+    \item \textsf{Zeros}: $\{0\} \subseteq \mathbb{R}^N$
+    \item \textsf{SecondOrderCone}: $\{(t,x) \in \mathbb{R}^{N}:\;||x||_2 \le t\} \subseteq \mathbb{R}^N$
+    \item \textsf{PositiveSemidefiniteConeTriangle}, \textsf{SOS1}, \textsf{SOS2}, \textsf{Complements}, ...
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Multiplicity of formulations}
+$l \le a^\top x \le u$ can be formulated in at least three ways:
+\begin{enumerate}
+    \item Using the original formulation: $l \le a^\top x \le u$ (\textsf{ScalarAffineFunction}-in-\textsf{Interval})\pause
+    \item Splitting the constraint into $a^\top x \le u$ (\textsf{ScalarAffineFunction}-in-\textsf{LessThan}) and $a^\top x \ge l$ (\textsf{ScalarAffineFunction}-in-\textsf{GreaterThan})\pause
+    \item Introducing a slack variable $y$, with constraints $a^\top x - y = 0$ (\textsf{ScalarAffineFunction}-in-\textsf{EqualTo}) and $l \le y \le u$ (\textsf{SingleVariable}-in-\textsf{Interval})
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bridging example}
+\begin{equation*}
+    \begin{array}{rl}
+        \min & x^2 + x + 1\\
+        \text{s.t.} & x \in \mathbb{R}^1_+.
+    \end{array}
+\end{equation*}
+to
+\begin{itemize}
+    \item \textsf{VectorAffineFunction}-in-\textsf{RotatedSecondOrderCone} constraints;
+    \item \textsf{ScalarAffineFunction} objective functions; and
+    \item Variables in \textsf{Nonnegatives}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Objective slack bridge}
+\begin{equation*}
+    \begin{array}{rl}
+        \min & x^2 + x + 1\\
+        \text{s.t.} & x \in \mathbb{R}^1_+.
+    \end{array}
+\end{equation*}
+becomes
+\begin{equation*}
+    \begin{array}{rl}
+        \min & \alert{y}\\
+        \text{s.t.} & \alert{x^2 + x + 1 \le y}\\
+        & x \in \mathbb{R}^1_+\\
+        & \alert{y\ \mathsf{free}.}
+    \end{array}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Objective functionize bridge}
+\begin{equation*}
+    \begin{array}{rl}
+        \min & y\\
+        \text{s.t.} & x^2 + x + 1 \le y\\
+        & x \in \mathbb{R}^1_+\\
+        & y\ \mathsf{free}.
+    \end{array}
+\end{equation*}
+becomes
+\begin{equation*}
+    \begin{array}{rl}
+        \min & 1y \alert{+ 0}\\
+        \text{s.t.} & x^2 + x + 1 \le y\\
+        & x \in \mathbb{R}^1_+\\
+        & y\ \mathsf{free}.
+    \end{array}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Constraint quadratic to RSOC bridge}
+Let $Q = U^\top U$, we have
+\begin{equation*}
+    \begin{array}{l}
+    0.5x^\top Q x + a^\top x + b \le 0 \\
+    \iff || Ux ||_2 \le 2(-a^\top x - b)\\
+    \iff [1, -a^\top x - b, Ux] \in \textsf{RotatedSecondOrderCone(3)},
+    \end{array}
+\end{equation*}
+\begin{equation*}
+    \begin{array}{rl}
+        \min & 1y + 0\\
+        \text{s.t.} & x^2 + x + 1 \le y\\
+        & x \in \mathbb{R}^1_+\\
+        & y\ \mathsf{free}
+    \end{array}
+\end{equation*}
+becomes
+\begin{equation*}
+    \begin{array}{rl}
+        \min & 1y + 0\\
+        \text{s.t.} & \alert{[1, -x + y - 1, \sqrt 2x] \in \textsf{RotatedSecondOrderCone(3)}}\\
+        & x \in \mathbb{R}^1_+\\
+        & y\ \mathsf{free}.
+    \end{array}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variable free bridge}
+\begin{equation*}
+    \begin{array}{rl}
+        \min & 1y + 0\\
+        \text{s.t.} & [1, -x + y - 1, \sqrt 2x] \in \textsf{RotatedSecondOrderCone(3)}\\
+        & x \in \mathbb{R}^1_+\\
+        & y\ \mathsf{free}.
+    \end{array}
+\end{equation*}
+becomes
+\begin{equation*}
+    \begin{array}{rl}
+        \min & \alert{1y^+ - 1 y^-} + 0\\
+        \text{s.t.} & [1, -x + \alert{1y^+ - 1 y^-} - 1, \sqrt 2x] \in \textsf{RotatedSecondOrderCone(3)}\\
+        & [x, \alert{y^+}, \alert{y^-}] \in \mathbb{R}^3_+.
+    \end{array}
+\end{equation*}
+\end{frame}
+
+
+  \begin{frame}[allowframebreaks]
+    \frametitle{Examples}
+    \begin{block}{FlipSignBridge}
+      \begin{itemize}
+        \item \textbf{Variable} $x \ge l$ substituted by $x = -y$ where $y \le -l$.
+        \item \textbf{Constraint} $a^\top x \le \beta$ transformed into $-a^\top x \ge -\beta$.
+      \end{itemize}
+    \end{block}
+    \begin{block}{VectorizeBridge}
+      \begin{itemize}
+        \item \textbf{Variable} $x \ge l$ substituted by $x = y + l$ where $y \in \R^1_+$.
+        \item \textbf{Constraint} $a^\top x \le \beta$ transformed into $[a^\top x - \beta] \in \R^1_-$.
+      \end{itemize}
+    \end{block}
+    \begin{block}{IntervalBridge}
+      \begin{itemize}
+        \item \textbf{Constraint} $l \le a^\top x \le u$ transformed into $a^\top x \ge l$ and $a^\top x \le u$.
+      \end{itemize}
+    \end{block}
+    \begin{block}{IndicatorBridge}
+      \begin{itemize}
+        \item \textbf{Constraint} $y$ binary, $\neg y \Rightarrow a^\top x \le \beta$ transformed into $z$ binary, $z + y = 1$ and $z \Rightarrow a^\top x \le \beta$.
+      \end{itemize}
+    \end{block}
+    \begin{block}{FreeBridge}
+      \begin{itemize}
+        \item \textbf{Variable} $x \in \R$ substituted by $x = y + z$ where $y \in \R_+$ and $z \in \R_-$.
+      \end{itemize}
+    \end{block}
+
+    \begin{block}{SlackBridge}
+      \begin{itemize}
+        \item \textbf{Constraint} $f \in S$ transformed into $f = x$ for variable $x \in S$.
+        \item \textbf{Objective} $\min f$ transformed into $\min x$ with $f \le x$.
+      \end{itemize}
+    \end{block}
+  \end{frame}
+
+\begin{frame}
+  \frametitle{Bridge hyper-graph}
+\begin{itemize}
+    \item Consider directed hyper-graph $G(N, E)$ with one node $n\in N$ for each function-in-set pair.
+
+    \item Solver declares set of supported nodes $S$.
+
+    \item Each directed hyper-edge $e \in E$, is a bridge, and a source node $s(e)\in N$ and a set of target nodes $T(e) \subseteq N$.
+
+    \item Each edge has weight $w(e)$
+\end{itemize}
+
+$$C(n) = \begin{cases}
+0 & n \in S \\
+\min\limits_{e\in E\;|\;s(e) = n}\{w(e) + \sum\limits_{n^\prime \in T(e)} C(n^\prime)\}&\text{otherwise}.
+\end{cases}$$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hyper-graph nodes}
+There are actually three types of nodes
+\begin{itemize}
+    \item Objective nodes, for each objective $\min f$
+    \item Constraint nodes, for each $f$-in-$S$
+    \item Variable nodes for each variable-in-$S$
+\end{itemize}
+Hyper-edges start at a node, and can target nodes of different types.
+\end{frame}
+
+
+
+\begin{frame}{Interval constraint for SDPA}
+\Wider[4em]{
+  \begin{center}
+    \begin{tikzpicture}[xscale=4.5, yscale=2]
+      \tikzset{VertexStyle/.style = {}}
+      \Vertex[x=1, y=-1, L={$a^\top x + \beta \ge l$}]{G}
+      \Vertex[x=2, y=-1, L={$a^\top x + \beta \le u$}]{L}
+      \Vertex[x=1, y=-2, L={$A x + b \in \mathbb{R}_+^1$}]{N}
+      \Vertex[x=2, y=-2, L={$A x + b \in \mathbb{R}_-^1$}]{P}
+      \Vertex[x=1, y=-3, L={$A x + b \in \{0\}^1$}]{Z}
+      \Vertex[x=0, y=0, L={$x \le u$}]{VL}
+      \Vertex[x=0, y=-1, L={$x \ge l$}]{VG}
+      \Vertex[x=0, y=-2, L={$x \in \mathbb{R}_-^1$}]{VP}
+      \tikzset{VertexStyle/.style = {
+        shape = rectangle,
+        draw
+      }}
+      \Vertex[x=1, y=0, L={$l \le a^\top x + \beta \le u$}]{I}
+      \tikzset{VertexStyle/.style = {
+        shape = rounded rectangle,
+        draw
+      }}
+      \Vertex[x=2, y=-3, L={$a^\top x = \beta$}]{E}
+      \Vertex[x=0, y=-3, L={$x \in \mathbb{R}_+^1$}]{VN}
+      \tikzset{EdgeStyle/.style = {->}}
+      \Edge[label={flip}](L)(G)
+      \Edge[label={flip}](VP)(VN)
+      \Edge[label={flip}](VL)(VG)
+      \Edge[label={split}](I)(L)
+      \Edge[label={split}](I)(G)
+      \Edge[label={vectorize}](G)(N)
+      \Edge[label={vectorize}](L)(P)
+      \Edge[label={scalarize}](Z)(E)
+      \Edge[label={slack}](P)(Z)
+      \Edge[label={slack}](N)(Z)
+      \Edge[label={slack}](N)(VN)
+      \Edge[label={slack}](G)(VG)
+      \tikzset{EdgeStyle/.style = {->, pos=0.3}}
+      \Edge[label={slack}](G)(E)
+      \tikzset{EdgeStyle/.style = {->, bend left=22, pos=0.3}}
+      \Edge[label={slack}](P)(VP)
+      \tikzset{EdgeStyle/.style = {->, bend left=20, pos=0.7}}
+      \Edge[label={vectorize}](VL)(VP)
+      \tikzset{EdgeStyle/.style = {->, bend left=25, pos=0.8}}
+      \Edge[label={slack}](L)(E)
+      \tikzset{EdgeStyle/.style = {->, bend right=20, pos=0.3}}
+      \Edge[label={vectorize}](VG)(VN)
+      \tikzset{EdgeStyle/.style = {->, bend right=25}}
+      \tikzset{EdgeStyle/.style = {->, bend right=60, pos=0.2}}
+      \Edge[label={slack}](L)(VL)
+      \tikzset{EdgeStyle/.style = {->}}
+      \Edge[label={flip}](P)(N)
+    \end{tikzpicture}
+  \end{center}
+}
+\end{frame}
+
+\begin{frame}{Quadratic objective for SDPA}
+\Wider[4em]{
+  \begin{center}
+    \begin{tikzpicture}[xscale=4.5, yscale=2]
+      \tikzset{VertexStyle/.style = {}}
+      \Vertex[x=2, y=-1, L={$x^\top Q x/2 + a^\top x \le \beta$}]{L}
+      \Vertex[x=1, y=-1, L={$Ax + b \in {}$RSOC}]{R}
+      \Vertex[x=1, y=-2, L={$A x + b \in \mathbb{S}_+$}]{P}
+      \Vertex[x=0, y=-2, L={$x \in {}$RSOC}]{VR}
+      \Vertex[x=1, y=-3, L={$A x + b \in \{0\}^1$}]{Z}
+      \Vertex[x=1, y=0, L={$x$ free}]{F}
+      \Vertex[x=0, y=0, L={$x \in \mathbb{R}_-^1$}]{VP}
+      \Vertex[x=2, y=-1.6, L={$\min x$}]{SV}
+      \tikzset{VertexStyle/.style = {
+        shape = rectangle,
+        draw
+      }}
+      \Vertex[x=2, y=0, L={$\min x^\top Q x/2 + a^\top x + \beta$}]{Q}
+      \tikzset{VertexStyle/.style = {
+        shape = rounded rectangle,
+        draw
+      }}
+      \Vertex[x=2, y=-3, L={$a^\top x = \beta$}]{E}
+      \Vertex[x=2, y=-2.4, L={$\min a^\top x$}]{AF}
+      \Vertex[x=0, y=-3, L={$x \in \mathbb{S}_+$}]{VPSD}
+      \Vertex[x=0, y=-1, L={$x \in \mathbb{R}_+^1$}]{VN}
+      \tikzset{EdgeStyle/.style = {->}}
+      \Edge[label={slack}](Q)(L)
+      \Edge[label={slack}](Q)(F)
+      \Edge[label={quad}](L)(R)
+      \Edge[label={slack}](P)(Z)
+      \Edge[label={slack}](P)(VPSD)
+      \Edge[label={slack}](R)(VR)
+      \Edge[label={scalarize}](Z)(E)
+      \Edge[label={rsoctopsd}](R)(P)
+      \Edge[label={rsoctopsd}](VR)(VPSD)
+      \Edge[label={free}](F)(VP)
+      \Edge[label={free}](F)(VN)
+      \Edge[label={flip}](VP)(VN)
+      \Edge[label={functionize}](SV)(AF)
+      \tikzset{EdgeStyle/.style = {->, bend left=30, pos=0.7}}
+      \Edge[label={slack}](R)(Z)
+      \tikzset{EdgeStyle/.style = {->, bend left=45, pos=0.85}}
+      \Edge[label={slack}](Q)(SV)
+    \end{tikzpicture}
+  \end{center}
+}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Conclusion}
+  JuMP and MathOptInterface provide an optimization framework \alert{extensible} by \alert{design}.
+
+  \vspace{4em}
+
+  Bridges allow to communicate \alert{custom} structure to solvers from \alert{solver-independent} models.
+\end{frame}
+
+\end{document}

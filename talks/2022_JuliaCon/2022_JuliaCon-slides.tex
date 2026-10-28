@@ -1,0 +1,163 @@
+\documentclass{beamer}
+\usetheme[block=fill]{metropolis}
+\usepackage{graphicx}
+\graphicspath{{../../latex/images/}}
+\usepackage{boolexpr}
+\usepackage{kpfonts}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage[labelformat=empty]{caption}
+\usepackage[official]{eurosym}
+
+\usepackage[charsperline=60]{jlcode}
+\addlitjlmacros{@constraint}{@constraint}{11}
+\addlitjlmacros{@variable}{@variable}{9}
+\addlitjlmacros{@objective}{@objective}{10}
+
+\usepackage{minted}
+
+\usepackage{siunitx}
+
+\usepackage[math]{iwona}
+\usepackage{scalerel}
+\def\lVert{\mid\!\mid}
+\def\rVert{\mid\!\mid}
+
+\usepackage[normalem]{ulem}
+\usepackage{mathtools}
+
+\usepackage{../../latex/custom}
+\usepackage{amsfonts}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+
+\usepackage{framed}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\aeur}{\alpha_\text{\euro}}
+\newcommand{\adol}{\alpha_\$}
+\newcommand{\apou}{\alpha_\text{\pounds}}
+
+\title{Multivariate polynomials in Julia}
+\date{July, 2022}
+\author{Beno\^it Legat}
+\institute{
+  Joint work with Robin Deits, Chris Elrod and Yingbo Ma\\
+  JuliaCon-dev 2022 \hfill \includegraphics[scale=0.2]{juliacon.png}\\[5em]
+}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+\begin{document}
+  \maketitle
+
+  \begin{frame}
+    \frametitle{Where are multivariate polynomials used in Julia ?}
+    Used in variety of applications:
+    \begin{itemize}
+      \item HomotopyContinuation: Solve polynomial systems with homotopy continuation
+      \item SumOfSquares: Sum-of-Squares programming
+      \item Symbolics: Manipulate and simplify symbolic expressions
+      \item Groebner: Gröbner bases computations based on Faugère's F4 algorithm
+      \item SemialgebraicSets: Reduction modulo ideal with Gröbner bases + solve polynomial systems with Schur decomposition
+      \item Nemo/AbstractAlgebra: Computer algebra system
+      \item CondensedMatterSOS: Condensed Matter with Sum-of-Squares
+      \item ...
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{How are multivariate polynomials represented?}
+    Sorted vector of terms:
+\begin{jllisting}
+struct Term{C,M}
+    coefficient::C
+    monomial::M
+end
+struct Polynomial{C,M}
+    terms::Vector{Term{T,M}}
+end
+\end{jllisting}
+
+    \uncover<2->{
+      Sorted how ? \alert{Any} ordering ?
+    }
+
+    \uncover<3->{
+      If $m_1 > m_2$ and $m_3 > m_4$, we need $m_1m_3 > m_2m_4$.\\
+      {\scriptsize See 2.\S2.Definition 1 of Cox Little O'Shea ``\emph{Ideal, Varieties, and Algorithms}''}.
+    }
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{How are monomials represented?}
+    \begin{block}{DynamicPolynomials}
+      \vspace{-0.5cm}
+\begin{jllisting}
+struct Variable
+    id::Int
+    name::String
+end
+struct Monomial
+    variables::Vector{Variable}
+    exponents::Vector{Int}
+end
+\end{jllisting}
+      \vspace{-0.5cm}
+    \end{block}
+
+    \begin{block}{TypedPolynomials (Robin Deits)}
+      \vspace{-0.5cm}
+\begin{jllisting}
+struct Variable{Name} end
+struct Monomial{V<:Tuple{Vararg{Variable,N}},N}
+    exponents::NTuple{N,Int}
+end
+\end{jllisting}
+    \end{block}
+      \vspace{-1cm}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{How are monomials represented? (part 2)}
+    \begin{block}{SIMDPolynomials (Chris Elrod and Yingbo Ma)}
+      Bit packed with maximum $L$ variables and $E$ bits of exponents (so $64K > LE$).
+\begin{jllisting}
+struct Monomial{L,E,K}
+    bits::NTuple{K,UInt64}
+end
+\end{jllisting}
+    \end{block}
+    \begin{block}{CondensedMatterSOS (Jacopo Surace)}
+\begin{jllisting}
+struct Monomial
+    variables::SortedDict{Int,SpinVariable}
+end
+\end{jllisting}
+    \end{block}
+
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{MultivariatePolynomials API}
+    \begin{itemize}
+      \item \jlinl{AbstractVariable}, \jlinl{AbstractMonomial}, \jlinl{AbstractTerm}, \jlinl{AbstractPolynomials}
+      \item Implementation-independent API: \jlinl{degree}, \jlinl{coefficient}, \jlinl{monomial}, \jlinl{isless}, \jlinl{+}, ...
+      \item Implements MutableArithmetics to make \alert{generic} code \alert{fast}
+      \item Pretty printing
+      \item Differentiation
+      \item Substitution (partial) and evaluation (i.e., full substitution)
+      \item Euclidean division and \alert{gcd}/\alert{gcdx}
+    \end{itemize}
+    Get all that for free for any new fancy monomial representation!
+  \end{frame}
+
+\end{document}

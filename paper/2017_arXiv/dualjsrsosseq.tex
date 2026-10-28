@@ -1,0 +1,49 @@
+\subsection{Generating high growth sequence}
+\label{sec:algo}
+In this section we give an algorithm that generates an infinite
+sequence of matrices such that the asymptotic growth rate of the
+product of the matrices is arbitrarily close to the CJSR.
+Note that by \defref{cjsr}, this asymptotic growth rate must be
+smaller than the CJSR.
+
+
+Given an \arc{} $e \in \Arcs$, let $\pE_e[p(x)] = \la \pmu_e, p(x) \ra$.
+Given a polynomial $p_0(x) \in \inte(\Sosh)$ and an initial edge $(v_1,v_0,\sigma_1)$,
+the algorithm builds a $\G^\Tr$-admissible
+sequence $(v_1,v_0,\sigma_1),\allowbreak(v_2,v_1,\sigma_2), \ldots$ such that
+\begin{equation}
+	\label{eq:thetak}
+  \theta_k \eqdef \pE_{v_{k}v_{k-1}\sigma_k}[p_0(A_{\sigma_1} \cdots A_{\sigma_k}x)]
+\end{equation}
+remains ``large'' for increasing $k$.
+As we will see, using \lemref{thetatoA},
+this implies that $A_{\sigma_1} \cdots A_{\sigma_k}$ has a ``large'' norm.
+
+\input{sosbound}
+\input{thetatoA}
+
+
+\input{prodl}
+
+
+
+
+\lemref{maxdegpathl} provides a guarantee on the growth rate of $\theta_k$, defined in \eqref{eq:thetak},
+using the dual constraint~\eqref{eq:dual1}.
+
+\input{dualconsl}
+\input{maxdegpathl}
+
+\theoref{fourth} translates the guarantee on $\theta_k$ to a guarantee on $A_{\sigma_1} \cdots A_{\sigma_k}$ using \lemref{thetatoA}.
+
+\input{fourth}
+
+Taking the limit $l \to \infty$ and using \eqref{eq:rhoAG}, we see
+that Theorem~\ref{theo:second} is a corollary of
+Theorem~\ref{theo:fourth}.
+
+
+
+\input{simple3}
+
+\input{paths}

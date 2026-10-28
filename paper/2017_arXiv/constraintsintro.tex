@@ -1,0 +1,19 @@
+In some applications the values that $\sigma_k$ can take in \eqref{eq:switchsys} may depend on $\sigma_{k-1}, \sigma_{k-2},\\\ldots$.
+These constraints are often conveniently represented using a \emph{finite automaton} and the JSR under such constraints
+is called \emph{constrained joint spectral radius} (CJSR) \cite{dai2012gel}; an example of constrained s\witch{} system is given by \exemref{run1} and its automaton is illustrated by \figref{run}.
+
+\input{runex1}
+
+The automaton representing the constraints can be represented by a
+strongly connected labelled directed graph $\G(\Nodes,\Arcs)$
+of \nodes{} $\Nodes$ and \arcs{} $\Arcs$,
+possibly with parallel \arcs{}.  The labels are elements of the set
+$[m]$ and $\Arcs$ is a subset of $\Nodes \times \Nodes
+\times [m]$.  We say that $(u,v,\sigma) \in \Arcs$ if
+there is an \arc{} between node $u$ and node $v$ with label $\sigma$.
+The iteration~\ref{eq:switchsys} is rewritten as follows to take the automaton into account:
+\begin{equation}
+  \label{eq:cswitchsys}
+  x_k = A_{\sigma_k} x_{k-1}, \qquad (\sigma_1, \ldots, \sigma_k) \text{ are the respective labels of a path in }\G
+  .
+\end{equation}

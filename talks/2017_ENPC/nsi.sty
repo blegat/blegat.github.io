@@ -1,0 +1,294 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{nsi}[2015/11/09 NSI package]
+
+\usepackage{listofitems}
+
+\newcommand{\Ac}[1][n]{\mathcal{A}_{#1}}%
+\newcommand{\Es}[1][n]{\mathcal{E}_{#1}}%
+\newcommand{\dEs}[1][n]{\mathcal{E}_{#1}^*}%
+\newcommand{\Ec}[1][n]{\mathcal{H}_{#1}}%
+\newcommand{\cEc}[1][n]{\cl{\Ec[#1]}}
+\newcommand{\dEc}[1][n]{(\cl{\Ec[#1]})^*}
+\newcommand{\Pm}[1][n]{\mathcal{P}_{#1}}
+\newcommand{\dPm}[1][n]{\Pm[#1]^*}
+\newcommand{\dda}[2]{\la \Delta_{#1}, #2 \ra}
+\newcommand{\dd}[1]{\Delta_{#1}}
+\newcommand{\nda}[3]{\dda{#1|#2}{#3}}
+\newcommand{\nd}[2]{\dd{#1|#2}}
+\newcommand{\diff}[3]{\dda{{#1},{#2}}{#3}}
+\newcommand{\difff}[4]{\dda{{#1},{#2}|#3}{#4}}
+\newcommand{\di}[2]{\dd{{#1},{#2}}}
+\newcommand{\ddif}[4]{\diff{#2}{#3|#4}{#1}}
+\newcommand{\ddi}[3]{\di{#1}{#2|#3}}
+\newcommand{\inadh}[3]{D_{#1,#2|#3}}
+\newcommand{\ad}{\hat{f}}
+\newcommand{\bH}[2][1]{H_{#1}({#2})}
+\usepackage[makeroom]{cancel}
+\newcommand{\matus}{Mat\'{u}\u{s}}
+\newcommand{\re}[2]{r_{#1}^{#2}}
+\newcommand{\ingsc}{\mathbb{I}^*}
+\newcommand{\ingij}[2]{\mathbb{I}_{#1#2}}
+\newcommand{\ingsq}[2]{\square_{#1#2}}
+
+\newcommand{\iae}[2]{\mathsf{ia}_{#1,#2}}
+\newcommand{\ia}[3]{\iae{#1}{#2|#3}}
+\newcommand{\iai}[3]{\ia{#1}{#2}{#3}^{-1}}
+\newcommand{\sa}[2]{\mathsf{sa}_{#1|#2}}
+\newcommand{\sai}[2]{\sa{#1}{#2}^{-1}}
+\newcommand{\dpp}[2]{\delta_{{#1},{#2}}}
+\newcommand{\ddp}[3]{\dpp{#1}{#2|#3}}
+\newcommand{\contra}[2]{#2 / #1}
+\newcommand{\contr}[2]{#2 \cdot #1}
+
+\newcommand{\nmax}{n_{\max}}
+
+\newcommand{\ine}{h^*}
+
+\newcommand{\latthreenb}[1]{
+  \setsepchar{ }
+  \readlist\args{#1}
+\begin{center}
+  \begin{tikzpicture}[x=3.2cm,y=1.8cm]
+    \tikzset{VertexStyle/.style = {
+    shape = rectangle}}
+    \Vertex[x=1, y=0,L={$\emptyset$ 0}]{000}
+    \Vertex[x=0, y=1,L={$\{1\}$ \args[1]}]{001}
+    \Vertex[x=1, y=1,L={$\{2\}$ \args[2]}]{010}
+    \Vertex[x=2, y=1,L={$\{3\}$ \args[4]}]{100}
+    \Vertex[x=0, y=2,L={$\{1,2\}$ \args[3]}]{011}
+    \Vertex[x=1, y=2,L={$\{1,3\}$ \args[5]}]{101}
+    \Vertex[x=2, y=2,L={$\{2,3\}$ \args[6]}]{110}
+    \Vertex[x=1, y=3,L={$\{1,2,3\}$ \args[7]}]{111}
+
+    \Edge(000)(100)
+    \Edge(000)(010)
+    \Edge(000)(001)
+
+
+    \Edge(100)(110)
+    \Edge(100)(101)
+
+    \Edge(010)(110)
+    \Edge(010)(011)
+
+    \Edge(001)(101)
+    \Edge(001)(011)
+
+
+    \Edge(110)(111)
+    \Edge(101)(111)
+    \Edge(011)(111)
+  \end{tikzpicture}
+\end{center}
+}
+
+\newcommand{\latthree}[2][2]{
+  \setsepchar{ }
+  \readlist\args{#2}
+\begin{center}
+  \begin{tikzpicture}[x=#1cm,y=2cm]
+    \tikzset{VertexStyle/.style = {
+    shape = rectangle}}
+    \Vertex[x=1, y=0,L={000 \textbf{0}}]{000}
+    \Vertex[x=0, y=1,L={001 \textbf{\args[1]}}]{001}
+    \Vertex[x=1, y=1,L={010 \textbf{\args[2]}}]{010}
+    \Vertex[x=2, y=1,L={100 \textbf{\args[4]}}]{100}
+    \Vertex[x=0, y=2,L={011 \textbf{\args[3]}}]{011}
+    \Vertex[x=1, y=2,L={101 \textbf{\args[5]}}]{101}
+    \Vertex[x=2, y=2,L={110 \textbf{\args[6]}}]{110}
+    \Vertex[x=1, y=3,L={111 \textbf{\args[7]}}]{111}
+
+    \Edge(000)(100)
+    \Edge(000)(010)
+    \Edge(000)(001)
+
+
+    \Edge(100)(110)
+    \Edge(100)(101)
+
+    \Edge(010)(110)
+    \Edge(010)(011)
+
+    \Edge(001)(101)
+    \Edge(001)(011)
+
+
+    \Edge(110)(111)
+    \Edge(101)(111)
+    \Edge(011)(111)
+  \end{tikzpicture}
+\end{center}
+}
+
+\newcommand{\latfournb}[2][1.2]{
+  \setsepchar{ }
+  \readlist\args{#2}
+\begin{center}
+  \begin{tikzpicture}[x=#1cm,y=1.7cm]
+    \tikzset{VertexStyle/.style = {
+    shape = rectangle}}
+    \Vertex[x=2.5 , y=0,L={0000 0}]{0000}
+    \Vertex[x=0.25, y=1,L={0001 \args[1]}]{0001}
+    \Vertex[x=1.75, y=1,L={0010 \args[2]}]{0010}
+    \Vertex[x=3.25, y=1,L={0100 \args[4]}]{0100}
+    \Vertex[x=4.75, y=1,L={1000 \args[8]}]{1000}
+    \Vertex[x=5   , y=2,L={1100 \args[12]}]{1100}
+    \Vertex[x=4   , y=2,L={1010 \args[10]}]{1010}
+    \Vertex[x=3   , y=2,L={0110 \args[6]}]{0110}
+    \Vertex[x=2   , y=2,L={1001 \args[9]}]{1001}
+    \Vertex[x=1   , y=2,L={0101 \args[5]}]{0101}
+    \Vertex[x=0   , y=2,L={0011 \args[3]}]{0011}
+    \Vertex[x=4.75, y=3,L={1110 \args[14]}]{1110}
+    \Vertex[x=3.25, y=3,L={1101 \args[13]}]{1101}
+    \Vertex[x=1.75, y=3,L={1011 \args[11]}]{1011}
+    \Vertex[x=0.25, y=3,L={0111 \args[7]}]{0111}
+    \Vertex[x=2.5 , y=4,L={1111 \args[15]}]{1111}
+
+    \Edge(0000)(1000)
+    \Edge(0000)(0100)
+    \Edge(0000)(0010)
+    \Edge(0000)(0001)
+
+
+    \Edge(1000)(1100)
+    \Edge(1000)(1010)
+    \Edge(1000)(1001)
+
+    \Edge(0100)(1100)
+    \Edge(0100)(0110)
+    \Edge(0100)(0101)
+
+    \Edge(0010)(1010)
+    \Edge(0010)(0110)
+    \Edge(0010)(0011)
+
+    \Edge(0001)(1001)
+    \Edge(0001)(0101)
+    \Edge(0001)(0011)
+
+
+    \Edge(1100)(1110)
+    \Edge(1100)(1101)
+
+    \Edge(1010)(1110)
+    \Edge(1010)(1011)
+
+    \Edge(0110)(1110)
+    \Edge(0110)(0111)
+
+    \Edge(1001)(1101)
+    \Edge(1001)(1011)
+
+    \Edge(0101)(1101)
+    \Edge(0101)(0111)
+
+    \Edge(0011)(1011)
+    \Edge(0011)(0111)
+
+
+    \Edge(1110)(1111)
+    \Edge(1101)(1111)
+    \Edge(1011)(1111)
+    \Edge(0111)(1111)
+  \end{tikzpicture}
+\end{center}
+}
+
+
+
+\newcommand{\latfour}[2][1.2]{
+  \setsepchar{ }
+  \readlist\args{#2}
+\begin{center}
+  \begin{tikzpicture}[x=#1cm,y=2cm]
+    \tikzset{VertexStyle/.style = {
+    shape = rectangle}}
+    \Vertex[x=2.5 , y=0,L={0000 \textbf{0}}]{0000}
+    \Vertex[x=0.25, y=1,L={0001 \textbf{\args[1]}}]{0001}
+    \Vertex[x=1.75, y=1,L={0010 \textbf{\args[2]}}]{0010}
+    \Vertex[x=3.25, y=1,L={0100 \textbf{\args[4]}}]{0100}
+    \Vertex[x=4.75, y=1,L={1000 \textbf{\args[8]}}]{1000}
+    \Vertex[x=5   , y=2,L={1100 \textbf{\args[12]}}]{1100}
+    \Vertex[x=4   , y=2,L={1010 \textbf{\args[10]}}]{1010}
+    \Vertex[x=3   , y=2,L={0110 \textbf{\args[6]}}]{0110}
+    \Vertex[x=2   , y=2,L={1001 \textbf{\args[9]}}]{1001}
+    \Vertex[x=1   , y=2,L={0101 \textbf{\args[5]}}]{0101}
+    \Vertex[x=0   , y=2,L={0011 \textbf{\args[3]}}]{0011}
+    \Vertex[x=4.75, y=3,L={1110 \textbf{\args[14]}}]{1110}
+    \Vertex[x=3.25, y=3,L={1101 \textbf{\args[13]}}]{1101}
+    \Vertex[x=1.75, y=3,L={1011 \textbf{\args[11]}}]{1011}
+    \Vertex[x=0.25, y=3,L={0111 \textbf{\args[7]}}]{0111}
+    \Vertex[x=2.5 , y=4,L={1111 \textbf{\args[15]}}]{1111}
+
+    \Edge(0000)(1000)
+    \Edge(0000)(0100)
+    \Edge(0000)(0010)
+    \Edge(0000)(0001)
+
+
+    \Edge(1000)(1100)
+    \Edge(1000)(1010)
+    \Edge(1000)(1001)
+
+    \Edge(0100)(1100)
+    \Edge(0100)(0110)
+    \Edge(0100)(0101)
+
+    \Edge(0010)(1010)
+    \Edge(0010)(0110)
+    \Edge(0010)(0011)
+
+    \Edge(0001)(1001)
+    \Edge(0001)(0101)
+    \Edge(0001)(0011)
+
+
+    \Edge(1100)(1110)
+    \Edge(1100)(1101)
+
+    \Edge(1010)(1110)
+    \Edge(1010)(1011)
+
+    \Edge(0110)(1110)
+    \Edge(0110)(0111)
+
+    \Edge(1001)(1101)
+    \Edge(1001)(1011)
+
+    \Edge(0101)(1101)
+    \Edge(0101)(0111)
+
+    \Edge(0011)(1011)
+    \Edge(0011)(0111)
+
+
+    \Edge(1110)(1111)
+    \Edge(1101)(1111)
+    \Edge(1011)(1111)
+    \Edge(0111)(1111)
+  \end{tikzpicture}
+\end{center}
+}
+
+\newcommand{\strong}[1]{\textbf{#1}}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\SX}{\mathcal{S}_X}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\xor}{\oplus}
+\newcommand{\DKL}{D_\mathrm{KL}}
+
+\newcommand{\Iis}{I}
+\newcommand{\Jis}{J}
+\newcommand{\Kis}{K}
+\newcommand{\Lis}{L}
+
+\newcommand{\pmf}{probability mass function}
+\newcommand{\pmfs}{probability mass functions}
+\newcommand{\pdf}{probability density function}
+\newcommand{\pdfs}{probability density functions}
+
+\newcommand{\tEc}{\textcolor{blue}{Entropic Cone}}
+
+\endinput

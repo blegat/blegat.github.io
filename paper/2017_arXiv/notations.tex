@@ -1,0 +1,29 @@
+We define the automaton $\G^\Tr (\Nodes,\Arcs^\Tr )$ where
+\(\Arcs^\Tr  = \{\, (v,u,\sigma) : (u,v,\sigma)\\\in \Arcs \,\}.\)
+We denote as $\Arcs_k$ the subset of $\Arcs^k$ (the $k$th cartesian power of $\Arcs$) that represents paths of length $k$ in $\G$.
+The \ktup{k} $(\sigma_1, \sigma_2, \ldots, \sigma_k)$ is said to be $\G$-\emph{admissible} if $\sigma_1, \ldots, \sigma_k$ are the respective labels of a path of length $k$ in $\G$.
+We denote the set $\{1, \ldots, m\}$ as $[m]$ and the set of all \ktups{k} of $[m]^k$ that are $\G$-admissible as $\G_k$.
+The sequence $\sigma_1, \sigma_2, \ldots$ is $\G$-admissible (resp. $\G^\Tr $-admissible) if $(\sigma_1, \ldots, \sigma_k)$ (resp. $(\sigma_k, \ldots, \sigma_1)$) is $\G$-admissible for any $k \geq 1$.
+We denote $A_{\sigma_k}\cdots A_{\sigma_1}$ as $A_s$ where $s = (\sigma_1, \ldots, \sigma_k)$ or $s$ is a path with these respective labels.
+
+To shorten the notation we denote the $i$th node of a path $s$ as
+$s(i)$ and the $i$th edge as $s[i]$.
+Also, for a given \ktup{k} $s$, we denote $(s(i),\ldots,s(k))$ by $s(i:)$.
+We define
+\begin{align*}
+  \Arcsin_k(v) & = \{\, s \in \Arcs_k \mid s(k+1) = v \,\} &
+  \Arcsin_k[e] & = \{\, s \in \Arcs_k \mid s[k] = e \,\}\\
+  \Arcsout_k(v) & = \{\, s \in \Arcs_k \mid s(1) = v \,\} &
+  \Arcsout_k[e] & = \{\, s \in \Arcs_k \mid s[1] = e \,\}\\
+  \Arcs_k(u, v) & = \Arcsout_k(u) \cap \Arcsin_k(v).
+\end{align*}
+We denote the indegree (resp. outdegree) of a node $v \in \Nodes$ as
+$\din(v)$ (resp. $\dout(v)$) and the maximum indegree (resp.
+outdegree) of $\G$ as $\mdin(\G) = \max_{v \in \Nodes} \din(v)$ (resp.
+$\mdout(\G) = \max_{v \in \Nodes} \dout(v)$).
+We also denote the number of paths of length $k$ ending (resp.
+starting) at a node $v \in \Nodes$ as $\din_k(v) \eqdef |\Arcsin_k(v)|$ (resp. $\dout_k(v) \eqdef |\Arcsout_k(v)|$)
+and define $\mdin_k(\G) = \max_{v \in \Nodes} \din_k(v)$ and
+$\mdout_k(\G) = \max_{v \in \Nodes} \dout_k(v)$.
+Note that $\mdin_1(\G) = \mdin(\G)$, $\mdout_1(\G) = \mdout(\G)$ and
+for any $k$, $\mdout_k(\G^\Tr) = \mdin_k(\G)$.

@@ -13,3 +13,6 @@
 # * \newcommand{\phrase}{This is a long phrase to copy.}
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
+
+# Documents are compiled separately; only the resulting PDFs are deployed.
+@def ignore = ["talks/", "paper/", "latex/", "scripts/", "_build/", "_documents/"]

@@ -1,0 +1,168 @@
+[
+  {
+    "directory": "talks/2016_CTUP",
+    "main": "2016_CTUP-slides.tex",
+    "output": "talks/2016_CTUP.pdf"
+  },
+  {
+    "directory": "talks/2016_HSCC",
+    "main": "2016_HSCC-slides.tex",
+    "output": "talks/2016_HSCC.pdf"
+  },
+  {
+    "directory": "talks/2016_SITB",
+    "main": "2016_SITB-slides.tex",
+    "output": "talks/2016_SITB.pdf"
+  },
+  {
+    "directory": "talks/2017_BNLM",
+    "main": "2017_BNLM-slides.tex",
+    "output": "talks/2017_BNLM.pdf"
+  },
+  {
+    "directory": "talks/2017_ENPC",
+    "main": "2017_ENPC-slides.tex",
+    "output": "talks/2017_ENPC.pdf"
+  },
+  {
+    "directory": "talks/2017_JuMP",
+    "main": "2017_JuMP-slides.tex",
+    "output": "talks/2017_JuMP.pdf"
+  },
+  {
+    "directory": "talks/2017_UCLA",
+    "main": "2017_UCLA-slides.tex",
+    "output": "talks/2017_UCLA.pdf"
+  },
+  {
+    "directory": "talks/2018_ADHS",
+    "main": "2018_ADHS-slides.tex",
+    "output": "talks/2018_ADHS.pdf"
+  },
+  {
+    "directory": "talks/2018_BNLM",
+    "main": "2018_BNLM-slides.tex",
+    "output": "talks/2018_BNLM.pdf"
+  },
+  {
+    "directory": "talks/2018_ISMP",
+    "main": "2018_ISMP-slides.tex",
+    "output": "talks/2018_ISMP.pdf"
+  },
+  {
+    "directory": "talks/2018_JuMP",
+    "main": "2018_JuMP-slides.tex",
+    "output": "talks/2018_JuMP.pdf"
+  },
+  {
+    "directory": "talks/2018_NCAG",
+    "main": "2018_NCAG-slides.tex",
+    "output": "talks/2018_NCAG.pdf"
+  },
+  {
+    "directory": "talks/2019_BJUG",
+    "main": "2019_BJUG-slides.tex",
+    "output": "talks/2019_BJUG.pdf"
+  },
+  {
+    "directory": "talks/2019_ICCOPT",
+    "main": "2019_ICCOPT-slides.tex",
+    "output": "talks/2019_ICCOPT.pdf"
+  },
+  {
+    "directory": "talks/2019_JuMP",
+    "main": "2019_JuMP-slides.tex",
+    "output": "talks/2019_JuMP.pdf"
+  },
+  {
+    "directory": "talks/2019_LANL",
+    "main": "2019_LANL-slides.tex",
+    "output": "talks/2019_LANL.pdf"
+  },
+  {
+    "directory": "talks/2019_NSIDE",
+    "main": "2019_NSIDE-slides.tex",
+    "output": "talks/2019_NSIDE.pdf"
+  },
+  {
+    "directory": "talks/2020_CDC",
+    "main": "2020_CDC-slides.tex",
+    "output": "talks/2020_CDC.pdf",
+    "unavailable": "Missing figures from HybridCoSimulationStabilityAnalysis; see latex/README.md."
+  },
+  {
+    "directory": "talks/2020_INFORMS",
+    "main": "2020_INFORMS-slides.tex",
+    "output": "talks/2020_INFORMS.pdf"
+  },
+  {
+    "directory": "talks/2020_PieceQuad",
+    "main": "2020_PieceQuad-slides.tex",
+    "output": "talks/2020_PieceQuad.pdf"
+  },
+  {
+    "directory": "talks/2021_ADHS",
+    "main": "2021_ADHS-slides.tex",
+    "output": "talks/2021_ADHS.pdf"
+  },
+  {
+    "directory": "talks/2021_INFORMS",
+    "main": "2021_INFORMS-slides.tex",
+    "output": "talks/2021_INFORMS.pdf"
+  },
+  {
+    "directory": "talks/2021_JCon",
+    "main": "2021_JCon-slides.tex",
+    "output": "talks/2021_JCon.pdf"
+  },
+  {
+    "directory": "talks/2022_JuliaCon",
+    "main": "2022_JuliaCon-slides.tex",
+    "output": "talks/2022_JuliaCon.pdf"
+  },
+  {
+    "directory": "talks/2023_JuliaCon",
+    "main": "2023_JuliaCon-slides.tex",
+    "output": "talks/2023_JuliaCon.pdf"
+  },
+  {
+    "directory": "paper/2016_HSCC",
+    "main": "2016_HSCC-paper.tex",
+    "output": "paper/2016_HSCC.pdf"
+  },
+  {
+    "directory": "paper/2016_SITB",
+    "main": "2016_SITB-paper.tex",
+    "output": "paper/2016_SITB.pdf"
+  },
+  {
+    "directory": "paper/2017_BNLM",
+    "main": "2017_BNLM-paper.tex",
+    "output": "paper/2017_BNLM.pdf"
+  },
+  {
+    "directory": "paper/2017_arXiv",
+    "main": "2017_arXiv-paper.tex",
+    "output": "paper/2017_arXiv.pdf"
+  },
+  {
+    "directory": "paper/2018_BNLM",
+    "main": "2018_BNLM-paper.tex",
+    "output": "paper/2018_BNLM.pdf"
+  },
+  {
+    "directory": "talks/2021_L4DC",
+    "main": "2021_L4DC-poster.tex",
+    "output": "talks/2021_L4DC.pdf"
+  },
+  {
+    "directory": "paper/thesis",
+    "main": "thesis-paper.tex",
+    "output": "paper/thesis.pdf"
+  },
+  {
+    "directory": "talks/thesis",
+    "main": "thesis-slides.tex",
+    "output": "talks/thesis.pdf"
+  }
+]

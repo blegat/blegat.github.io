@@ -1,0 +1,34 @@
+\begin{theorem}
+  \label{theo:fourth}
+  Consider \defAGe{}.
+  For any positive integer $d$ and $l$,
+  using \progref{dual} with any $\gamma < \jsrsos$,
+  \algoref{prodl} with paths of length $l$
+  produces a $\G^\Tr$-admissible sequence
+  $(v_1,v_0,\sigma_0), (v_2,v_1,\sigma_1), \ldots$ %
+  that satisfies the following inequality for all $k \geq 1$:
+  \begin{equation*}
+    \lim_{k \to \infty} \|A_{s_k}\|_2^\frac{1}{k} \geq \frac{\gamma}{\|(A(\G)^\Tr)^l\|_\infty^\frac{1}{2dl}}
+  \end{equation*}
+  where $s_k = (\sigma_k, \ldots, \sigma_1)$.
+  \begin{proof}
+    By \lemref{maxdegpathl}, for any $k$ multiple of $l$, %
+    \begin{equation*}
+      \pE_{s_k[1]}[p_0(A_{s_k}x)] \geq \frac{\gamma^{2dk}}{(\mdin_l)^\frac{k}{l}} \pE_{v_0v_{-1}\sigma_0}[p_0(x)]
+    \end{equation*}
+
+    By Lemma~\ref{lem:thetatoA},
+    there exists a constant $\tau > 0$ such that
+    \[
+      \pE_{s_k[1]}[p_0(A_{s_k} x)] \leq \tau \|A_{s_k}\|^{2d}.
+    \]
+
+    Combining these two inequalities, we obtain
+    \begin{align*}
+      \tau \|A_{s_k}\|^{2d} & \geq \frac{\gamma^{2dk}}{(\mdin_l)^\frac{k}{l}} \pE_{v_0v_{-1}\sigma_0}[p_0(x)].
+    \end{align*}
+    Since $\pE_{v_0v_{-1}\sigma_0}$ is nonzero, $\pE_{v_0v_{-1}\sigma_0}[p_0(x)] > 0$.
+    Therefore taking the $(2dk)$th root and the limit $k \to \infty$
+    we obtain the result.
+  \end{proof}
+\end{theorem}

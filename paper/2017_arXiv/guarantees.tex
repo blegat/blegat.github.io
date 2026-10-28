@@ -1,0 +1,149 @@
+In this section, we provide a new bound that relates the accuracy of Program~\ref{prog:primal} to the $p$-radius and the spectral radius of the adjacency matrix of the automaton.
+The $p$-radius is a generalization of the joint spectral radius;
+we recover the JSR with $p=\infty$.
+The definition of the $p$-radius and its property can be found in \appref{pradius}; see \cite{jungers2011fast} for an introduction.
+
+An important property of the $p$-radius is that it is increasing in $p$.
+\begin{lemma}
+  \label{lem:incp}
+  Consider \defAG{}.
+  For any integers $p \leq q$,
+  \begin{equation}
+    \label{eq:incp}
+    \cpr[p] \leq \cpr[q] \leq \cjsr \leq \rho(A(\G))^{\frac{1}{q}}
+    \cpr[q] \leq \rho(A(\G))^{\frac{1}{p}} \cpr[p].
+  \end{equation}
+\end{lemma}
+The proof can be found in \appref{pradius}.
+This Lemma is already known in the unconstrained case~\cite{zhou2002p}.
+
+\input{remlift}
+
+In this section, we show the following bound stating that the solution found by \progref{primal} is at least as good as the bound obtained by computing the $2d$-radius.
+\begin{theorem}
+  \label{theo:second}
+  Consider \defAG{} and a positive integer $d$.
+  The approximation given by \progref{primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \begin{equation}
+    \label{eq:second}
+    \jsrsos \leq \rho(A(\G))^{\frac{1}{2d}}\cdr \leq \rho(A(\G))^{\frac{1}{2d}} \cjsr
+  \end{equation}
+  where $A(\G)$ is the adjacency matrix of $\G$.
+\end{theorem}
+Note that the second inequality in \eqref{eq:second} is simply \eqref{eq:incp}.
+This theorem is proved at the end of this section.
+
+As a corollary of Theorem~\ref{theo:second}, in the trivial cases such that $\rho(A(\G)) = 1$, the approximation is exact.
+This corresponds to the case where every node of $\G$ has indegree and outdegree 1.
+In that case, the graph forms a cycle of some length $k$ and the CJSR is simply the $k$th root of the spectral radius of the product of the matrices along this cycle.
+
+In the general case, the following approximation guarantee is known (note that the bound does not take into account the particular structure of the automaton):
+\begin{theorem}[{\cite[Theorem~3.6]{philippe2016stability}}]
+  \label{theo:matt}
+  Consider \defAGn{} and a positive integer $d$.
+  The approximation $\jsrsos$ given by Program~\ref{prog:primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \[ \jsrsos \leq {n+d-1 \choose d}^{\frac{1}{2d}} \cjsr. \]
+\end{theorem}
+
+The results of \theoref{second}, \theoref{matt} and \eqref{eq:upperbound} are summarized by the following corollary.
+\begin{corollary}
+  \label{coro:mix}
+  Consider \defAGn{} and a positive integer $d$,
+  the approximation given by Program~\ref{prog:primal} using homogeneous polynomials of degree $2d$
+  satisfies:
+  \[
+    \min\Big\{{n+d-1 \choose d}, \rho(A(\G))\Big\}^{-\frac{1}{2d}} \jsrsos%
+    \leq \cjsr \leq \jsrsos
+  \]
+  where $A(G)$ is the adjacency matrix of the automaton $\G$.
+\end{corollary}
+We see that we can have arbitrary accuracy by increasing $d$.
+
+For the arbitrary switching case, $\rho(A(\G))$ is equal to the number of matrices $m$.
+Theorem~\ref{theo:second} was already known in this particular case \cite[Theorem~4.3]{parrilo2008approximation}.
+
+Our proof technique relies on the analysis of an iteration in the vector space of polynomials of degree $2d$.
+When this iteration converges, it converges to a feasible solution of Program~\ref{prog:primal}.
+By analysing this iteration as affine iterations in this vector space, we derive a sufficient condition for its convergence
+and thus an upper bound for $\jsrsos$.
+
+Consider the iteration
+\begin{align}
+  \notag
+  p_{v,0}(x) & = 0,\\
+  \label{eq:iter}
+  p_{v,k+1}(x) & = q_v(x) + \frac{1}{\iterc} %
+  \sum_{(u,v,\sigma) \in \Arcs} p_{u,k}(A_\sigma x), \quad  v \in \Nodes
+\end{align}
+for fixed homogeneous polynomials $q_v(x)$ of degree $2d$ in $n$ variables (not necessarily different)
+and a constant $\iterc > 0$.
+
+When this iteration converges, it converges to a feasible solution of Program~\ref{prog:primal}.
+\begin{lemma}
+  \label{lem:conv}
+  Consider a constant $\iterc > 0$.
+  If there exist homogeneous polynomials $q_v(x)$ in the interior of the SOS cone such that
+  iteration~\eqref{eq:iter} converges then
+  \[
+    \jsrsos \leq \iterc^{\frac{1}{2d}}.
+  \]
+  \begin{proof}
+    Suppose the iteration converges to the polynomials $p_{v,\infty}(x)$.
+    It is easy to show by induction that $p_{v,k}(x)$ is SOS for all $k$.
+    It is trivial for $k = 0$ and if it is true for $k$ then it is also true for $k+1$ by \eqref{eq:iter}.
+    Since the SOS cone is closed, $p_{v,\infty}$ is SOS.
+    Now by \eqref{eq:iter}, for each $v \in \Nodes$,
+    \[ p_{v,\infty}(x) = q_v(x) + \frac{1}{\iterc} %
+    \sum_{(u,v,\sigma) \in \Arcs} p_{u,\infty}(A_\sigma x) \]
+    so $p_{v,\infty}(x)$ is also in the interior of the SOS cone.
+    For each edge $(u,v,\sigma)$, by manipulating the above equation, we have
+    \[ \iterc p_{v,\infty}(x) - p_{u,\infty}(A_\sigma x) = \iterc q_v(x) + %
+    \sum_{(u',v',\sigma') \in \Arcs} p_{u',\infty}(A_{\sigma'} x) \]
+    so $\iterc p_{v,\infty}(x) - p_{u,\infty}(A_\sigma x)$ is SOS.
+    Therefore $(\{\, p_{v,\infty}(x) : v \in \Nodes \,\}, \iterc^{\frac{1}{2d}})$ is a feasible solution of Program~\ref{prog:primal}.
+  \end{proof}
+\end{lemma}
+
+In view of \lemref{conv}, it is thus natural to analyse
+under which condition iteration~\ref{eq:iter} converges. Recall
+that iteration~\ref{eq:iter} is an affine map on the vector space of
+homogeneous polynomials of degree $2d$.
+
+\begin{proof}[Proof of Theorem~\ref{theo:second}]
+  Iteration~\ref{eq:iter} is an affine map on the vector space of
+  homogeneous polynomials of degree $2d$.  It is well known that
+  if the convergence is guaranteed when we only retain the linear
+  part of the affine map then it is also guaranteed for the affine
+  iteration.
+
+  Therefore we can analyse instead the following iteration
+  \begin{align*}
+    p_{v,0}(x) & = q_v(x),\\
+    p_{v,k+1}(x) & = \frac{1}{\iterc} %
+    \sum_{(u,v,\sigma) \in \Arcs} p_{u,k}(A_\sigma x), \quad  v \in \Nodes
+  \end{align*}
+
+  We can see that
+  \begin{equation}
+    p_{v,k+1}(x) = \frac{1}{\iterc^k}\sum_{s \in \Arcsin_k(v)} q_{s(1)}(A_s x)\\
+    \leq \frac{1}{\iterc^k}\sum_{s \in \Arcsin_k(v)} q_{s(1)}(A_s x).
+  \end{equation}
+
+  Consider a norm $\|\cdot\|$ of $\R^n$ and its corresponding induced matrix norm of $\R^{n \times n}$.
+  For each $v \in \Nodes$, we know by continuity of $q_v(x)$ that there exist $\beta_v > 0$ such that
+  \[ q_v(x) \leq \beta_v\|x\|^{2d} \]
+  for all $x \in \R^n$.
+  Let $\beta = \max_{v \in \Nodes} \beta_v$.
+
+  Therefore,
+  \begin{align*}
+    p_{v,k+1}(x)
+    & \leq \frac{1}{\iterc^k}\sum_{s \in \Arcsin_k(v)} \beta_v \|A_s\|^{2d} \|x\|^{2d}\\
+    & \leq \frac{\beta}{\iterc^k} \|x\|^{2d} \sum_{s \in \Arcsin_k(v)} \|A_s\|^{2d}.
+  \end{align*}
+  By Lemma~\ref{lem:rhoAG} and Remark~\ref{rem:path}, if
+  $\iterc > \rho(A(G))\cdr^{2d}$, $\lim_{k \to \infty} p_{v,k}(x) = 0$.
+  We obtain the result by \lemref{conv}.
+\end{proof}

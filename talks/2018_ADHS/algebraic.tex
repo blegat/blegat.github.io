@@ -1,0 +1,16 @@
+\begin{frame}{Unconstrained control to algebraic system}
+  \begin{block}{Linear Discrete \alert{Control} System (DT\alert{C}S)}
+    \[ x_{k+1} = A x_k + B u_k, \quad x_k \in X \]
+  \end{block}
+  \begin{block}{Linear Discrete \alert{Algebraic} System (DT\alert{A}S)}
+    \[ Ex_{k+1} = A x_k, \quad x_k \in X \]
+    Invariant Set $S \subseteq X$ if
+    \[ \forall x \in S, \alert{\exists} y \in S : Ey = Ax \]
+  \end{block}
+  \begin{block}{Reduction}
+    The set $S$ is controlled invariant for the DT\alert{C}S iff
+    it is invariant for the DT\alert{A}S
+    \[ \Pi x_{k+1} = \Pi A x_k, \quad x_k \in X \]
+    where $\Pi$ is a projection on $\Image(B)^\perp$.
+  \end{block}
+\end{frame}

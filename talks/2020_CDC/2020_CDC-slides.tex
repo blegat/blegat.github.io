@@ -1,0 +1,152 @@
+\documentclass[9pt,notes=hide]{beamer}
+
+\usepackage{../../latex/custom}
+\usepackage{../../latex/jsr}
+\usepackage{../../latex/nsi}
+
+\usepackage{animate}
+
+\usetheme[progressbar=frametitle,block=fill]{metropolis}
+\usepackage{appendixnumberbeamer}
+\setbeamertemplate{frametitle continuation}{\hfill(\insertcontinuationcount)} %
+
+\newcommand{\HS}[0]{\ensuremath{\mathcal{S}}}
+\newcommand{\SD}[0]{\ensuremath{\HS}} %
+\newcommand{\hpcmap}[2]{\mathcal{Q}(#2, #1)}
+
+\newcommand{\setsection}[1]{
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
+    #1
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
+    \usebeamertemplate*{frame numbering}
+  \end{beamercolorbox}%
+}
+}
+
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, patterns}
+\usetikzlibrary{matrix,decorations.pathreplacing,chains,fit,shapes,calc} %
+\usetikzlibrary{calc,decorations.pathmorphing,decorations.markings}
+
+\usepackage{pgfplots}
+    \pgfplotsset{compat=1.11}
+\usepackage{pgfplotsthemetol} %
+\usepackage{subcaption} %
+\usepackage{array}
+
+\newcommand{\abs}[1]{\left| #1 \right|} %
+\newcommand{\Init}{\mathrm{Init}} %
+\newcommand{\comment}[1]{{\color{red}\textbf{{#1}}}}
+
+\graphicspath{{../../../HybridCoSimulationStabilityAnalysis/19.FORMATS.DelayedSwitching/imgs/}{../../../HybridCoSimulationStabilityAnalysis/experiments/forgetfull_bouncing_ball/}}
+\usepackage[super]{nth}
+
+\newcommand{\expe}[2]{\la #1, #2 \ra}
+\newcommand{\piB}{\pi_{\Image(B)^\perp}}
+\newcommand{\piBTr}{\pi_{\Image(B)^\perp}^\Tr}
+\DeclareMathOperator{\gauge}{g}
+\DeclareMathOperator{\suppfun}{h}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+
+\title{Stability of Planar Switched Systems\\ under Delayed Event Detection}
+\subtitle{59th Conference on Decision and Control}
+\date{December 18, 2020}
+\author{Beno\^{i}t Legat$^\dagger$, Cl\'audio Gomes$^\ddagger$, Paschalis Karalis$^*$, Rapha\"el M. Jungers$^\dagger$, Eva M. Navarro-L\'opez$^{\dagger\dagger}$, and Hans Vangheluwe$^{\ddagger\ddagger}$}
+\institute{${}^\dagger$ UCLouvain, ${}^\ddagger$ Aarhus University, ${}^*$ Cadence Design Systems, ${}^{\dagger\dagger}$ University of Manchester, ${}^{\ddagger\ddagger}$ University of Antwerp}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}{Instability due to switching delays}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{no_delay_orbit}~%
+    \includegraphics[width=0.5\textwidth]{delay_orbit}
+  \end{center}
+  \begin{center}
+    \emph{How to compute maximum switching delay preserving stability ?}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Hybrid system reformulation}
+  First option: Lyapunov function of hybrid system:
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=\textwidth]{hybrid_system}~%
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \includegraphics[width=\textwidth]{hybrid_system_delayed_switching}
+    \end{column}
+  \end{columns}
+  Issue: Difficult to compute in general.
+\end{frame}
+
+\begin{frame}{Orbit for planar case}
+  Planar case result of this paper: \alert{Unstable} with maximum switching delay $H$ $\Leftrightarrow$ $\exists$ \alert{orbit}.
+
+  Algorithmic search (\alert{meet in the middle} approach for $x_2$):
+  \[ \hat{\sigma}(\SD) = \inf_{(x, h_1, h_2)} \max(h_1, h_2) \text{ s.t. } \hpcmap{h_1, h_2}{x} = x. \]
+  \begin{center}
+      \includegraphics[width=0.6\textwidth]{hpcmap.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Poincar\'e map: continuous ?}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{goodpc.pdf}
+      \includegraphics[width=\textwidth]{remark_continuity}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{perppc.pdf}
+      \includegraphics[width=\textwidth]{remark_continuity2}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Topological argument}
+
+  Poincar\'e map: $S_p$.
+
+  Consecutive intersection with $S_p$ form a path \alert{component}.
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{example_lemma2}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{example_lemma22}
+    \end{column}
+  \end{columns}
+  Reentering it intersects at \alert{different modes}.
+\end{frame}
+
+\begin{frame}{Conclusion}
+  \begin{block}{Summary and future work}
+    \begin{itemize}
+      \item Planar case: \alert{instability} equivalent to existence of \alert{orbit}.
+      \item What about higher dimensions ?
+      \item How to compute Lyapunov functions for such systems ?
+    \end{itemize}
+  \end{block}
+  \vspace{6em}
+  \begin{quote}
+    Any question ?
+  \end{quote}
+\end{frame}
+
+
+\end{document}
