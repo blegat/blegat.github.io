@@ -25,11 +25,6 @@
     "output": "talks/2017_ENPC.pdf"
   },
   {
-    "directory": "talks/2017_JuMP",
-    "main": "2017_JuMP-slides.tex",
-    "output": "talks/2017_JuMP.pdf"
-  },
-  {
     "directory": "talks/2017_UCLA",
     "main": "2017_UCLA-slides.tex",
     "output": "talks/2017_UCLA.pdf"
@@ -75,11 +70,6 @@
     "output": "talks/2019_JuMP.pdf"
   },
   {
-    "directory": "talks/2019_LANL",
-    "main": "2019_LANL-slides.tex",
-    "output": "talks/2019_LANL.pdf"
-  },
-  {
     "directory": "talks/2019_NSIDE",
     "main": "2019_NSIDE-slides.tex",
     "output": "talks/2019_NSIDE.pdf"
@@ -88,7 +78,7 @@
     "directory": "talks/2020_CDC",
     "main": "2020_CDC-slides.tex",
     "output": "talks/2020_CDC.pdf",
-    "unavailable": "Missing figures from HybridCoSimulationStabilityAnalysis; see latex/README.md."
+    "unavailable": "Build disabled."
   },
   {
     "directory": "talks/2020_INFORMS",

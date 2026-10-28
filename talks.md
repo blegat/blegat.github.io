@@ -45,10 +45,10 @@
     KU Leuven, 24th of November 2023<br><strong>Low-Rank Univariate Sum-of-Squares Has No Spurious Local Minima</strong><br>
   </li>
   <li id="2023_Julia">
-    <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong><br>
+    <a href="https://julia-users-paris.github.io/workshop/en/">Julia and Optimization Days 2023</a>, 6th of October 2023<br><strong>Synergy between Macaulay and Sum-of-Squares frameworks</strong><br><a href="/SumOfSquaresSlides/2023_Julia.pdf">slides</a>
   </li>
   <li id="2023_JuMP">
-    <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a><br>
+    <a href="https://jump.dev/meetings/jumpdev2023/">JuMP-dev 2023</a>, 28th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/XLT8H3/"><strong>Polynomial Optimization</strong></a><br><a href="/SumOfSquaresSlides/2023_JuMP.pdf">slides</a>
   </li>
   <li id="2023_JCON">
     <a href="https://juliacon.org/2023/">JuliaCon 2023</a>, 26th of July 2023<br><a href="https://pretalx.com/juliacon2023/talk/JP3SPX/"><strong>Polyhedral Computation</strong></a><br><a href="/talks/2023_JuliaCon.pdf">slides</a>
@@ -57,7 +57,7 @@
     <a href="https://www.siam.org/conferences/cm/conference/op23">SIAM Conference on Optimization (OP23)</a>, May 31 - June 3, 2023<br><strong>Low-Rank Nonconvex Solver for Sum-of-Squares</strong><br>
   </li>
   <li id="2023_SIDS">
-    <a href="https://www.siam.org/conferences/cm/conference/ds23">SIAM Conference on Applications of Dynamical Systems (DS23)</a>, May 14 - 18 2023<br><strong>Exploiting the Structure of a Polynomial Optimization Problem</strong><br>
+    <a href="https://www.siam.org/conferences/cm/conference/ds23">SIAM Conference on Applications of Dynamical Systems (DS23)</a>, May 14 - 18 2023<br><strong>Exploiting the Structure of a Polynomial Optimization Problem</strong><br><a href="/SumOfSquaresSlides/2023_SIAMDS.pdf">slides</a>
   </li>
   <li id="2022_JuMP">
     <a href="https://jump.dev/meetings/juliacon2022/">JuMP-dev 2022</a>, July 2022<br><strong>Complex number support in JuMP</strong>
@@ -81,19 +81,19 @@
     <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>First-order methods for Sum-of-Squares programs</strong>
   </li>
   <li id="2022_ICS">
-    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong><br>
+    <a href="https://ics2022tampa.eng.usf.edu/">INFORMS Computing Society Conference</a>, January 2022<br><strong>Symmetry Reduction for Sum-of-Squares Optimization</strong><br><a href="/SumOfSquaresSlides/2022_INFORMS.pdf">slides</a>
   </li>
   <li id="2021_INFORMS">
     <a href="http://meetings2.informs.org/wordpress/anaheim2021/">2021 INFORMS Annual Meeting</a>, October 2021<br><strong>Matrix representations for MathOptInterface</strong><br><a href="/talks/2021_INFORMS.pdf">slides</a>
   </li>
   <li id="2021_POEM">
-    <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">2nd POEMA Learning Week</a>, September 2021<br><strong><a href="http://poema-network.eu/images/Workshop/LW2/Benoit.pdf">Sum-of-Squares optimization with JuMP in Julia</a></strong><br>
+    <a href="http://poema-network.eu/index.php/news-and-events/project-workshops/13-poema-learning-week-2">2nd POEMA Learning Week</a>, September 2021<br><strong><a href="http://poema-network.eu/images/Workshop/LW2/Benoit.pdf">Sum-of-Squares optimization with JuMP in Julia</a></strong><br><a href="/SumOfSquaresSlides/2021_POEMA.pdf">slides</a>
   </li>
   <li id="2021_JCon">
     <a href="https://juliacon.org/2021/">JuliaCon 2021</a>, July 2021<br><strong><a href="https://pretalx.com/juliacon2021/talk/PRFW3N/">MutableArithmetics: An API for mutable operations</a></strong><br><a href="/talks/2021_JCon.pdf">slides</a> <a href="https://live.juliacon.org/talk/PRFW3N">live</a> <a href="https://youtu.be/gggxyIzSYWI">video</a>
   </li>
   <li id="2021_JuMP">
-    <a href="https://jump.dev/meetings/juliacon2021/">JuMP-dev 2021</a>, July 2021<br><strong><a href="https://pretalx.com/juliacon2021/talk/L8DTE3/">Symmetry reduction for Sum-of-Squares programming</a></strong><br> <a href="https://live.juliacon.org/talk/L8DTE3">live</a> <a href="https://youtu.be/KsBUmhZ1Ejw">video</a>
+    <a href="https://jump.dev/meetings/juliacon2021/">JuMP-dev 2021</a>, July 2021<br><strong><a href="https://pretalx.com/juliacon2021/talk/L8DTE3/">Symmetry reduction for Sum-of-Squares programming</a></strong><br><a href="/SumOfSquaresSlides/2021_JuMP.pdf">slides</a> <a href="https://live.juliacon.org/talk/L8DTE3">live</a> <a href="https://youtu.be/KsBUmhZ1Ejw">video</a>
   </li>
   <li id="2021_EURO">
     <a href="https://europt2021.recherche.enac.fr/">18th European Conference in Operational Research (EUROPT)</a>, July 2021<br><strong>Polynomial optimization applied to set computation</strong><br>
@@ -111,7 +111,7 @@
     <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><strong>MathOptInterface: A Data Structure for Mathematical Optimization Problems</strong><br><a href="/talks/2020_INFORMS.pdf">slides</a>
   </li>
   <li id="2020_INFORMSSOS">
-    <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><strong>SumOfSquares: A Julia package for Polynomial Optimization</strong><br>
+    <a href="http://meetings2.informs.org/wordpress/annual2020/">2020 INFORMS Annual Meeting</a>, November 2020<br><strong>SumOfSquares: A Julia package for Polynomial Optimization</strong><br><a href="/SumOfSquaresSlides/2020_INFORMS.pdf">slides</a>
   </li>
   <li id="2019_NSIDE">
     <a href="https://www.n-side.com/">N-SIDE</a>, October 2019<br><strong>Julia for Operations Research</strong><br><a href="/talks/2019_NSIDE.pdf">slides</a>
@@ -123,16 +123,16 @@
     <a href="https://iccopt2019.berlin/">6th International Conference on Continuous Optimization (ICCOPT)</a>, August 2019<br><strong>Computing polynomial controlled invariant sets using Sum-of-Squares Programming</strong><br><a href="/talks/2019_ICCOPT.pdf">slides</a>
   </li>
   <li id="2019_JuliaCon">
-    <a href="https://juliacon.org/2019/">JuliaCon 2019</a>, July 2019<br><strong>Polynomial and Moment Optimization in Julia and JuMP</strong><br> <a href="https://www.youtube.com/watch?v=cTmqmPcroFo">video</a>
+    <a href="https://juliacon.org/2019/">JuliaCon 2019</a>, July 2019<br><strong>Polynomial and Moment Optimization in Julia and JuMP</strong><br><a href="/SumOfSquaresSlides/2019_JCON.pdf">slides</a> <a href="https://www.youtube.com/watch?v=cTmqmPcroFo">video</a>
   </li>
   <li id="2019_LANL">
-    <a href="https://cnls.lanl.gov/External/showtalksummary.php?selection=7768">Los Alamos National Institute (LANL), Center for Nonlinear Studies (CNLS) 2019</a>, July 2019<br><strong>Automatic reformulation using optimization bridges</strong><br><a href="/talks/2019_LANL.pdf">slides</a>
+    <a href="https://cnls.lanl.gov/External/showtalksummary.php?selection=7768">Los Alamos National Institute (LANL), Center for Nonlinear Studies (CNLS) 2019</a>, July 2019<br><strong>Automatic reformulation using optimization bridges</strong><br><a href="/SumOfSquaresSlides/2019_LANL.pdf">slides</a>
   </li>
   <li id="2019_EURO">
-    <a href="https://www.euro2019dublin.com/">17th European Conference in Operational Research (EUROPT)</a>, June 2019<br><strong>JuMP and MathOptInterface: An optimization framework extensible by design</strong><br>
+    <a href="https://www.euro2019dublin.com/">17th European Conference in Operational Research (EUROPT)</a>, June 2019<br><strong>JuMP and MathOptInterface: An optimization framework extensible by design</strong><br><a href="/SumOfSquaresSlides/2019_EURO.pdf">slides</a>
   </li>
   <li id="2019_JuliaNantes">
-    <a href="https://julialang.univ-nantes.fr/programme/">juliaday Nantes 2019</a>, June 2019<br><strong>JuMP extension to Sum-of-Squares Programming</strong><br>
+    <a href="https://julialang.univ-nantes.fr/programme/">juliaday Nantes 2019</a>, June 2019<br><strong>JuMP extension to Sum-of-Squares Programming</strong><br><a href="/SumOfSquaresSlides/2019_NANT.pdf">slides</a>
   </li>
   <li id="2019_JuMP">
     <a href="https://jump.dev/meetings/santiago2019/">3rd Annual JuMP-dev Workshop</a>, March 2019<br><strong>Set Programming with JuMP</strong><br><a href="/talks/2019_JuMP.pdf">slides</a> <a href="https://www.youtube.com/watch?v=hV3G-eNLNjk">video</a>
@@ -162,7 +162,7 @@
     <a href="https://www.uantwerpen.be/"><em>UAntwerpen</em></a>, February 2018<br><strong><a href="https://www.uantwerpen.be/images/uantwerpen/personalpage33566/files/AG-Seminar-2018ss/2018-02-19-Legat.pdf">Optimal Stabilization of Constrained Switched Systems and Application to (Co-)simulation</a></strong><br>
   </li>
   <li id="2017_JuMP">
-    <a href="https://jump.dev/meetings/mit2017/"><em>1st Annual JuMP-dev Workshop</em></a>, June 2017<br><strong>Sum-of-squares optimization in Julia</strong><br><a href="/talks/2017_JuMP.pdf">slides</a> <a href="https://www.youtube.com/watch?v=kyo72yWYr54&feature=youtu.be">video</a>
+    <a href="https://jump.dev/meetings/mit2017/"><em>1st Annual JuMP-dev Workshop</em></a>, June 2017<br><strong>Sum-of-squares optimization in Julia</strong><br><a href="/SumOfSquaresSlides/2017_JuMP.pdf">slides</a> <a href="https://www.youtube.com/watch?v=kyo72yWYr54&feature=youtu.be">video</a>
   </li>
   <li id="2017_ENPC">
     <a href="https://www.ecoledesponts.fr/"><em>Ecole des Ponts</em></a>, June 2017<br><strong>Parallel optimization on the Entropic Cone</strong><br><a href="/talks/2017_ENPC.pdf">slides</a>
@@ -193,7 +193,7 @@
     <a href="https://l4dc.ethz.ch/"><em>3rd Annual Learning for Dynamics & Control Conference</em></a>, June 2021.<br><strong>Abstraction-based branch and bound approach to Q-learning for hybrid optimal control</strong><br><a href="/talks/2021_L4DC.pdf">poster</a>
   </li>
   <li id="2018_NCAG_poster">
-    <a href="https://www.mis.mpg.de/calendar/conferences/2018/nc2018.html">Summer School on Numerical Computing in Algebraic Geometry</a>, August 2018.<br><strong>Sum-of-Squares Programming in Julia with JuMP</strong><br>
+    <a href="https://www.mis.mpg.de/calendar/conferences/2018/nc2018.html">Summer School on Numerical Computing in Algebraic Geometry</a>, August 2018.<br><strong>Sum-of-Squares Programming in Julia with JuMP</strong><br><a href="/SumOfSquaresSlides/2018_NCAG.pdf">poster</a>
   </li>
   <li id="2018_ADHS_poster">
     <a href="https://www.cs.ox.ac.uk/conferences/ADHS18/"><em>IFAC Conference on Analysis and Design of Hybrid Systems</em></a>, July 2018.<br><strong>Minimally Constrained Stable Switched Systems and Application to Co-simulation</strong><br>
