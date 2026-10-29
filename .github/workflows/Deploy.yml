@@ -21,7 +21,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends \
           latexmk texlive-latex-extra texlive-fonts-extra texlive-science \
-          texlive-bibtex-extra biber ghostscript python3-pygments
+          texlive-bibtex-extra texlive-plain-generic texlive-lang-french \
+          lmodern biber ghostscript python3-pygments
     - name: Compile public papers, slides, and posters
       run: |
         python3 scripts/build_documents.py

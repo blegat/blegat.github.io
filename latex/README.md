@@ -20,7 +20,9 @@ Install latexmk, pdfLaTeX, the extra LaTeX fonts and science packages,
 BibTeX/Biber, Ghostscript, and Pygments. The workflow contains the Ubuntu
 package list. Build logs and auxiliary files go to `_build/`; the PDFs go
 to `_documents/paper/` and `_documents/talks/`. These are ignored by Git.
-The build ignores user latexmk configuration and needs no Drive mount.
+Documents compile in copies under `_build/`, which keeps their sources clean
+and supports both minted v2 and v3. The build ignores user latexmk
+configuration and needs no Drive mount.
 
 The `documents` CI job compiles the PDFs and uploads them as an artifact.
 The website job downloads that artifact into `__site` after Franklin runs,

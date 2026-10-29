@@ -18,19 +18,26 @@ def build(document):
         print(f"SKIP {document['directory']}: {document['unavailable']}", flush=True)
         return True
     directory = ROOT / document['directory']
-    output = ROOT / '_build' / document['directory']
-    output.mkdir(parents=True, exist_ok=True)
+    # Keep the original two-level depth so relative inputs and symlinks resolve.
+    # Running LaTeX in this copy also supports minted v2's generated files.
+    output = ROOT / '_build' / document['directory'].replace('/', '--')
+    if output.exists():
+        shutil.rmtree(output)
+    shutil.copytree(directory, output, symlinks=True)
+    (output / Path(document['main']).with_suffix('.pdf')).unlink(missing_ok=True)
     env = os.environ.copy()
     env['TEXINPUTS'] = f".:{ROOT}/latex//:{ROOT}/latex/images//:" + env.get('TEXINPUTS', '')
     env['BIBINPUTS'] = f".:{ROOT}/latex//:" + env.get('BIBINPUTS', '')
     with (output / 'build.log').open('w') as log:
         result = subprocess.run(
             ['latexmk', '-norc', '-pdf', '-shell-escape', '-interaction=nonstopmode',
-             '-halt-on-error', '-file-line-error', f'-outdir={output}', document['main']],
-            cwd=directory, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=600,
+             '-halt-on-error', '-file-line-error', document['main']],
+            cwd=output, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=600,
         )
     if result.returncode:
-        print(f"FAIL {document['directory']} (see {output / 'build.log'})", flush=True)
+        log_path = output / 'build.log'
+        excerpt = '\n'.join(log_path.read_text(errors='replace').splitlines()[-80:])
+        print(f"FAIL {document['directory']}: {log_path}\n{excerpt}", flush=True)
         return False
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(output / Path(document['main']).with_suffix('.pdf'), target)
