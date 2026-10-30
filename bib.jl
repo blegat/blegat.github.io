@@ -130,7 +130,7 @@ add!("legat2020sum",
 add!("legat2020certifying",
     url = "https://epubs.siam.org/doi/10.1137/18M1173460",
     arXiv = "1710.01814",
-    pdf = "https://drive.google.com/open?id=0B1axlYz3_XXKd0lTektfekU2eGc",
+    pdf = "/paper/2017_arXiv.pdf",
     code_doi = "10.24433/CO.9148109.v2",
 )
 add!("legat2019entropy",
@@ -180,15 +180,15 @@ add!("gomes2018minimally",
 )
 add!("legat2016parallel",
     url = "http://sites.uclouvain.be/sitb2016/Proceedings_SITB2016_preliminary.pdf",
-    pdf = "https://drive.google.com/open?id=0B1axlYz3_XXKNTRjZTVuSmtWTXM",
+    pdf = "/paper/2016_SITB.pdf",
     code = "https://github.com/blegat/EntropicCone.jl",
-    slides = "https://drive.google.com/open?id=0B1axlYz3_XXKa3BXZTlsdUJJZzA",
+    slides = "/talks/2016_SITB.pdf",
 )
 add!("legat2016generating",
     url = "http://dl.acm.org/citation.cfm?id=2883821",
-    pdf = "https://drive.google.com/open?id=0B1axlYz3_XXKeGRabkFCN3R0Y00",
+    pdf = "/paper/2016_HSCC.pdf",
     code = "https://github.com/blegat/RPHSCC2016",
-    slides = "https://drive.google.com/open?id=0B1axlYz3_XXKNm13eWU5R3E1RVE",
+    slides = "/talks/2016_HSCC.pdf",
 )
 #add!("legat2021mutablearithmetics")
 
